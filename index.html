@@ -2,37 +2,60 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f6f8fc">
-<meta name="description" content="StudyPilot is your personal academic workspace. Organize subjects, assignments, quizzes, exams, grades, semesters and study schedules.">
+<meta name="description" content="StudyPilot is your personal academic workspace. Organize subjects, assignments, exams, grades and study schedules.">
 <title>StudyPilot — Your Personal Academic Workspace</title>
 <style>
 :root{
  --bg:#f6f8fc;--surface:#fff;--surface2:#f1f5fb;--text:#202b3c;
  --muted:#748197;--line:#e7ecf3;--primary:#4779d8;--primary2:#315fbd;
- --soft:#eaf1ff;--green:#269b76;--greenbg:#e9f7f1;--orange:#d68a36;
- --orangebg:#fff4e6;--red:#d65c66;--redbg:#fff0f1;--purple:#8871d5;
- --shadow:0 8px 28px rgba(31,51,82,.055);--radius:17px;
+ --soft:#eaf1ff;--green:#269b76;--greenbg:#e9f7f1;
+ --orange:#d68a36;--orangebg:#fff4e6;--red:#d65c66;
+ --redbg:#fff0f1;--shadow:0 8px 28px rgba(31,51,82,.055);
+ --radius:17px
 }
-[data-theme="dark"]{
- --bg:#151b27;--surface:#1d2635;--surface2:#263246;--text:#edf2fa;
- --muted:#a4b0c3;--line:#344154;--primary:#83a9f5;--primary2:#a6c1ff;
- --soft:#293b5c;--greenbg:#203b35;--orangebg:#493927;--redbg:#482d34;
- --shadow:0 8px 28px rgba(0,0,0,.15);
+[data-theme=dark]{
+ --bg:#151b27;--surface:#1d2635;--surface2:#263246;
+ --text:#edf2fa;--muted:#a4b0c3;--line:#344154;
+ --primary:#83a9f5;--primary2:#a6c1ff;--soft:#293b5c;
+ --greenbg:#203b35;--orangebg:#493927;--redbg:#482d34;
+ --shadow:0 8px 28px rgba(0,0,0,.15)
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.5}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
+.hidden{display:none!important}
+.auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(140deg,var(--bg),var(--soft))}
+.auth-card{width:min(440px,100%);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:11px;margin-bottom:25px}
+.brand-icon{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#6696ef,#4774ce);color:white;display:grid;place-items:center;font-size:22px;font-weight:800}
+.brand-name{font-size:20px;font-weight:800;letter-spacing:-.6px}
+.brand-sub{font-size:11px;color:var(--muted)}
+.auth-card h1{font-size:25px;margin:0 0 6px;letter-spacing:-.7px}
+.auth-intro{color:var(--muted);margin:0 0 23px;font-size:13px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--surface2);padding:4px;border-radius:11px;margin-bottom:20px}
+.auth-tabs button{border:0;border-radius:8px;padding:10px;background:transparent;color:var(--muted);font-weight:700}
+.auth-tabs button.active{background:var(--surface);color:var(--primary2);box-shadow:0 2px 8px #0000000b}
+.form-group{margin-bottom:14px}
+.field-label{font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
+.field{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:11px 12px;outline:none;min-height:41px}
+.field:focus{border-color:var(--primary)}
+.auth-error{background:var(--redbg);color:var(--red);padding:10px 12px;border-radius:9px;font-size:12px;margin-bottom:13px}
+.auth-footer{font-size:11px;color:var(--muted);margin-top:18px;text-align:center}
+.primary-btn,.secondary-btn,.danger-btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;font-size:12px}
+.primary-btn{background:var(--primary);color:white}
+.primary-btn:hover{background:var(--primary2)}
+.primary-btn:disabled{opacity:.55;cursor:wait}
+.secondary-btn{background:var(--soft);color:var(--primary2)}
+.danger-btn{background:var(--redbg);color:var(--red)}
 .app{min-height:100vh}
 .sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:var(--surface);border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column;z-index:20}
-.brand{display:flex;align-items:center;gap:11px;padding:0 9px 28px}
-.brand-icon{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#6696ef,#4774ce);color:white;display:grid;place-items:center;font-size:21px;font-weight:800}
-.brand-name{font-size:19px;font-weight:800;letter-spacing:-.6px}
-.brand-sub{font-size:10px;color:var(--muted);margin-top:-2px}
+.sidebar .brand{padding:0 9px 28px;margin:0}
 .nav-label{font-size:10px;font-weight:800;letter-spacing:1.1px;color:var(--muted);padding:13px 11px 8px;text-transform:uppercase}
 .nav{display:grid;gap:5px}
-.nav button{border:0;background:transparent;color:var(--muted);display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;text-align:left;font-weight:600;width:100%;transition:.18s}
+.nav button{border:0;background:transparent;color:var(--muted);display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;text-align:left;font-weight:600;width:100%}
 .nav button:hover{background:var(--surface2);color:var(--text)}
 .nav button.active{background:var(--soft);color:var(--primary2)}
 .nav-icon{width:20px;text-align:center;font-size:17px}
@@ -44,250 +67,264 @@ button{cursor:pointer}
 .main{margin-left:245px;min-height:100vh}
 .topbar{height:75px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:15}
 .top-left{display:flex;align-items:center;gap:12px}
-.page-title{font-size:19px;font-weight:750;letter-spacing:-.4px}
+.page-title{font-size:19px;font-weight:750}
 .page-subtitle{font-size:11px;color:var(--muted)}
-.top-actions{display:flex;align-items:center;gap:10px}
-.icon-btn{width:38px;height:38px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:11px;font-size:17px}
-.icon-btn:hover{background:var(--surface2)}
-.primary-btn,.secondary-btn,.danger-btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;font-size:12px}
-.primary-btn{background:var(--primary);color:white}
-.primary-btn:hover{background:var(--primary2)}
-.secondary-btn{background:var(--soft);color:var(--primary2)}
-.danger-btn{background:var(--redbg);color:var(--red)}
+.top-actions{display:flex;align-items:center;gap:9px}
+.icon-btn{width:38px;height:38px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:11px}
 .content{max-width:1450px;margin:auto;padding:29px 34px 55px}
 .page{display:none}
 .page.active{display:block}
 .welcome{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:25px}
-.welcome h1{font-size:25px;letter-spacing:-.8px;margin:0 0 5px}
+.welcome h1{font-size:25px;margin:0 0 5px}
 .welcome p{color:var(--muted);margin:0}
-.date-pill{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:10px 13px;color:var(--muted);font-size:12px}
 .grid{display:grid;gap:16px}
 .stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:19px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow);min-width:0}
-.stat-top{display:flex;align-items:center;justify-content:space-between}
-.stat-icon{width:37px;height:37px;border-radius:11px;display:grid;place-items:center;background:var(--soft);color:var(--primary2);font-size:17px}
 .stat-label{color:var(--muted);font-size:12px;font-weight:600}
-.stat-value{font-size:27px;font-weight:800;letter-spacing:-1px;margin-top:10px}
-.stat-note{color:var(--muted);font-size:11px;margin-top:2px}
+.stat-value{font-size:27px;font-weight:800;margin-top:8px}
+.stat-note{color:var(--muted);font-size:11px}
 .two-col{grid-template-columns:minmax(0,1.5fr) minmax(270px,1fr);margin-bottom:17px}
-.three-col{grid-template-columns:repeat(3,minmax(0,1fr))}
 .card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-.card-head h2,.section-heading{font-size:15px;margin:0;font-weight:750}
+.card-head h2{font-size:15px;margin:0}
 .card-head p{margin:3px 0 0;color:var(--muted);font-size:11px}
 .text-link{border:0;background:none;color:var(--primary2);font-weight:700;font-size:11px}
-.empty{padding:27px 12px;text-align:center;color:var(--muted);font-size:12px}
-.empty-icon{font-size:27px;margin-bottom:8px}
 .subject-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .subject-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface);min-width:0}
-.subject-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.subject-dot{width:10px;height:10px;border-radius:50%;background:var(--primary)}
 .subject-card h3{font-size:14px;margin:12px 0 3px}
 .subject-card p{font-size:11px;color:var(--muted);margin:0}
 .subject-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-top:14px}
 .progress{height:7px;background:var(--surface2);border-radius:10px;overflow:hidden;margin-top:8px}
-.progress span{display:block;height:100%;background:var(--primary);border-radius:10px}
-.list{display:grid;gap:0}
+.progress span{display:block;height:100%;background:var(--primary)}
+.list{display:grid}
 .list-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
-.list-row:last-child{border-bottom:0}
+.list-row:last-child{border:0}
 .list-mark{width:34px;height:34px;border-radius:10px;background:var(--surface2);display:grid;place-items:center;flex-shrink:0}
 .list-main{flex:1;min-width:0}
-.list-main strong{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-main strong{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis}
 .list-main small{color:var(--muted);font-size:10px}
-.status{font-size:10px;font-weight:700;padding:5px 8px;border-radius:20px;white-space:nowrap;background:var(--surface2);color:var(--muted)}
+.status{font-size:10px;font-weight:700;padding:5px 8px;border-radius:20px;background:var(--surface2);color:var(--muted);white-space:nowrap}
 .status.done{background:var(--greenbg);color:var(--green)}
 .status.pending{background:var(--orangebg);color:var(--orange)}
 .status.late{background:var(--redbg);color:var(--red)}
 .table-wrap{overflow:auto}
 table{border-collapse:collapse;width:100%;min-width:580px}
-th{text-align:left;color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:11px;border-bottom:1px solid var(--line)}
+th{text-align:left;color:var(--muted);font-size:10px;text-transform:uppercase;padding:11px;border-bottom:1px solid var(--line)}
 td{padding:13px 11px;border-bottom:1px solid var(--line);font-size:12px}
-tr:last-child td{border-bottom:0}
-td strong{font-weight:700}
+tr:last-child td{border:0}
 .row-actions{display:flex;gap:5px}
 .small-btn{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:8px;padding:6px 8px;font-size:10px}
-.small-btn:hover{background:var(--surface2);color:var(--text)}
 .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:17px}
-.toolbar-left,.toolbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.field,.search-field{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 12px;outline:none;min-height:39px}
-.field:focus,.search-field:focus{border-color:var(--primary)}
+.toolbar-left{display:flex;gap:8px;flex-wrap:wrap}
 .search-field{min-width:210px}
-.field-label{font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{min-width:0}
-.form-group.full{grid-column:1/-1}
-.form-group input,.form-group select,.form-group textarea{width:100%}
-.form-group textarea{min-height:78px;resize:vertical}
-.modal-backdrop{position:fixed;inset:0;background:rgba(22,33,52,.42);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.empty{padding:27px 12px;text-align:center;color:var(--muted);font-size:12px}
+.empty-icon{font-size:27px;margin-bottom:8px}
+.modal-backdrop{position:fixed;inset:0;background:#16213470;z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
 .modal-backdrop.show{display:flex}
-.modal{width:min(540px,100%);max-height:90vh;overflow:auto;background:var(--surface);border-radius:19px;padding:23px;box-shadow:0 20px 70px rgba(0,0,0,.2)}
+.modal{width:min(540px,100%);max-height:90vh;overflow:auto;background:var(--surface);border-radius:19px;padding:23px;box-shadow:0 20px 70px #0003}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px}
 .modal-head h2{font-size:18px;margin:0}
-.modal-close{border:0;background:var(--surface2);color:var(--text);width:31px;height:31px;border-radius:9px;font-size:18px}
+.modal-close{border:0;background:var(--surface2);color:var(--text);width:31px;height:31px;border-radius:9px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group.full{grid-column:1/-1}
+.form-group textarea{min-height:78px;resize:vertical}
 .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
 .notice{padding:12px 14px;background:var(--soft);color:var(--primary2);border-radius:11px;font-size:11px;margin-bottom:16px}
-.chart{display:flex;align-items:end;gap:12px;height:170px;padding:15px 5px 0;border-bottom:1px solid var(--line)}
-.chart-col{flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%;gap:7px;min-width:0}
-.chart-bar{width:min(38px,75%);background:linear-gradient(180deg,#83a9f5,#4779d8);border-radius:7px 7px 2px 2px;min-height:3px}
-.chart-col small{font-size:9px;color:var(--muted);white-space:nowrap}
-.chart-col b{font-size:10px}
 .week-grid{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:8px;overflow:auto}
 .day-col{background:var(--surface2);border-radius:12px;padding:10px;min-height:145px}
 .day-col h4{font-size:11px;margin:0 0 10px}
 .event{background:var(--soft);border-left:3px solid var(--primary);border-radius:7px;padding:7px;margin-bottom:6px;font-size:10px}
 .event strong{display:block}
 .event small{color:var(--muted)}
+.chart{display:flex;align-items:end;gap:12px;height:170px;padding:15px 5px 0;border-bottom:1px solid var(--line)}
+.chart-col{flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%;gap:7px;min-width:0}
+.chart-bar{width:min(38px,75%);background:linear-gradient(180deg,#83a9f5,#4779d8);border-radius:7px 7px 2px 2px;min-height:3px}
+.chart-col small{font-size:9px;color:var(--muted)}
 .profile-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .settings-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
-.settings-row:last-child{border:0}
 .settings-row strong{display:block;font-size:12px}
 .settings-row small{color:var(--muted);font-size:10px}
 .mobile-menu{display:none}
-.toast{position:fixed;bottom:22px;right:22px;background:#24344d;color:white;padding:12px 17px;border-radius:11px;font-size:12px;z-index:100;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none}
+.toast{position:fixed;bottom:22px;right:22px;background:#24344d;color:white;padding:12px 17px;border-radius:11px;font-size:12px;z-index:100;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
-.onboarding{position:fixed;inset:0;background:var(--bg);z-index:80;display:none;overflow:auto;padding:30px 16px}
+.onboarding{position:fixed;inset:0;background:var(--bg);z-index:40;display:none;overflow:auto;padding:25px 16px}
 .onboarding.show{display:grid;place-items:center}
-.onboard-box{width:min(720px,100%);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow)}
-.onboard-brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}
-.onboard-box h1{font-size:25px;margin:0 0 7px;letter-spacing:-.7px}
-.onboard-box>p{color:var(--muted);margin:0 0 22px}
+.onboard-box{width:min(720px,100%);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow)}
 .level-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:13px 0 20px}
-.level-option{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;padding:15px;text-align:left}
+.level-option{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;padding:13px;text-align:left}
 .level-option.selected{border:2px solid var(--primary);background:var(--soft)}
-.level-option strong{display:block;font-size:13px;margin-bottom:3px}
+.level-option strong{display:block;font-size:13px}
 .level-option small{font-size:10px;color:var(--muted)}
 .onboard-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.onboard-form .full{grid-column:1/-1}
-.onboard-actions{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px}
-.muted{color:var(--muted)}
 @media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(2,1fr)}.content{padding:24px}}
 @media(max-width:760px){
  .sidebar{transform:translateX(-100%);transition:.25s;box-shadow:var(--shadow)}
  .sidebar.open{transform:translateX(0)}
  .main{margin-left:0}.mobile-menu{display:inline-grid;place-items:center}
  .topbar{height:65px;padding:0 16px}.content{padding:21px 15px 40px}
- .two-col{grid-template-columns:1fr}.three-col{grid-template-columns:1fr}
- .welcome{align-items:flex-start;flex-direction:column}.welcome h1{font-size:22px}
- .stats{gap:10px}.card{padding:15px}.stat-value{font-size:23px}
- .subject-grid{grid-template-columns:1fr 1fr}.page-title{font-size:16px}
- .top-actions .primary-btn{padding:9px 10px}
- .profile-panel{grid-template-columns:1fr}
+ .two-col{grid-template-columns:1fr}.welcome{align-items:flex-start;flex-direction:column}
+ .stats{gap:10px}.card{padding:15px}.subject-grid{grid-template-columns:1fr 1fr}
+ .page-title{font-size:16px}.top-actions .primary-btn{padding:9px 10px}
 }
-@media(max-width:420px){.subject-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.level-grid,.onboard-form,.form-grid{grid-template-columns:1fr}.onboard-form .full,.form-group.full{grid-column:auto}.onboard-box{padding:21px}}
+@media(max-width:420px){
+ .stats{grid-template-columns:1fr 1fr}.level-grid,.onboard-form,.form-grid{grid-template-columns:1fr}
+ .form-group.full{grid-column:auto}.onboard-box{padding:20px}
+ .subject-grid{grid-template-columns:1fr}.auth-card{padding:22px}
+}
 </style>
 </head>
 <body>
-<div class="app">
+
+<section class="auth-screen" id="authScreen">
+ <div class="auth-card">
+  <div class="brand">
+   <div class="brand-icon">S</div>
+   <div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your personal academic workspace</div></div>
+  </div>
+  <h1 id="authTitle">Welcome back</h1>
+  <p class="auth-intro" id="authIntro">Log in to continue to your personal workspace.</p>
+  <div class="auth-tabs">
+   <button class="active" id="loginTab" type="button">Log in</button>
+   <button id="registerTab" type="button">Create account</button>
+  </div>
+  <form id="authForm">
+   <div class="form-group hidden" id="nameGroup">
+    <label class="field-label">Your name</label>
+    <input class="field" name="name" autocomplete="name" maxlength="80" placeholder="Your full name">
+   </div>
+   <div class="form-group">
+    <label class="field-label">Email address</label>
+    <input class="field" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
+   </div>
+   <div class="form-group">
+    <label class="field-label">Password</label>
+    <input class="field" name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="128" placeholder="At least 10 characters">
+   </div>
+   <div class="auth-error hidden" id="authError"></div>
+   <button class="primary-btn" id="authSubmit" type="submit" style="width:100%;padding:13px">Log in →</button>
+  </form>
+  <div class="auth-footer">Your academic information is private to your account.</div>
+ </div>
+</section>
+
+<div class="app hidden" id="app">
 <aside class="sidebar" id="sidebar">
  <div class="brand"><div class="brand-icon">S</div><div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your academic workspace</div></div></div>
  <div class="nav-label">Workspace</div>
  <nav class="nav">
-  <button class="active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
-  <button data-page="subjects"><span class="nav-icon">▤</span>My Subjects</button>
-  <button data-page="assignments"><span class="nav-icon">▣</span>Assignments</button>
-  <button data-page="assessments"><span class="nav-icon">✓</span>Quizzes & Exams</button>
-  <button data-page="planner"><span class="nav-icon">▦</span>Study Planner</button>
+  <button class="active" data-page="dashboard">▦ &nbsp; Dashboard</button>
+  <button data-page="subjects">▤ &nbsp; My Subjects</button>
+  <button data-page="assignments">▣ &nbsp; Assignments</button>
+  <button data-page="assessments">✓ &nbsp; Quizzes & Exams</button>
+  <button data-page="planner">▦ &nbsp; Study Planner</button>
  </nav>
  <div class="nav-label">Academic</div>
  <nav class="nav">
-  <button data-page="records"><span class="nav-icon">▥</span>Academic Records</button>
-  <button data-page="reports"><span class="nav-icon">◔</span>Reports & Analytics</button>
+  <button data-page="records">▥ &nbsp; Academic Records</button>
+  <button data-page="reports">◔ &nbsp; Reports & Analytics</button>
  </nav>
  <div class="nav-label">Personal</div>
- <nav class="nav">
-  <button data-page="settings"><span class="nav-icon">⚙</span>Settings & Profile</button>
- </nav>
+ <nav class="nav"><button data-page="settings">⚙ &nbsp; Settings & Profile</button></nav>
  <div class="sidebar-bottom">
-  <div class="profile-mini"><div class="avatar" id="miniAvatar">S</div><div><strong id="miniName">Student</strong><small id="miniLevel">My workspace</small></div></div>
+  <div class="profile-mini"><div class="avatar" id="miniAvatar">S</div><div><strong id="miniName">Student</strong><small id="miniEmail">My workspace</small></div></div>
  </div>
 </aside>
+
 <main class="main">
- <header class="topbar">
-  <div class="top-left"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div><div class="page-title" id="topTitle">Dashboard</div><div class="page-subtitle" id="topSubtitle">Your academic overview</div></div></div>
-  <div class="top-actions"><button class="icon-btn" id="themeBtn" title="Change theme">☾</button><button class="primary-btn" id="quickAdd">＋ Add New</button></div>
- </header>
- <div class="content">
-  <section class="page active" id="page-dashboard">
-   <div class="welcome"><div><h1 id="greeting">Welcome back!</h1><p>Here's what's happening with your studies.</p></div><div class="date-pill" id="todayDate"></div></div>
-   <div class="grid stats">
-    <div class="card"><div class="stat-top"><span class="stat-label">Current GPA</span><span class="stat-icon">✦</span></div><div class="stat-value" id="dashGpa">—</div><div class="stat-note" id="dashGpaNote">Add assessment results</div></div>
-    <div class="card"><div class="stat-top"><span class="stat-label">My Subjects</span><span class="stat-icon">▤</span></div><div class="stat-value" id="dashSubjects">0</div><div class="stat-note">Active subjects</div></div>
-    <div class="card"><div class="stat-top"><span class="stat-label">Pending Tasks</span><span class="stat-icon">▣</span></div><div class="stat-value" id="dashPending">0</div><div class="stat-note">Assignments to complete</div></div>
-    <div class="card"><div class="stat-top"><span class="stat-label">Assessments</span><span class="stat-icon">✓</span></div><div class="stat-value" id="dashAssessments">0</div><div class="stat-note">Quizzes and exams recorded</div></div>
-   </div>
-   <div class="grid two-col">
-    <div class="card"><div class="card-head"><div><h2>My Subjects</h2><p>Your current academic courses</p></div><button class="text-link" data-go="subjects">View all →</button></div><div class="grid subject-grid" id="dashSubjectList"></div></div>
-    <div class="card"><div class="card-head"><div><h2>Upcoming Assignments</h2><p>Keep track of your deadlines</p></div><button class="text-link" data-go="assignments">View all →</button></div><div class="list" id="dashAssignments"></div></div>
-   </div>
-   <div class="grid two-col">
-    <div class="card"><div class="card-head"><div><h2>Recent Results</h2><p>Your latest recorded marks</p></div><button class="text-link" data-go="assessments">View all →</button></div><div class="list" id="dashResults"></div></div>
-    <div class="card"><div class="card-head"><div><h2>Study Snapshot</h2><p>Your academic setup</p></div><button class="text-link" data-go="settings">Edit profile →</button></div><div id="studySnapshot"></div></div>
-   </div>
-  </section>
-
-  <section class="page" id="page-subjects">
-   <div class="welcome"><div><h1>My Subjects</h1><p>Organize the courses and subjects you are studying.</p></div><button class="primary-btn" data-add="subject">＋ Add Subject</button></div>
-   <div class="toolbar"><div class="toolbar-left"><input class="search-field" id="subjectSearch" placeholder="Search subjects..."></div><div class="toolbar-right"><span class="muted" id="subjectCount"></span></div></div>
-   <div class="grid subject-grid" id="subjectList"></div>
-  </section>
-
-  <section class="page" id="page-assignments">
-   <div class="welcome"><div><h1>Assignments</h1><p>Manage your coursework, deadlines and progress.</p></div><button class="primary-btn" data-add="assignment">＋ Add Assignment</button></div>
-   <div class="toolbar"><div class="toolbar-left"><select class="field" id="assignmentFilter"><option value="all">All assignments</option><option value="Pending">Pending</option><option value="In Progress">In Progress</option><option value="Completed">Completed</option></select><input class="search-field" id="assignmentSearch" placeholder="Search assignments..."></div></div>
-   <div class="card"><div class="table-wrap"><table><thead><tr><th>Assignment</th><th>Subject</th><th>Due date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="assignmentTable"></tbody></table></div></div>
-  </section>
-
-  <section class="page" id="page-assessments">
-   <div class="welcome"><div><h1>Quizzes & Exams</h1><p>Record your test scores, marks and grades.</p></div><button class="primary-btn" data-add="assessment">＋ Add Result</button></div>
-   <div class="grid stats">
-    <div class="card"><div class="stat-label">Total Assessments</div><div class="stat-value" id="assessmentTotal">0</div></div>
-    <div class="card"><div class="stat-label">Average Score</div><div class="stat-value" id="assessmentAverage">—</div></div>
-    <div class="card"><div class="stat-label">Best Score</div><div class="stat-value" id="assessmentBest">—</div></div>
-    <div class="card"><div class="stat-label">Recorded Exams</div><div class="stat-value" id="examTotal">0</div></div>
-   </div>
-   <div class="card"><div class="card-head"><div><h2>Assessment History</h2><p>All your saved marks and results</p></div></div><div class="table-wrap"><table><thead><tr><th>Assessment</th><th>Subject</th><th>Type</th><th>Marks</th><th>Percentage</th><th>Actions</th></tr></thead><tbody id="assessmentTable"></tbody></table></div></div>
-  </section>
-
-  <section class="page" id="page-planner">
-   <div class="welcome"><div><h1>Study Planner</h1><p>Build a study routine that works for you.</p></div><button class="primary-btn" data-add="schedule">＋ Add Schedule</button></div>
-   <div class="card" style="margin-bottom:17px"><div class="card-head"><div><h2>Weekly Timetable</h2><p>Your personal study schedule</p></div></div><div class="week-grid" id="weekGrid"></div></div>
-   <div class="card"><div class="card-head"><div><h2>My Study Tasks</h2><p>Plan your next study activities</p></div><button class="secondary-btn" data-add="assignment">＋ Add Task</button></div><div class="list" id="plannerTasks"></div></div>
-  </section>
-
-  <section class="page" id="page-records">
-   <div class="welcome"><div><h1>Academic Records</h1><p>Keep your semester history and academic results in one place.</p></div><button class="primary-btn" data-add="semester">＋ Add Semester</button></div>
-   <div class="notice">Your academic history belongs to you. Add previous semesters manually or record a new semester as you progress.</div>
-   <div class="grid stats">
-    <div class="card"><div class="stat-label">Overall CGPA</div><div class="stat-value" id="recordCgpa">—</div></div>
-    <div class="card"><div class="stat-label">Semesters</div><div class="stat-value" id="recordSemesters">0</div></div>
-    <div class="card"><div class="stat-label">Recorded Credits</div><div class="stat-value" id="recordCredits">0</div></div>
-    <div class="card"><div class="stat-label">Academic Level</div><div class="stat-value" style="font-size:17px" id="recordLevel">—</div></div>
-   </div>
-   <div class="card"><div class="card-head"><div><h2>Semester History</h2><p>Your past and current academic periods</p></div></div><div class="table-wrap"><table><thead><tr><th>Semester / Term</th><th>Academic Year</th><th>GPA</th><th>Credits</th><th>Status</th><th>Actions</th></tr></thead><tbody id="semesterTable"></tbody></table></div></div>
-  </section>
-
-  <section class="page" id="page-reports">
-   <div class="welcome"><div><h1>Reports & Analytics</h1><p>Understand your academic performance over time.</p></div></div>
-   <div class="grid two-col">
-    <div class="card"><div class="card-head"><div><h2>Semester GPA Trend</h2><p>Your recorded semester performance</p></div></div><div class="chart" id="gpaChart"></div></div>
-    <div class="card"><div class="card-head"><div><h2>Performance Overview</h2><p>Based on your recorded assessments</p></div></div><div id="performanceOverview"></div></div>
-   </div>
-   <div class="card"><div class="card-head"><div><h2>Subject Performance</h2><p>Average score in each subject</p></div></div><div id="subjectPerformance"></div></div>
-  </section>
-
-  <section class="page" id="page-settings">
-   <div class="welcome"><div><h1>Settings & Profile</h1><p>Manage your personal and academic workspace.</p></div></div>
-   <div class="grid two-col">
-    <div class="card"><div class="card-head"><div><h2>My Profile</h2><p>Your education and personal details</p></div><button class="secondary-btn" id="editProfile">Edit Profile</button></div><div id="profileDetails"></div></div>
-    <div class="card"><div class="card-head"><div><h2>Workspace Preferences</h2><p>Customize your StudyPilot experience</p></div></div>
-     <div class="settings-row"><div><strong>Appearance</strong><small>Switch between light and dark theme</small></div><button class="secondary-btn" id="settingsTheme">Change</button></div>
-     <div class="settings-row"><div><strong>Export my data</strong><small>Download a backup of your workspace</small></div><button class="secondary-btn" id="exportData">Export</button></div>
-     <div class="settings-row"><div><strong>Import backup</strong><small>Restore a previously exported backup</small></div><button class="secondary-btn" id="importDataBtn">Import</button><input type="file" id="importFile" accept="application/json" hidden></div>
-     <div class="settings-row"><div><strong>Reset workspace</strong><small>Clear this browser's StudyPilot data</small></div><button class="danger-btn" id="resetData">Reset</button></div>
-    </div>
-   </div>
-   <div class="card" style="margin-top:17px"><h2 class="section-heading">About StudyPilot</h2><p class="muted" style="font-size:12px">StudyPilot is your personal academic workspace. This version stores your information locally in this browser. Account registration and secure cloud synchronization will be added in a later development phase.</p></div>
-  </section>
+<header class="topbar">
+ <div class="top-left">
+  <button class="icon-btn mobile-menu" id="menuBtn">☰</button>
+  <div><div class="page-title" id="topTitle">Dashboard</div><div class="page-subtitle" id="topSubtitle">Your academic overview</div></div>
  </div>
+ <div class="top-actions">
+  <button class="icon-btn" id="themeBtn" title="Change theme">☾</button>
+  <button class="primary-btn" id="quickAdd">＋ Add New</button>
+  <button class="secondary-btn" id="logoutBtn">Log out</button>
+ </div>
+</header>
+
+<div class="content">
+<section class="page active" id="page-dashboard">
+ <div class="welcome"><div><h1 id="greeting">Welcome!</h1><p>Here's what's happening with your studies.</p></div><div class="notice" id="todayDate"></div></div>
+ <div class="grid stats">
+  <div class="card"><div class="stat-label">Current GPA</div><div class="stat-value" id="dashGpa">—</div><div class="stat-note">Estimated from recorded results</div></div>
+  <div class="card"><div class="stat-label">My Subjects</div><div class="stat-value" id="dashSubjects">0</div><div class="stat-note">Active subjects</div></div>
+  <div class="card"><div class="stat-label">Pending Tasks</div><div class="stat-value" id="dashPending">0</div><div class="stat-note">Assignments to complete</div></div>
+  <div class="card"><div class="stat-label">Assessments</div><div class="stat-value" id="dashAssessments">0</div><div class="stat-note">Results recorded</div></div>
+ </div>
+ <div class="grid two-col">
+  <div class="card"><div class="card-head"><div><h2>My Subjects</h2><p>Your current academic courses</p></div><button class="text-link" data-go="subjects">View all →</button></div><div class="grid subject-grid" id="dashSubjectList"></div></div>
+  <div class="card"><div class="card-head"><div><h2>Upcoming Assignments</h2><p>Keep track of deadlines</p></div><button class="text-link" data-go="assignments">View all →</button></div><div class="list" id="dashAssignments"></div></div>
+ </div>
+ <div class="grid two-col">
+  <div class="card"><div class="card-head"><div><h2>Recent Results</h2><p>Your latest marks</p></div><button class="text-link" data-go="assessments">View all →</button></div><div class="list" id="dashResults"></div></div>
+  <div class="card"><div class="card-head"><div><h2>Study Snapshot</h2><p>Your academic setup</p></div><button class="text-link" data-go="settings">Edit profile →</button></div><div id="studySnapshot"></div></div>
+ </div>
+</section>
+
+<section class="page" id="page-subjects">
+ <div class="welcome"><div><h1>My Subjects</h1><p>Organize your courses and subjects.</p></div><button class="primary-btn" data-add="subject">＋ Add Subject</button></div>
+ <div class="toolbar"><div class="toolbar-left"><input class="field search-field" id="subjectSearch" placeholder="Search subjects..."></div><span class="muted" id="subjectCount"></span></div>
+ <div class="grid subject-grid" id="subjectList"></div>
+</section>
+
+<section class="page" id="page-assignments">
+ <div class="welcome"><div><h1>Assignments</h1><p>Manage coursework, deadlines and progress.</p></div><button class="primary-btn" data-add="assignment">＋ Add Assignment</button></div>
+ <div class="toolbar"><div class="toolbar-left"><select class="field" id="assignmentFilter"><option value="all">All assignments</option><option>Pending</option><option>In Progress</option><option>Completed</option></select><input class="field search-field" id="assignmentSearch" placeholder="Search assignments..."></div></div>
+ <div class="card"><div class="table-wrap"><table><thead><tr><th>Assignment</th><th>Subject</th><th>Due date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="assignmentTable"></tbody></table></div></div>
+</section>
+
+<section class="page" id="page-assessments">
+ <div class="welcome"><div><h1>Quizzes & Exams</h1><p>Record test scores, marks and grades.</p></div><button class="primary-btn" data-add="assessment">＋ Add Result</button></div>
+ <div class="grid stats">
+  <div class="card"><div class="stat-label">Total Assessments</div><div class="stat-value" id="assessmentTotal">0</div></div>
+  <div class="card"><div class="stat-label">Average Score</div><div class="stat-value" id="assessmentAverage">—</div></div>
+  <div class="card"><div class="stat-label">Best Score</div><div class="stat-value" id="assessmentBest">—</div></div>
+  <div class="card"><div class="stat-label">Recorded Exams</div><div class="stat-value" id="examTotal">0</div></div>
+ </div>
+ <div class="card"><div class="card-head"><div><h2>Assessment History</h2><p>All saved marks and results</p></div></div><div class="table-wrap"><table><thead><tr><th>Assessment</th><th>Subject</th><th>Type</th><th>Marks</th><th>Percentage</th><th>Actions</th></tr></thead><tbody id="assessmentTable"></tbody></table></div></div>
+</section>
+
+<section class="page" id="page-planner">
+ <div class="welcome"><div><h1>Study Planner</h1><p>Build a study routine that works for you.</p></div><button class="primary-btn" data-add="schedule">＋ Add Schedule</button></div>
+ <div class="card" style="margin-bottom:17px"><div class="card-head"><div><h2>Weekly Timetable</h2><p>Your personal study schedule</p></div></div><div class="week-grid" id="weekGrid"></div></div>
+ <div class="card"><div class="card-head"><div><h2>My Study Tasks</h2><p>Plan upcoming activities</p></div><button class="secondary-btn" data-add="assignment">＋ Add Task</button></div><div class="list" id="plannerTasks"></div></div>
+</section>
+
+<section class="page" id="page-records">
+ <div class="welcome"><div><h1>Academic Records</h1><p>Keep semester history and results in one place.</p></div><button class="primary-btn" data-add="semester">＋ Add Semester</button></div>
+ <div class="notice">Add previous semesters manually or record a new semester as you progress.</div>
+ <div class="grid stats">
+  <div class="card"><div class="stat-label">Overall CGPA</div><div class="stat-value" id="recordCgpa">—</div></div>
+  <div class="card"><div class="stat-label">Semesters</div><div class="stat-value" id="recordSemesters">0</div></div>
+  <div class="card"><div class="stat-label">Recorded Credits</div><div class="stat-value" id="recordCredits">0</div></div>
+  <div class="card"><div class="stat-label">Academic Level</div><div class="stat-value" style="font-size:17px" id="recordLevel">—</div></div>
+ </div>
+ <div class="card"><div class="card-head"><div><h2>Semester History</h2><p>Past and current academic periods</p></div></div><div class="table-wrap"><table><thead><tr><th>Semester</th><th>Academic Year</th><th>GPA</th><th>Credits</th><th>Status</th><th>Actions</th></tr></thead><tbody id="semesterTable"></tbody></table></div></div>
+</section>
+
+<section class="page" id="page-reports">
+ <div class="welcome"><div><h1>Reports & Analytics</h1><p>Understand your academic performance.</p></div></div>
+ <div class="grid two-col">
+  <div class="card"><div class="card-head"><div><h2>Semester GPA Trend</h2><p>Your recorded semester performance</p></div></div><div class="chart" id="gpaChart"></div></div>
+  <div class="card"><div class="card-head"><div><h2>Performance Overview</h2><p>Based on recorded assessments</p></div></div><div id="performanceOverview"></div></div>
+ </div>
+ <div class="card"><div class="card-head"><div><h2>Subject Performance</h2><p>Average score in each subject</p></div></div><div id="subjectPerformance"></div></div>
+</section>
+
+<section class="page" id="page-settings">
+ <div class="welcome"><div><h1>Settings & Profile</h1><p>Manage your personal academic workspace.</p></div></div>
+ <div class="grid two-col">
+  <div class="card"><div class="card-head"><div><h2>My Profile</h2><p>Your education and personal details</p></div><button class="secondary-btn" id="editProfile">Edit Profile</button></div><div id="profileDetails"></div></div>
+  <div class="card"><div class="card-head"><div><h2>Workspace Preferences</h2><p>Customize your experience</p></div></div>
+   <div class="settings-row"><div><strong>Appearance</strong><small>Switch between light and dark theme</small></div><button class="secondary-btn" id="settingsTheme">Change</button></div>
+   <div class="settings-row"><div><strong>Export my data</strong><small>Download a backup of your workspace</small></div><button class="secondary-btn" id="exportData">Export</button></div>
+   <div class="settings-row"><div><strong>Import backup</strong><small>Restore a previously exported backup</small></div><button class="secondary-btn" id="importDataBtn">Import</button><input type="file" id="importFile" accept="application/json" hidden></div>
+   <div class="settings-row"><div><strong>Log out</strong><small>Securely end your session</small></div><button class="danger-btn" id="settingsLogout">Log out</button></div>
+  </div>
+ </div>
+ <div class="card" style="margin-top:17px"><h2>About StudyPilot</h2><p class="muted">Your personal academic workspace. Your account's workspace is stored in the StudyPilot cloud database.</p><p class="muted" id="accountEmail"></p></div>
+</section>
+</div>
 </main>
 </div>
 
@@ -297,107 +334,441 @@ td strong{font-weight:700}
 
 <div class="onboarding" id="onboarding">
  <div class="onboard-box">
-  <div class="onboard-brand"><div class="brand-icon">S</div><div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your academic workspace</div></div></div>
+  <div class="brand"><div class="brand-icon">S</div><div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your academic workspace</div></div></div>
   <h1>Let's set up your study space.</h1>
-  <p>Tell us a little about your education. We'll create a starting structure that you can customize anytime.</p>
+  <p class="muted">Tell us about your education. You can customize everything later.</p>
   <form id="onboardForm">
    <label class="field-label">Choose your education level</label>
    <div class="level-grid">
-    <button type="button" class="level-option selected" data-level="University"><strong>🎓 University</strong><small>Degree, department and semesters</small></button>
-    <button type="button" class="level-option" data-level="College"><strong>📚 College</strong><small>Intermediate and college studies</small></button>
-    <button type="button" class="level-option" data-level="School"><strong>🏫 School</strong><small>Class, subjects and academic year</small></button>
-    <button type="button" class="level-option" data-level="Self-Learner"><strong>✏️ Self-Learner</strong><small>Personal learning goals and topics</small></button>
+    <button type="button" class="level-option selected" data-level="University"><strong>🎓 University</strong><small>Degree and semesters</small></button>
+    <button type="button" class="level-option" data-level="College"><strong>📚 College</strong><small>Intermediate and college</small></button>
+    <button type="button" class="level-option" data-level="School"><strong>🏫 School</strong><small>Class and subjects</small></button>
+    <button type="button" class="level-option" data-level="Self-Learner"><strong>✏️ Self-Learner</strong><small>Personal learning</small></button>
    </div>
    <div class="onboard-form">
-    <div class="form-group"><label class="field-label">Your name</label><input class="field" name="name" placeholder="e.g. Alex Morgan" required></div>
-    <div class="form-group"><label class="field-label">Institution name</label><input class="field" name="institution" placeholder="School, college or university"></div>
-    <div class="form-group"><label class="field-label" id="programLabel">Degree / Program</label><input class="field" name="program" placeholder="e.g. BS Computer Science"></div>
-    <div class="form-group"><label class="field-label">Current year / class</label><input class="field" name="year" placeholder="e.g. Year 2 / Class 10"></div>
-    <div class="form-group"><label class="field-label">Current semester / term</label><input class="field" name="semester" placeholder="e.g. Semester 3 / Term 1"></div>
-    <div class="form-group"><label class="field-label">Academic year</label><input class="field" name="academicYear" placeholder="e.g. 2026–2027"></div>
-    <div class="form-group full"><label class="field-label">Subjects (separate with commas)</label><input class="field" name="subjects" placeholder="e.g. Mathematics, English, Physics"></div>
+    <div class="form-group"><label class="field-label">Your name</label><input class="field" name="name" required maxlength="80"></div>
+    <div class="form-group"><label class="field-label">Institution name</label><input class="field" name="institution"></div>
+    <div class="form-group"><label class="field-label">Degree / Program / Class</label><input class="field" name="program"></div>
+    <div class="form-group"><label class="field-label">Current year / class</label><input class="field" name="year"></div>
+    <div class="form-group"><label class="field-label">Current semester / term</label><input class="field" name="semester"></div>
+    <div class="form-group"><label class="field-label">Academic year</label><input class="field" name="academicYear"></div>
+    <div class="form-group" style="grid-column:1/-1"><label class="field-label">Subjects (separate with commas)</label><input class="field" name="subjects" placeholder="Mathematics, English, Physics"></div>
    </div>
-   <div class="onboard-actions"><span class="muted" style="font-size:10px">You can change all these details later.</span><button class="primary-btn" type="submit">Create My Workspace →</button></div>
+   <div style="display:flex;justify-content:flex-end;margin-top:20px"><button class="primary-btn" type="submit">Create My Workspace →</button></div>
   </form>
  </div>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-const STORAGE_KEY="studypilot_workspace_v1";
-const $=s=>document.querySelector(s);
-const $$=s=>[...document.querySelectorAll(s)];
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const today=()=>new Date().toISOString().slice(0,10);
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const safeNum=n=>Number.isFinite(Number(n))?Number(n):0;
+const num=n=>Number.isFinite(Number(n))?Number(n):0;
 const defaults=()=>({profile:null,subjects:[],assignments:[],assessments:[],semesters:[],schedule:[],theme:"light"});
-let db=loadData(),activeLevel="University",editing=null,currentType=null;
-function loadData(){try{return {...defaults(),...JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}}catch(e){return defaults()}}
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(db));renderAll()}
-function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2400)}
-function dateText(d){if(!d)return "No date";const x=new Date(d+"T00:00:00");return isNaN(x)?"No date":x.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}
-function gradeFromPercent(p){if(p>=90)return "A+";if(p>=85)return "A";if(p>=80)return "A-";if(p>=75)return "B+";if(p>=70)return "B";if(p>=65)return "B-";if(p>=60)return "C+";if(p>=55)return "C";if(p>=50)return "D";return "F"}
-function gradePoints(g){return ({"A+":4,"A":4,"A-":3.7,"B+":3.3,"B":3,"B-":2.7,"C+":2.3,"C":2,"D":1,"F":0})[g]??null}
-function calcGpa(){let total=0,credits=0;db.subjects.forEach(s=>{const a=db.assessments.filter(x=>x.subjectId===s.id&&x.total>0);if(!a.length)return;const obtained=a.reduce((n,x)=>n+x.obtained,0),possible=a.reduce((n,x)=>n+x.total,0);const gp=gradePoints(gradeFromPercent(obtained/possible*100));if(gp!==null){total+=gp*(s.credits||1);credits+=s.credits||1}});return credits?total/credits:null}
-function calcCgpa(){const old=db.semesters.filter(s=>s.gpa!==""&&s.gpa!==null&&s.gpa!==undefined);let points=0,credits=0;old.forEach(s=>{let c=s.credits||1;points+=safeNum(s.gpa)*c;credits+=c});return credits?points/credits:calcGpa()}
-function subjectAverage(id){const a=db.assessments.filter(x=>x.subjectId===id&&x.total>0);if(!a.length)return null;return a.reduce((n,x)=>n+x.obtained,0)/a.reduce((n,x)=>n+x.total,0)*100}
+let db=defaults(),user=null,authMode="login",activeLevel="University",currentType=null,editing=null,saving=false;
+let saveTimer=null;
+
+async function api(path,options={}){
+ const response=await fetch("/api/"+path,{
+  credentials:"same-origin",
+  ...options,
+  headers:{"Content-Type":"application/json",...(options.headers||{})}
+ });
+ let result={};
+ try{result=await response.json()}catch{}
+ if(!response.ok)throw new Error(result.error||"Request failed.");
+ return result;
+}
+function toast(message){const t=$("#toast");t.textContent=message;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500)}
+function dateText(d){if(!d)return"No date";const x=new Date(d+"T00:00:00");return isNaN(x)?"No date":x.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}
+function gradeFromPercent(p){if(p>=90)return"A+";if(p>=85)return"A";if(p>=80)return"A-";if(p>=75)return"B+";if(p>=70)return"B";if(p>=65)return"B-";if(p>=60)return"C+";if(p>=55)return"C";if(p>=50)return"D";return"F"}
+function gradePoints(g){return({"A+":4,A:4,"A-":3.7,"B+":3.3,B:3,"B-":2.7,"C+":2.3,C:2,D:1,F:0})[g]??null}
+function calcGpa(){
+ let total=0,credits=0;
+ db.subjects.forEach(s=>{
+  const a=db.assessments.filter(x=>x.subjectId===s.id&&x.total>0);
+  if(!a.length)return;
+  const obtained=a.reduce((n,x)=>n+num(x.obtained),0),possible=a.reduce((n,x)=>n+num(x.total),0);
+  const gp=gradePoints(gradeFromPercent(obtained/possible*100));
+  if(gp!==null){const c=num(s.credits)||1;total+=gp*c;credits+=c}
+ });
+ return credits?total/credits:null;
+}
+function calcCgpa(){
+ const records=db.semesters.filter(s=>s.gpa!==""&&s.gpa!==null&&s.gpa!==undefined);
+ if(!records.length)return calcGpa();
+ let points=0,credits=0;
+ records.forEach(s=>{const c=num(s.credits)||1;points+=num(s.gpa)*c;credits+=c});
+ return credits?points/credits:null;
+}
+function subjectAverage(id){
+ const a=db.assessments.filter(x=>x.subjectId===id&&num(x.total)>0);
+ if(!a.length)return null;
+ return a.reduce((n,x)=>n+num(x.obtained),0)/a.reduce((n,x)=>n+num(x.total),0)*100;
+}
 function subjectName(id){return db.subjects.find(s=>s.id===id)?.name||"Unassigned"}
-function showPage(name){$$(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+name));$$(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===name));const b=$(`[data-page="${name}"]`);$("#topTitle").textContent=b?b.textContent.trim():name;$("#topSubtitle").textContent=({dashboard:"Your academic overview",subjects:"Manage your courses and subjects",assignments:"Coursework and deadlines",assessments:"Your quiz and exam results",planner:"Your personal study routine",records:"Your academic history",reports:"Track your academic progress",settings:"Your profile and preferences"})[name]||"";$("#sidebar").classList.remove("open");renderAll()}
-function renderAll(){if(!db.profile)return;syncProfile();renderDashboard();renderSubjects();renderAssignments();renderAssessments();renderPlanner();renderRecords();renderReports();renderSettings()}
-function syncProfile(){const p=db.profile;$("#miniName").textContent=p.name;$("#miniLevel").textContent=p.level+" workspace";$("#miniAvatar").textContent=(p.name||"S").charAt(0).toUpperCase();$("#greeting").textContent="Welcome back, "+p.name.split(" ")[0]+"!";$("#todayDate").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});document.documentElement.dataset.theme=db.theme==="dark"?"dark":"light";$("#themeBtn").textContent=db.theme==="dark"?"☀":"☾"}
-function subjectCard(s){const avg=subjectAverage(s.id),pct=avg===null?0:avg;return `<div class="subject-card"><div class="subject-top"><span class="subject-dot" style="background:${esc(s.color||"#4779d8")}"></span><div class="row-actions"><button class="small-btn" data-edit="subject" data-id="${s.id}">Edit</button><button class="small-btn" data-delete="subject" data-id="${s.id}">×</button></div></div><h3>${esc(s.name)}</h3><p>${esc(s.code||"Subject")} · ${safeNum(s.credits)||1} credit(s)</p><div class="subject-meta"><span>Performance</span><strong>${avg===null?"No results":pct.toFixed(1)+"%"}</strong></div><div class="progress"><span style="width:${Math.min(100,pct)}%"></span></div></div>`}
+function syncProfile(){
+ const p=db.profile||{};
+ $("#miniName").textContent=p.name||user.name;
+ $("#miniEmail").textContent=user.email;
+ $("#miniAvatar").textContent=(p.name||user.name||"S").charAt(0).toUpperCase();
+ $("#greeting").textContent="Welcome back, "+(p.name||user.name).split(" ")[0]+"!";
+ $("#todayDate").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+ document.documentElement.dataset.theme=db.theme==="dark"?"dark":"light";
+ $("#themeBtn").textContent=db.theme==="dark"?"☀":"☾";
+}
+function subjectCard(s){
+ const avg=subjectAverage(s.id);
+ return `<div class="subject-card">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+   <span style="width:10px;height:10px;border-radius:50%;background:${esc(s.color||"#4779d8")}"></span>
+   <div class="row-actions"><button class="small-btn" data-edit="subject" data-id="${esc(s.id)}">Edit</button><button class="small-btn" data-delete="subject" data-id="${esc(s.id)}">Delete</button></div>
+  </div>
+  <h3>${esc(s.name)}</h3><p>${esc(s.code||"Subject")} · ${num(s.credits)||1} credit(s)</p>
+  <div class="subject-meta"><span>Performance</span><strong>${avg===null?"No results":avg.toFixed(1)+"%"}</strong></div>
+  <div class="progress"><span style="width:${Math.min(100,avg||0)}%"></span></div>
+ </div>`;
+}
 function renderDashboard(){
  const g=calcGpa(),pending=db.assignments.filter(a=>a.status!=="Completed").length;
- $("#dashGpa").textContent=g===null?"—":g.toFixed(2);$("#dashGpaNote").textContent=g===null?"Add marks to calculate an estimate":"Estimated from recorded subject results";
- $("#dashSubjects").textContent=db.subjects.length;$("#dashPending").textContent=pending;$("#dashAssessments").textContent=db.assessments.length;
- $("#dashSubjectList").innerHTML=db.subjects.length?db.subjects.slice(0,6).map(subjectCard).join(""):`<div class="empty"><div class="empty-icon">📚</div>Add your first subject to get started.</div>`;
+ $("#dashGpa").textContent=g===null?"—":g.toFixed(2);
+ $("#dashSubjects").textContent=db.subjects.length;
+ $("#dashPending").textContent=pending;
+ $("#dashAssessments").textContent=db.assessments.length;
+ $("#dashSubjectList").innerHTML=db.subjects.length?db.subjects.slice(0,6).map(subjectCard).join(""):`<div class="empty">📚<br>Add your first subject to get started.</div>`;
  const upcoming=db.assignments.filter(a=>a.status!=="Completed").sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")).slice(0,5);
- $("#dashAssignments").innerHTML=upcoming.length?upcoming.map(a=>`<div class="list-row"><div class="list-mark">▣</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · Due ${dateText(a.due)}</small></div><span class="status ${a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></div>`).join(""):`<div class="empty">No pending assignments. You're all caught up!</div>`;
+ $("#dashAssignments").innerHTML=upcoming.length?upcoming.map(a=>`<div class="list-row"><div class="list-mark">▣</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · Due ${dateText(a.due)}</small></div><span class="status ${a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></div>`).join(""):`<div class="empty">No pending assignments.</div>`;
  const recent=[...db.assessments].sort((a,b)=>(b.date||"").localeCompare(a.date||"")).slice(0,4);
- $("#dashResults").innerHTML=recent.length?recent.map(a=>`<div class="list-row"><div class="list-mark">✓</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.date)}</small></div><strong>${a.obtained}/${a.total}</strong></div>`).join(""):`<div class="empty">Your saved quiz and exam results will appear here.</div>`;
- $("#studySnapshot").innerHTML=`<div class="list"><div class="list-row"><div class="list-main"><strong>Education</strong><small>${esc(db.profile.level)}</small></div></div><div class="list-row"><div class="list-main"><strong>Institution</strong><small>${esc(db.profile.institution||"Not added")}</small></div></div><div class="list-row"><div class="list-main"><strong>Program / Class</strong><small>${esc(db.profile.program||"Not added")} · ${esc(db.profile.year||"")}</small></div></div><div class="list-row"><div class="list-main"><strong>Current period</strong><small>${esc(db.profile.semester||"Not added")} · ${esc(db.profile.academicYear||"")}</small></div></div></div>`;
+ $("#dashResults").innerHTML=recent.length?recent.map(a=>`<div class="list-row"><div class="list-mark">✓</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.date)}</small></div><strong>${num(a.obtained)}/${num(a.total)}</strong></div>`).join(""):`<div class="empty">Your results will appear here.</div>`;
+ const p=db.profile||{};
+ $("#studySnapshot").innerHTML=`<div class="list">
+ <div class="list-row"><div class="list-main"><strong>Education</strong><small>${esc(p.level||"Not added")}</small></div></div>
+ <div class="list-row"><div class="list-main"><strong>Institution</strong><small>${esc(p.institution||"Not added")}</small></div></div>
+ <div class="list-row"><div class="list-main"><strong>Program / Class</strong><small>${esc(p.program||"Not added")} · ${esc(p.year||"")}</small></div></div>
+ <div class="list-row"><div class="list-main"><strong>Current period</strong><small>${esc(p.semester||"Not added")} · ${esc(p.academicYear||"")}</small></div></div></div>`;
 }
-function renderSubjects(){const q=($("#subjectSearch")?.value||"").toLowerCase();const arr=db.subjects.filter(s=>s.name.toLowerCase().includes(q));$("#subjectCount").textContent=arr.length+" subjects";$("#subjectList").innerHTML=arr.length?arr.map(subjectCard).join(""):`<div class="card empty" style="grid-column:1/-1"><div class="empty-icon">📘</div>No subjects found. Add a subject to build your academic workspace.</div>`}
-function renderAssignments(){const filter=$("#assignmentFilter")?.value||"all",q=($("#assignmentSearch")?.value||"").toLowerCase();let arr=db.assignments.filter(a=>(filter==="all"||a.status===filter)&&(a.title+" "+subjectName(a.subjectId)).toLowerCase().includes(q)).sort((a,b)=>(a.due||"").localeCompare(b.due||""));$("#assignmentTable").innerHTML=arr.length?arr.map(a=>`<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${esc(a.notes||"")}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${dateText(a.due)}</td><td><span class="status ${a.status==="Completed"?"done":a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="assignment" data-id="${a.id}">Edit</button><button class="small-btn" data-delete="assignment" data-id="${a.id}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="5"><div class="empty">No assignments yet. Add your first assignment.</div></td></tr>`}
-function renderAssessments(){const arr=[...db.assessments].sort((a,b)=>(b.date||"").localeCompare(a.date||""));const avg=arr.length?arr.reduce((n,a)=>n+a.obtained/a.total*100,0)/arr.length:null;$("#assessmentTotal").textContent=arr.length;$("#assessmentAverage").textContent=avg===null?"—":avg.toFixed(1)+"%";$("#assessmentBest").textContent=arr.length?Math.max(...arr.map(a=>a.obtained/a.total*100)).toFixed(1)+"%":"—";$("#examTotal").textContent=arr.filter(a=>a.type==="Exam").length;$("#assessmentTable").innerHTML=arr.length?arr.map(a=>{let pct=a.total?a.obtained/a.total*100:0;return `<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${dateText(a.date)}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${esc(a.type)}</td><td>${a.obtained} / ${a.total}</td><td><strong>${pct.toFixed(1)}%</strong> · ${gradeFromPercent(pct)}</td><td><div class="row-actions"><button class="small-btn" data-edit="assessment" data-id="${a.id}">Edit</button><button class="small-btn" data-delete="assessment" data-id="${a.id}">Delete</button></div></td></tr>`}).join(""):`<tr><td colspan="6"><div class="empty">No results recorded yet.</div></td></tr>`}
-function renderPlanner(){const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];$("#weekGrid").innerHTML=days.map(day=>{let items=db.schedule.filter(x=>x.day===day).sort((a,b)=>(a.time||"").localeCompare(b.time||""));return `<div class="day-col"><h4>${day}</h4>${items.length?items.map(x=>`<div class="event"><strong>${esc(x.title)}</strong><small>${esc(x.time||"")} · ${esc(x.subjectId?subjectName(x.subjectId):"Study")}</small><div style="text-align:right;margin-top:4px"><button class="small-btn" data-edit="schedule" data-id="${x.id}">Edit</button></div></div>`).join(""):`<span class="muted" style="font-size:10px">No plans</span>`}</div>`}).join("");const tasks=db.assignments.filter(a=>a.status!=="Completed").sort((a,b)=>(a.due||"").localeCompare(b.due||""));$("#plannerTasks").innerHTML=tasks.length?tasks.map(a=>`<div class="list-row"><div class="list-mark">◷</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.due)}</small></div><span class="status pending">${esc(a.status)}</span></div>`).join(""):`<div class="empty">Your upcoming study tasks will appear here.</div>`}
-function renderRecords(){const cg=calcCgpa();$("#recordCgpa").textContent=cg===null?"—":cg.toFixed(2);$("#recordSemesters").textContent=db.semesters.length;$("#recordCredits").textContent=db.semesters.reduce((n,s)=>n+safeNum(s.credits),0);$("#recordLevel").textContent=db.profile.level;const arr=[...db.semesters].sort((a,b)=>(a.year||"").localeCompare(b.year||""));$("#semesterTable").innerHTML=arr.length?arr.map(s=>`<tr><td><strong>${esc(s.name)}</strong></td><td>${esc(s.year||"—")}</td><td>${s.gpa===""?"—":safeNum(s.gpa).toFixed(2)}</td><td>${safeNum(s.credits)}</td><td><span class="status ${s.status==="Completed"?"done":"pending"}">${esc(s.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="semester" data-id="${s.id}">Edit</button><button class="small-btn" data-delete="semester" data-id="${s.id}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="6"><div class="empty">No semester history yet. Add your current or previous semester.</div></td></tr>`}
-function renderReports(){const arr=[...db.semesters].filter(s=>s.gpa!==""&&s.gpa!==null).slice(-8);const max=4;$("#gpaChart").innerHTML=arr.length?arr.map(s=>`<div class="chart-col"><b>${safeNum(s.gpa).toFixed(2)}</b><div class="chart-bar" style="height:${Math.max(3,Math.min(100,safeNum(s.gpa)/max*100))}%"></div><small>${esc(s.name.slice(0,9))}</small></div>`).join(""):`<div class="empty" style="width:100%">Add semester GPA records to see your trend.</div>`;const a=db.assessments;const avg=a.length?a.reduce((n,x)=>n+x.obtained/x.total*100,0)/a.length:null;$("#performanceOverview").innerHTML=`<div class="list"><div class="list-row"><div class="list-main"><strong>Assessment average</strong><small>Across ${a.length} recorded results</small></div><strong>${avg===null?"—":avg.toFixed(1)+"%"}</strong></div><div class="list-row"><div class="list-main"><strong>Estimated current GPA</strong><small>Calculated from subject assessment totals</small></div><strong>${calcGpa()===null?"—":calcGpa().toFixed(2)}</strong></div><div class="list-row"><div class="list-main"><strong>Completed assignments</strong><small>Of ${db.assignments.length} total assignments</small></div><strong>${db.assignments.filter(x=>x.status==="Completed").length}</strong></div></div>`;$("#subjectPerformance").innerHTML=db.subjects.length?`<div class="list">${db.subjects.map(s=>{let v=subjectAverage(s.id);return `<div class="list-row"><div class="list-main"><strong>${esc(s.name)}</strong><div class="progress"><span style="width:${v===null?0:v}%"></span></div></div><strong>${v===null?"—":v.toFixed(1)+"%"}</strong></div>`}).join("")}</div>`:`<div class="empty">Add subjects and assessment results to see subject performance.</div>`}
-function renderSettings(){const p=db.profile;$("#profileDetails").innerHTML=`<div class="profile-panel"><div><span class="field-label">Name</span><strong>${esc(p.name)}</strong></div><div><span class="field-label">Education level</span><strong>${esc(p.level)}</strong></div><div><span class="field-label">Institution</span><strong>${esc(p.institution||"Not added")}</strong></div><div><span class="field-label">Program / Class</span><strong>${esc(p.program||"Not added")}</strong></div><div><span class="field-label">Year</span><strong>${esc(p.year||"Not added")}</strong></div><div><span class="field-label">Current semester / term</span><strong>${esc(p.semester||"Not added")}</strong></div><div><span class="field-label">Academic year</span><strong>${esc(p.academicYear||"Not added")}</strong></div></div>`}
-function subjectOptions(selected=""){return `<option value="">Choose a subject</option>`+db.subjects.map(s=>`<option value="${s.id}" ${s.id===selected?"selected":""}>${esc(s.name)}</option>`).join("")}
-function field(name,label,value="",type="text",required=false,extra=""){return `<div class="form-group"><label class="field-label">${label}</label><input class="field" name="${name}" type="${type}" value="${esc(value)}" ${required?"required":""} ${extra}></div>`}
-function selectField(name,label,options,value=""){return `<div class="form-group"><label class="field-label">${label}</label><select class="field" name="${name}">${options.map(o=>`<option value="${esc(o)}" ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`}
-function openModal(type,id=null){currentType=type;editing=id?{...db[type+"s"].find(x=>x.id===id)}:null;const x=editing||{};let title="",html="";
-if(type==="subject"){title=id?"Edit Subject":"Add Subject";html=`<div class="form-grid">${field("name","Subject name",x.name||"","text",true)}${field("code","Subject code",x.code||"")} ${field("credits","Credit hours",x.credits??3,"number",true,'min="0" step="0.5"')}${field("color","Subject color",x.color||"#4779d8","color")}</div>`}
-if(type==="assignment"){title=id?"Edit Assignment":"Add Assignment";html=`<div class="form-grid">${field("title","Assignment / task title",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${field("due","Due date",x.due||today(),"date")}${selectField("status","Status",["Pending","In Progress","Completed"],x.status||"Pending")}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes" placeholder="Instructions or details...">${esc(x.notes||"")}</textarea></div></div>`}
-if(type==="assessment"){title=id?"Edit Result":"Add Quiz / Exam Result";html=`<div class="form-grid">${field("title","Assessment name",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId" required>${subjectOptions(x.subjectId)}</select></div>${selectField("type","Assessment type",["Quiz","Test","Midterm","Final Exam","Assignment","Other"],x.type||"Quiz")}${field("date","Date",x.date||today(),"date")}${field("obtained","Obtained marks",x.obtained??"","number",true,'min="0" step="any"')}${field("total","Total marks",x.total??"","number",true,'min="0.01" step="any"')}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(x.notes||"")}</textarea></div></div>`}
-if(type==="semester"){title=id?"Edit Semester":"Add Semester Record";html=`<div class="form-grid">${field("name","Semester / term name",x.name||"","text",true)}${field("year","Academic year",x.year||db.profile.academicYear||"")}${field("gpa","GPA (optional)",x.gpa??"","number",false,'min="0" max="4" step="0.01"')}${field("credits","Credit hours",x.credits??0,"number",false,'min="0" step="0.5"')}${selectField("status","Status",["Current","Completed"],x.status||"Completed")}</div><div class="notice" style="margin-top:14px;margin-bottom:0">Enter your GPA from your official academic record. You can also add previous years and semesters.</div>`}
-if(type==="schedule"){title=id?"Edit Schedule":"Add Study Schedule";html=`<div class="form-grid">${field("title","Activity / subject",x.title||"","text",true)}<div class="form-group"><label class="field-label">Related subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${selectField("day","Day",["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],x.day||"Monday")}${field("time","Start time",x.time||"09:00","time")}</div>`}
-$("#modalTitle").textContent=title;$("#modalFields").innerHTML=html;$("#modalBackdrop").classList.add("show");$("#modalForm").dataset.id=id||""}
+function renderSubjects(){
+ const q=($("#subjectSearch")?.value||"").toLowerCase();
+ const arr=db.subjects.filter(s=>(s.name||"").toLowerCase().includes(q));
+ $("#subjectCount").textContent=arr.length+" subjects";
+ $("#subjectList").innerHTML=arr.length?arr.map(subjectCard).join(""):`<div class="card empty" style="grid-column:1/-1">No subjects found. Add a subject to begin.</div>`;
+}
+function renderAssignments(){
+ const filter=$("#assignmentFilter")?.value||"all",q=($("#assignmentSearch")?.value||"").toLowerCase();
+ const arr=db.assignments.filter(a=>(filter==="all"||a.status===filter)&&(a.title+" "+subjectName(a.subjectId)).toLowerCase().includes(q)).sort((a,b)=>(a.due||"").localeCompare(b.due||""));
+ $("#assignmentTable").innerHTML=arr.length?arr.map(a=>`<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${esc(a.notes||"")}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${dateText(a.due)}</td><td><span class="status ${a.status==="Completed"?"done":a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="assignment" data-id="${esc(a.id)}">Edit</button><button class="small-btn" data-delete="assignment" data-id="${esc(a.id)}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="5"><div class="empty">No assignments yet.</div></td></tr>`;
+}
+function renderAssessments(){
+ const arr=[...db.assessments].sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+ const avg=arr.length?arr.reduce((n,a)=>n+num(a.obtained)/num(a.total)*100,0)/arr.length:null;
+ $("#assessmentTotal").textContent=arr.length;
+ $("#assessmentAverage").textContent=avg===null?"—":avg.toFixed(1)+"%";
+ $("#assessmentBest").textContent=arr.length?Math.max(...arr.map(a=>num(a.obtained)/num(a.total)*100)).toFixed(1)+"%":"—";
+ $("#examTotal").textContent=arr.filter(a=>String(a.type).toLowerCase().includes("exam")).length;
+ $("#assessmentTable").innerHTML=arr.length?arr.map(a=>{
+  const pct=num(a.total)?num(a.obtained)/num(a.total)*100:0;
+  return `<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${dateText(a.date)}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${esc(a.type)}</td><td>${num(a.obtained)} / ${num(a.total)}</td><td><strong>${pct.toFixed(1)}%</strong> · ${gradeFromPercent(pct)}</td><td><div class="row-actions"><button class="small-btn" data-edit="assessment" data-id="${esc(a.id)}">Edit</button><button class="small-btn" data-delete="assessment" data-id="${esc(a.id)}">Delete</button></div></td></tr>`;
+ }).join(""):`<tr><td colspan="6"><div class="empty">No results recorded yet.</div></td></tr>`;
+}
+function renderPlanner(){
+ const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+ $("#weekGrid").innerHTML=days.map(day=>{
+  const items=db.schedule.filter(x=>x.day===day).sort((a,b)=>(a.time||"").localeCompare(b.time||""));
+  return `<div class="day-col"><h4>${day}</h4>${items.length?items.map(x=>`<div class="event"><strong>${esc(x.title)}</strong><small>${esc(x.time||"")} · ${esc(x.subjectId?subjectName(x.subjectId):"Study")}</small><div style="text-align:right;margin-top:4px"><button class="small-btn" data-edit="schedule" data-id="${esc(x.id)}">Edit</button><button class="small-btn" data-delete="schedule" data-id="${esc(x.id)}">×</button></div></div>`).join(""):`<span class="muted">No plans</span>`}</div>`;
+ }).join("");
+ const tasks=db.assignments.filter(a=>a.status!=="Completed").sort((a,b)=>(a.due||"").localeCompare(b.due||""));
+ $("#plannerTasks").innerHTML=tasks.length?tasks.map(a=>`<div class="list-row"><div class="list-mark">◷</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.due)}</small></div><span class="status pending">${esc(a.status)}</span></div>`).join(""):`<div class="empty">Your upcoming study tasks will appear here.</div>`;
+}
+function renderRecords(){
+ const cg=calcCgpa();
+ $("#recordCgpa").textContent=cg===null?"—":cg.toFixed(2);
+ $("#recordSemesters").textContent=db.semesters.length;
+ $("#recordCredits").textContent=db.semesters.reduce((n,s)=>n+num(s.credits),0);
+ $("#recordLevel").textContent=db.profile?.level||"—";
+ const arr=[...db.semesters].sort((a,b)=>(a.year||"").localeCompare(b.year||""));
+ $("#semesterTable").innerHTML=arr.length?arr.map(s=>`<tr><td><strong>${esc(s.name)}</strong></td><td>${esc(s.year||"—")}</td><td>${s.gpa===""?"—":num(s.gpa).toFixed(2)}</td><td>${num(s.credits)}</td><td><span class="status ${s.status==="Completed"?"done":"pending"}">${esc(s.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="semester" data-id="${esc(s.id)}">Edit</button><button class="small-btn" data-delete="semester" data-id="${esc(s.id)}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="6"><div class="empty">No semester history yet.</div></td></tr>`;
+}
+function renderReports(){
+ const arr=db.semesters.filter(s=>s.gpa!==""&&s.gpa!==null).slice(-8);
+ $("#gpaChart").innerHTML=arr.length?arr.map(s=>`<div class="chart-col"><b>${num(s.gpa).toFixed(2)}</b><div class="chart-bar" style="height:${Math.max(3,Math.min(100,num(s.gpa)/4*100))}%"></div><small>${esc((s.name||"").slice(0,9))}</small></div>`).join(""):`<div class="empty" style="width:100%">Add semester GPA records to see your trend.</div>`;
+ const a=db.assessments,avg=a.length?a.reduce((n,x)=>n+num(x.obtained)/num(x.total)*100,0)/a.length:null;
+ const g=calcGpa();
+ $("#performanceOverview").innerHTML=`<div class="list">
+ <div class="list-row"><div class="list-main"><strong>Assessment average</strong><small>Across ${a.length} results</small></div><strong>${avg===null?"—":avg.toFixed(1)+"%"}</strong></div>
+ <div class="list-row"><div class="list-main"><strong>Estimated current GPA</strong><small>Based on subject results</small></div><strong>${g===null?"—":g.toFixed(2)}</strong></div>
+ <div class="list-row"><div class="list-main"><strong>Completed assignments</strong><small>Of ${db.assignments.length} total</small></div><strong>${db.assignments.filter(x=>x.status==="Completed").length}</strong></div></div>`;
+ $("#subjectPerformance").innerHTML=db.subjects.length?`<div class="list">${db.subjects.map(s=>{const v=subjectAverage(s.id);return `<div class="list-row"><div class="list-main"><strong>${esc(s.name)}</strong><div class="progress"><span style="width:${v===null?0:v}%"></span></div></div><strong>${v===null?"—":v.toFixed(1)+"%"}</strong></div>`}).join("")}</div>`:`<div class="empty">Add subjects and assessment results to see performance.</div>`;
+}
+function renderSettings(){
+ const p=db.profile||{};
+ $("#profileDetails").innerHTML=`<div class="profile-panel">
+ <div><span class="field-label">Name</span><strong>${esc(p.name||"")}</strong></div>
+ <div><span class="field-label">Education level</span><strong>${esc(p.level||"")}</strong></div>
+ <div><span class="field-label">Institution</span><strong>${esc(p.institution||"Not added")}</strong></div>
+ <div><span class="field-label">Program / Class</span><strong>${esc(p.program||"Not added")}</strong></div>
+ <div><span class="field-label">Year</span><strong>${esc(p.year||"Not added")}</strong></div>
+ <div><span class="field-label">Current semester</span><strong>${esc(p.semester||"Not added")}</strong></div>
+ <div><span class="field-label">Academic year</span><strong>${esc(p.academicYear||"Not added")}</strong></div>
+ </div>`;
+ $("#accountEmail").textContent="Signed in as "+user.email;
+}
+function renderAll(){
+ if(!user)return;
+ syncProfile();renderDashboard();renderSubjects();renderAssignments();
+ renderAssessments();renderPlanner();renderRecords();renderReports();renderSettings();
+}
+function showPage(name){
+ $$(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+name));
+ $$(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
+ const b=$(`[data-page="${name}"]`);
+ $("#topTitle").textContent=b?b.textContent.trim():name;
+ $("#topSubtitle").textContent=({dashboard:"Your academic overview",subjects:"Manage your courses and subjects",assignments:"Coursework and deadlines",assessments:"Your quiz and exam results",planner:"Your personal study routine",records:"Your academic history",reports:"Track your academic progress",settings:"Your profile and preferences"})[name]||"";
+ $("#sidebar").classList.remove("open");renderAll();
+}
+function persist(){
+ if(!user)return;
+ clearTimeout(saveTimer);
+ saveTimer=setTimeout(async()=>{
+  if(saving)return;
+  saving=true;
+  try{await api("workspace",{method:"PUT",body:JSON.stringify({data:db})});}
+  catch(e){toast("Cloud save failed: "+e.message);}
+  finally{saving=false;}
+ },350);
+}
+function saveNow(){clearTimeout(saveTimer);return api("workspace",{method:"PUT",body:JSON.stringify({data:db})})}
+function subjectOptions(selected=""){
+ return `<option value="">Choose a subject</option>`+db.subjects.map(s=>`<option value="${esc(s.id)}" ${s.id===selected?"selected":""}>${esc(s.name)}</option>`).join("");
+}
+function field(name,label,value="",type="text",required=false,extra=""){
+ return `<div class="form-group"><label class="field-label">${label}</label><input class="field" name="${name}" type="${type}" value="${esc(value)}" ${required?"required":""} ${extra}></div>`;
+}
+function selectField(name,label,options,value=""){
+ return `<div class="form-group"><label class="field-label">${label}</label><select class="field" name="${name}">${options.map(o=>`<option value="${esc(o)}" ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`;
+}
+function getCollection(type){
+ return ({subject:"subjects",assignment:"assignments",assessment:"assessments",semester:"semesters",schedule:"schedule"})[type];
+}
+function openModal(type,id=null){
+ currentType=type;
+ const key=getCollection(type);
+ editing=id?db[key].find(x=>x.id===id):null;
+ const x=editing||{};
+ let title="",html="";
+ if(type==="subject"){
+  title=id?"Edit Subject":"Add Subject";
+  html=`<div class="form-grid">${field("name","Subject name",x.name||"","text",true)}${field("code","Subject code",x.code||"")}${field("credits","Credit hours",x.credits??3,"number",true,'min="0.5" step="0.5"')}${field("color","Subject color",x.color||"#4779d8","color")}</div>`;
+ }
+ if(type==="assignment"){
+  title=id?"Edit Assignment":"Add Assignment";
+  html=`<div class="form-grid">${field("title","Assignment / task title",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${field("due","Due date",x.due||today(),"date")}${selectField("status","Status",["Pending","In Progress","Completed"],x.status||"Pending")}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(x.notes||"")}</textarea></div></div>`;
+ }
+ if(type==="assessment"){
+  title=id?"Edit Result":"Add Quiz / Exam Result";
+  html=`<div class="form-grid">${field("title","Assessment name",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId" required>${subjectOptions(x.subjectId)}</select></div>${selectField("type","Assessment type",["Quiz","Test","Midterm","Final Exam","Assignment","Other"],x.type||"Quiz")}${field("date","Date",x.date||today(),"date")}${field("obtained","Obtained marks",x.obtained??"","number",true,'min="0" step="any"')}${field("total","Total marks",x.total??"","number",true,'min="0.01" step="any"')}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(x.notes||"")}</textarea></div></div>`;
+ }
+ if(type==="semester"){
+  title=id?"Edit Semester":"Add Semester Record";
+  html=`<div class="form-grid">${field("name","Semester / term name",x.name||"","text",true)}${field("year","Academic year",x.year||db.profile?.academicYear||"")}${field("gpa","GPA (optional)",x.gpa??"","number",false,'min="0" max="4" step="0.01"')}${field("credits","Credit hours",x.credits??0,"number",false,'min="0" step="0.5"')}${selectField("status","Status",["Current","Completed"],x.status||"Completed")}</div><div class="notice">Enter your GPA from your official academic record.</div>`;
+ }
+ if(type==="schedule"){
+  title=id?"Edit Schedule":"Add Study Schedule";
+  html=`<div class="form-grid">${field("title","Activity / subject",x.title||"","text",true)}<div class="form-group"><label class="field-label">Related subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${selectField("day","Day",["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],x.day||"Monday")}${field("time","Start time",x.time||"09:00","time")}</div>`;
+ }
+ $("#modalTitle").textContent=title;
+ $("#modalFields").innerHTML=html;
+ $("#modalBackdrop").classList.add("show");
+ $("#modalForm").dataset.id=id||"";
+}
 function closeModal(){$("#modalBackdrop").classList.remove("show");$("#modalForm").reset();editing=null}
-$("#modalForm").addEventListener("submit",e=>{e.preventDefault();const type=currentType;const data=Object.fromEntries(new FormData(e.target).entries());const id=e.target.dataset.id||uid();if(type==="subject"){data.credits=safeNum(data.credits)||1;data.color=data.color||"#4779d8"}if(type==="assessment"){data.obtained=safeNum(data.obtained);data.total=safeNum(data.total);if(data.total<=0||data.obtained<0||data.obtained>data.total){toast("Check your marks. Obtained marks cannot exceed total marks.");return}}if(type==="semester"){data.gpa=data.gpa===""?"":safeNum(data.gpa);data.credits=safeNum(data.credits);if(data.gpa!==""&&(data.gpa<0||data.gpa>4)){toast("Enter a GPA between 0 and 4.");return}}const key=type+"s";const index=db[key].findIndex(x=>x.id===id);const record={...data,id};if(index>=0)db[key][index]=record;else db[key].push(record);save();closeModal();toast(type.charAt(0).toUpperCase()+type.slice(1)+" saved successfully.")});
-function deleteItem(type,id){if(!confirm("Are you sure you want to delete this item?"))return;const key=type+"s";db[key]=db[key].filter(x=>x.id!==id);if(type==="subject"){db.assessments=db.assessments.filter(x=>x.subjectId!==id);db.assignments=db.assignments.filter(x=>x.subjectId!==id);db.schedule=db.schedule.filter(x=>x.subjectId!==id)}save();toast("Item deleted.")}
-document.addEventListener("click",e=>{const add=e.target.closest("[data-add]");if(add){openModal(add.dataset.add);return}const edit=e.target.closest("[data-edit]");if(edit){openModal(edit.dataset.edit,edit.dataset.id);return}const del=e.target.closest("[data-delete]");if(del){deleteItem(del.dataset.delete,del.dataset.id);return}const go=e.target.closest("[data-go]");if(go){showPage(go.dataset.go);return}});
+$("#modalForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const type=currentType,key=getCollection(type);
+ const data=Object.fromEntries(new FormData(e.target).entries());
+ const id=e.target.dataset.id||uid();
+ if(type==="subject"){data.credits=num(data.credits)||1;data.color=data.color||"#4779d8"}
+ if(type==="assessment"){
+  data.obtained=num(data.obtained);data.total=num(data.total);
+  if(data.total<=0||data.obtained<0||data.obtained>data.total){toast("Check your marks. Obtained marks cannot exceed total marks.");return}
+ }
+ if(type==="semester"){
+  data.gpa=data.gpa===""?"":num(data.gpa);data.credits=num(data.credits);
+  if(data.gpa!==""&&(data.gpa<0||data.gpa>4)){toast("Enter a GPA between 0 and 4.");return}
+ }
+ const index=db[key].findIndex(x=>x.id===id);
+ const record={...data,id};
+ if(index>=0)db[key][index]=record;else db[key].push(record);
+ closeModal();renderAll();
+ try{await saveNow();toast("Saved to your account.");}
+ catch(err){toast("Save failed: "+err.message);}
+});
+async function deleteItem(type,id){
+ if(!confirm("Are you sure you want to delete this item?"))return;
+ const key=getCollection(type);
+ db[key]=db[key].filter(x=>x.id!==id);
+ if(type==="subject"){
+  db.assessments=db.assessments.filter(x=>x.subjectId!==id);
+  db.assignments=db.assignments.filter(x=>x.subjectId!==id);
+  db.schedule=db.schedule.filter(x=>x.subjectId!==id);
+ }
+ renderAll();
+ try{await saveNow();toast("Item deleted.");}
+ catch(e){toast("Could not save deletion: "+e.message);}
+}
+document.addEventListener("click",e=>{
+ const add=e.target.closest("[data-add]");
+ if(add){openModal(add.dataset.add);return}
+ const edit=e.target.closest("[data-edit]");
+ if(edit){openModal(edit.dataset.edit,edit.dataset.id);return}
+ const del=e.target.closest("[data-delete]");
+ if(del){deleteItem(del.dataset.delete,del.dataset.id);return}
+ const go=e.target.closest("[data-go]");
+ if(go){showPage(go.dataset.go);return}
+});
 $$(".nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
-$("#quickAdd").addEventListener("click",()=>openModal("assignment"));
-$("#modalClose").onclick=closeModal;$("#modalCancel").onclick=closeModal;$("#modalBackdrop").addEventListener("click",e=>{if(e.target===$("#modalBackdrop"))closeModal()});
+$("#quickAdd").onclick=()=>openModal("assignment");
+$("#modalClose").onclick=closeModal;$("#modalCancel").onclick=closeModal;
+$("#modalBackdrop").addEventListener("click",e=>{if(e.target===$("#modalBackdrop"))closeModal()});
 $("#menuBtn").onclick=()=>$("#sidebar").classList.toggle("open");
-function toggleTheme(){db.theme=db.theme==="dark"?"light":"dark";save()}
+function toggleTheme(){db.theme=db.theme==="dark"?"light":"dark";renderAll();persist()}
 $("#themeBtn").onclick=toggleTheme;$("#settingsTheme").onclick=toggleTheme;
-$("#subjectSearch").addEventListener("input",renderSubjects);$("#assignmentFilter").addEventListener("change",renderAssignments);$("#assignmentSearch").addEventListener("input",renderAssignments);
-$$(".level-option").forEach(b=>b.addEventListener("click",()=>{$$(".level-option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");activeLevel=b.dataset.level;$("#programLabel").textContent=activeLevel==="School"?"Class / Grade":activeLevel==="Self-Learner"?"Learning focus":"Degree / Program"}));
-function showOnboarding(){if(db.profile){renderAll();return}$("#onboarding").classList.add("show")}
-$("#onboardForm").addEventListener("submit",e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target).entries());db.profile={name:f.name.trim(),institution:f.institution.trim(),program:f.program.trim(),year:f.year.trim(),semester:f.semester.trim(),academicYear:f.academicYear.trim(),level:activeLevel};const names=f.subjects.split(",").map(x=>x.trim()).filter(Boolean);db.subjects=names.map((name,i)=>({id:uid(),name,code:"",credits:1,color:["#4779d8","#269b76","#8871d5","#d68a36","#d65c66"][i%5]}));if(f.semester.trim())db.semesters.push({id:uid(),name:f.semester.trim(),year:f.academicYear.trim(),gpa:"",credits:0,status:"Current"});save();$("#onboarding").classList.remove("show");showPage("dashboard");toast("Your StudyPilot workspace is ready!")});
-$("#editProfile").onclick=()=>{const p=db.profile;const html=`<div class="form-grid">${field("name","Your name",p.name,"text",true)}${selectField("level","Education level",["School","College","University","Self-Learner"],p.level)}${field("institution","Institution",p.institution)}${field("program","Program / Class",p.program)}${field("year","Year / Class",p.year)}${field("semester","Current semester / term",p.semester)}${field("academicYear","Academic year",p.academicYear)}</div>`;currentType="profile";$("#modalTitle").textContent="Edit Profile";$("#modalFields").innerHTML=html;$("#modalBackdrop").classList.add("show");$("#modalForm").dataset.id="profile"};
-const originalSubmit=$("#modalForm").onsubmit;
-$("#modalForm").addEventListener("submit",e=>{if(currentType!=="profile")return;e.preventDefault();const f=Object.fromEntries(new FormData(e.target).entries());db.profile={...db.profile,...f};save();closeModal();toast("Profile updated.")});
-$("#exportData").onclick=()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="studypilot-backup-"+today()+".json";a.click();URL.revokeObjectURL(url);toast("Your backup has been downloaded.")};
+$("#subjectSearch").oninput=renderSubjects;
+$("#assignmentFilter").onchange=renderAssignments;
+$("#assignmentSearch").oninput=renderAssignments;
+$$(".level-option").forEach(b=>b.onclick=()=>{
+ $$(".level-option").forEach(x=>x.classList.remove("selected"));
+ b.classList.add("selected");activeLevel=b.dataset.level;
+});
+let activeLevel="University";
+$("#onboardForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const f=Object.fromEntries(new FormData(e.target).entries());
+ db.profile={
+  name:f.name.trim(),institution:f.institution.trim(),program:f.program.trim(),
+  year:f.year.trim(),semester:f.semester.trim(),academicYear:f.academicYear.trim(),level:activeLevel
+ };
+ db.subjects=f.subjects.split(",").map(x=>x.trim()).filter(Boolean).map((name,i)=>({
+  id:uid(),name,code:"",credits:1,color:["#4779d8","#269b76","#8871d5","#d68a36","#d65c66"][i%5]
+ }));
+ if(f.semester.trim())db.semesters.push({id:uid(),name:f.semester.trim(),year:f.academicYear.trim(),gpa:"",credits:0,status:"Current"});
+ try{
+  await saveNow();$("#onboarding").classList.remove("show");renderAll();showPage("dashboard");toast("Your workspace is ready!");
+ }catch(err){toast("Could not save your profile: "+err.message)}
+});
+$("#editProfile").onclick=()=>{
+ const p=db.profile||{};
+ const html=`<div class="form-grid">
+ ${field("name","Your name",p.name||"","text",true)}
+ ${selectField("level","Education level",["School","College","University","Self-Learner"],p.level||"University")}
+ ${field("institution","Institution",p.institution||"")}
+ ${field("program","Program / Class",p.program||"")}
+ ${field("year","Year / Class",p.year||"")}
+ ${field("semester","Current semester / term",p.semester||"")}
+ ${field("academicYear","Academic year",p.academicYear||"")}
+ </div>`;
+ currentType="profile";$("#modalTitle").textContent="Edit Profile";
+ $("#modalFields").innerHTML=html;$("#modalBackdrop").classList.add("show");
+ $("#modalForm").dataset.id="profile";
+};
+$("#modalForm").addEventListener("submit",async e=>{
+ if(currentType!=="profile")return;
+ e.preventDefault();
+ const f=Object.fromEntries(new FormData(e.target).entries());
+ db.profile={...db.profile,...f};
+ closeModal();renderAll();
+ try{await saveNow();toast("Profile updated.");}
+ catch(err){toast("Could not save profile: "+err.message)}
+});
+$("#exportData").onclick=()=>{
+ const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="studypilot-backup-"+today()+".json";a.click();
+ URL.revokeObjectURL(url);toast("Backup downloaded.");
+};
 $("#importDataBtn").onclick=()=>$("#importFile").click();
-$("#importFile").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const imported=JSON.parse(await file.text());if(!imported||!Array.isArray(imported.subjects)||!imported.profile)throw new Error();db={...defaults(),...imported};save();toast("Backup restored successfully.")}catch(err){toast("This backup file is not valid.")}e.target.value=""};
-$("#resetData").onclick=()=>{if(!confirm("This will permanently clear the StudyPilot data saved in this browser. Download a backup first if you need it. Continue?"))return;localStorage.removeItem(STORAGE_KEY);db=defaults();location.reload()};
-if(db.theme==="dark")document.documentElement.dataset.theme="dark";
-if(db.profile){$("#onboarding").classList.remove("show");renderAll()}else showOnboarding();
+$("#importFile").onchange=async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{
+  const imported=JSON.parse(await file.text());
+  if(!imported||!Array.isArray(imported.subjects)||!imported.profile)throw new Error();
+  const fresh={...defaults(),...imported};
+  for(const key of ["subjects","assignments","assessments","semesters","schedule"]){
+   if(!Array.isArray(fresh[key]))throw new Error();
+  }
+  db=fresh;await saveNow();renderAll();toast("Backup restored to your account.");
+ }catch(err){toast("This backup is not valid or could not be saved.");}
+ e.target.value="";
+};
+async function logout(){
+ if(!confirm("Log out of your StudyPilot account?"))return;
+ try{await api("logout",{method:"POST",body:"{}"});}catch(e){}
+ user=null;db=defaults();$("#app").classList.add("hidden");$("#authScreen").classList.remove("hidden");
+ $("#authForm").reset();setAuthMode("login");toast("You have logged out.");
+}
+$("#logoutBtn").onclick=logout;$("#settingsLogout").onclick=logout;
+
+function setAuthMode(mode){
+ authMode=mode;
+ const login=mode==="login";
+ $("#loginTab").classList.toggle("active",login);
+ $("#registerTab").classList.toggle("active",!login);
+ $("#nameGroup").classList.toggle("hidden",login);
+ $("#authTitle").textContent=login?"Welcome back":"Create your account";
+ $("#authIntro").textContent=login?"Log in to continue to your personal workspace.":"Create your private StudyPilot student account.";
+ $("#authSubmit").textContent=login?"Log in →":"Create account →";
+ $("#authForm").elements.password.autocomplete=login?"current-password":"new-password";
+ $("#authForm").elements.password.value="";
+ $("#authError").classList.add("hidden");
+}
+$("#loginTab").onclick=()=>setAuthMode("login");
+$("#registerTab").onclick=()=>setAuthMode("register");
+$("#authForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const f=Object.fromEntries(new FormData(e.target).entries());
+ const btn=$("#authSubmit");
+ btn.disabled=true;btn.textContent="Please wait...";
+ $("#authError").classList.add("hidden");
+ try{
+  const endpoint=authMode==="login"?"login":"register";
+  const result=await api(endpoint,{method:"POST",body:JSON.stringify(f)});
+  user=result.user;
+  await loadWorkspace();
+ }catch(err){
+  $("#authError").textContent=err.message;
+  $("#authError").classList.remove("hidden");
+ }finally{
+  btn.disabled=false;btn.textContent=authMode==="login"?"Log in →":"Create account →";
+ }
+});
+async function loadWorkspace(){
+ const result=await api("workspace");
+ db={...defaults(),...result.data};
+ if(!db.profile)db.profile={name:user.name,level:"University"};
+ $("#authScreen").classList.add("hidden");$("#app").classList.remove("hidden");
+ renderAll();
+ if(!db.profile.name)db.profile.name=user.name;
+ if(!db.profile.level){
+  $("#onboarding").classList.add("show");
+ }else{
+  $("#onboarding").classList.remove("show");
+ }
+}
+async function start(){
+ try{
+  const result=await api("me");
+  user=result.user;
+  if(user){await loadWorkspace();return}
+ }catch(e){}
+ $("#authScreen").classList.remove("hidden");
+ $("#app").classList.add("hidden");
+ setAuthMode("login");
+}
+if("serviceWorker" in navigator){
+ // No offline service worker is registered: private pages must be loaded from the server.
+}
+start();
 </script>
 </body>
 </html>
