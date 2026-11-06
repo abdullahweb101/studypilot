@@ -2,1253 +2,403 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="StudyPilot helps students study smarter with free GPA calculators, study planners, productivity tools, quizzes and academic resources.">
-  <meta name="keywords" content="student tools, GPA calculator, CGPA calculator, study planner, attendance calculator, word counter, quiz maker">
-  <meta name="author" content="StudyPilot">
-  <meta name="theme-color" content="#f5f7fc">
-  <title>StudyPilot — Everything Students Need. One Smart Workspace.</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg:#f5f7fc;
-      --surface:#ffffff;
-      --surface2:#f0f3fa;
-      --text:#17213a;
-      --muted:#69758e;
-      --border:#e5eaf3;
-      --primary:#5b5ce2;
-      --primary-dark:#4546c8;
-      --primary-soft:#eeeeff;
-      --cyan:#16b8bd;
-      --green:#16a477;
-      --orange:#ef9b42;
-      --red:#e35d6a;
-      --shadow:0 12px 35px rgba(35,48,85,.07);
-      --radius:20px;
-    }
-
-    [data-theme="dark"] {
-      --bg:#0d1324;
-      --surface:#151e33;
-      --surface2:#1c2840;
-      --text:#edf2ff;
-      --muted:#a2aec7;
-      --border:rgba(255,255,255,.09);
-      --primary:#8988ff;
-      --primary-dark:#7775ed;
-      --primary-soft:#29294e;
-      --cyan:#40d4d0;
-      --green:#39c99c;
-      --orange:#ffb45f;
-      --red:#ff7885;
-      --shadow:0 12px 35px rgba(0,0,0,.18);
-    }
-
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body {
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:"DM Sans",sans-serif;
-      line-height:1.6;
-      transition:background .25s,color .25s;
-    }
-    button,input,select,textarea { font:inherit; }
-    button { cursor:pointer; }
-    a { color:inherit;text-decoration:none; }
-    .container { width:min(1180px,calc(100% - 40px));margin:auto; }
-    .muted { color:var(--muted); }
-    .eyebrow {
-      display:inline-flex;align-items:center;gap:8px;
-      color:var(--primary);font-size:12px;font-weight:800;
-      letter-spacing:1.3px;text-transform:uppercase;
-    }
-    .eyebrow:before {
-      content:"";width:18px;height:2px;background:var(--primary);
-      border-radius:5px;
-    }
-
-    /* Header */
-    .header {
-      position:sticky;top:0;z-index:100;
-      background:color-mix(in srgb,var(--surface) 90%,transparent);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid var(--border);
-    }
-    .nav {
-      height:76px;display:flex;align-items:center;
-      justify-content:space-between;gap:25px;
-    }
-    .brand { display:flex;align-items:center;gap:11px;font-family:Manrope,sans-serif;font-weight:800;font-size:21px;letter-spacing:-.8px; }
-    .brand-mark {
-      width:39px;height:39px;border-radius:13px;
-      display:grid;place-items:center;color:#fff;font-size:19px;
-      background:linear-gradient(135deg,#6968f0,#29c5c5);
-      box-shadow:0 7px 18px rgba(91,92,226,.25);
-    }
-    .brand span span { color:var(--primary); }
-    .nav-links { display:flex;align-items:center;gap:28px;font-size:14px;font-weight:600;color:var(--muted); }
-    .nav-links a:hover { color:var(--primary); }
-    .nav-actions { display:flex;align-items:center;gap:10px; }
-    .icon-btn {
-      width:40px;height:40px;border:1px solid var(--border);
-      border-radius:12px;background:var(--surface);color:var(--text);
-      display:grid;place-items:center;font-size:17px;
-    }
-    .icon-btn:hover { border-color:var(--primary);color:var(--primary); }
-    .menu-btn { display:none; }
-
-    /* Buttons */
-    .btn {
-      border:0;border-radius:12px;padding:12px 19px;
-      background:var(--primary);color:white;font-weight:700;
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      transition:.2s;
-    }
-    .btn:hover { background:var(--primary-dark);transform:translateY(-2px); }
-    .btn-outline {
-      color:var(--text);background:var(--surface);
-      border:1px solid var(--border);
-    }
-    .btn-outline:hover { color:var(--primary);border-color:var(--primary);background:var(--primary-soft); }
-    .btn-small { padding:9px 13px;font-size:13px; }
-
-    /* Hero */
-    .hero {
-      padding:76px 0 65px;overflow:hidden;position:relative;
-      background:
-        radial-gradient(ellipse at 5% 5%,rgba(113,111,255,.12),transparent 34%),
-        radial-gradient(ellipse at 95% 65%,rgba(37,199,193,.10),transparent 34%);
-    }
-    .hero-grid { display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:50px; }
-    h1,h2,h3,h4 { font-family:Manrope,sans-serif;line-height:1.2; }
-    h1 { font-size:clamp(39px,5vw,63px);letter-spacing:-2.6px;margin:17px 0 20px;max-width:700px; }
-    .gradient-text {
-      background:linear-gradient(100deg,#6464ed,#20bfc1);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .hero-copy { color:var(--muted);font-size:17px;max-width:550px;line-height:1.8; }
-    .hero-buttons { display:flex;gap:12px;flex-wrap:wrap;margin-top:27px; }
-    .hero-note { margin-top:22px;color:var(--muted);font-size:12px; }
-    .hero-note span { color:var(--green);font-weight:800;margin-right:5px; }
-
-    .dashboard-art {
-      position:relative;background:var(--surface);border:1px solid var(--border);
-      border-radius:25px;padding:24px;box-shadow:var(--shadow);
-      transform:rotate(1deg);
-    }
-    .art-top { display:flex;justify-content:space-between;align-items:center;margin-bottom:20px; }
-    .art-dots { display:flex;gap:5px; }
-    .art-dots i { width:8px;height:8px;border-radius:50%;background:var(--border); }
-    .art-status { font-size:11px;color:var(--green);font-weight:800;background:color-mix(in srgb,var(--green) 12%,transparent);padding:5px 9px;border-radius:20px; }
-    .art-heading { font-weight:800;font-size:18px;margin-bottom:4px; }
-    .art-sub { color:var(--muted);font-size:12px; }
-    .progress-card { margin:20px 0;padding:17px;border-radius:16px;background:var(--surface2); }
-    .progress-line { display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:10px; }
-    .progress-track { height:8px;border-radius:20px;background:var(--border);overflow:hidden; }
-    .progress-fill { height:100%;width:72%;border-radius:20px;background:linear-gradient(90deg,#6968f0,#28c5c5); }
-    .art-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
-    .art-mini { padding:15px;border:1px solid var(--border);border-radius:15px; }
-    .art-icon { width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--primary-soft);font-size:17px;margin-bottom:10px; }
-    .art-mini strong { display:block;font-size:13px; }
-    .art-mini small { color:var(--muted);font-size:11px; }
-    .floating-tag {
-      position:absolute;padding:12px 15px;border-radius:14px;
-      background:var(--surface);border:1px solid var(--border);
-      box-shadow:var(--shadow);font-size:12px;font-weight:800;
-    }
-    .floating-one { top:-18px;right:-20px; }
-    .floating-two { bottom:20px;left:-30px; }
-
-    /* Search */
-    .search-section { margin-top:-5px;position:relative;z-index:2; }
-    .search-box {
-      max-width:760px;margin:auto;background:var(--surface);
-      border:1px solid var(--border);box-shadow:var(--shadow);
-      border-radius:16px;padding:8px;display:flex;align-items:center;gap:10px;
-    }
-    .search-symbol { padding-left:12px;font-size:19px;color:var(--muted); }
-    .search-box input { flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--text);padding:12px 4px; }
-    .search-box input::placeholder { color:var(--muted); }
-
-    /* Sections */
-    .section { padding:75px 0; }
-    .section-heading { display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px; }
-    .section-heading h2 { font-size:clamp(27px,3vw,36px);letter-spacing:-1.2px;margin:9px 0; }
-    .section-heading p { margin:0;color:var(--muted);max-width:560px; }
-    .text-link { color:var(--primary);font-size:13px;font-weight:800;white-space:nowrap; }
-
-    /* Categories */
-    .category-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:15px; }
-    .category-card {
-      text-align:left;padding:21px;border:1px solid var(--border);
-      border-radius:18px;background:var(--surface);color:var(--text);
-      transition:.22s;min-height:155px;
-    }
-    .category-card:hover { transform:translateY(-5px);border-color:var(--primary);box-shadow:var(--shadow); }
-    .category-icon { width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:21px;margin-bottom:15px; }
-    .category-card strong { display:block;font-size:15px;margin-bottom:5px; }
-    .category-card small { color:var(--muted);font-size:12px; }
-
-    /* Tools */
-    .tools-section { background:var(--surface2); }
-    .filter-row { display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px; }
-    .filter-btn {
-      padding:9px 15px;border:1px solid var(--border);border-radius:30px;
-      background:var(--surface);color:var(--muted);font-size:12px;font-weight:700;
-    }
-    .filter-btn.active,.filter-btn:hover { background:var(--primary);color:#fff;border-color:var(--primary); }
-    .tools-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:17px; }
-    .tool-card {
-      padding:21px;border:1px solid var(--border);border-radius:18px;
-      background:var(--surface);transition:.2s;display:flex;flex-direction:column;
-      min-height:215px;
-    }
-    .tool-card:hover { transform:translateY(-4px);border-color:var(--primary);box-shadow:var(--shadow); }
-    .tool-top { display:flex;justify-content:space-between;align-items:center;margin-bottom:17px; }
-    .tool-icon { width:43px;height:43px;border-radius:13px;display:grid;place-items:center;font-size:20px;background:var(--primary-soft); }
-    .tool-tag { font-size:10px;font-weight:800;color:var(--green);background:color-mix(in srgb,var(--green) 11%,transparent);padding:5px 8px;border-radius:20px; }
-    .tool-card h3 { font-size:16px;margin:0 0 8px; }
-    .tool-card p { color:var(--muted);font-size:12px;margin:0 0 19px;line-height:1.7;flex:1; }
-    .tool-open { border:0;background:transparent;color:var(--primary);font-size:12px;font-weight:800;text-align:left;padding:0; }
-    .tool-open:hover { color:var(--cyan); }
-    .empty-state { grid-column:1/-1;text-align:center;padding:45px;color:var(--muted); }
-
-    /* Workspace */
-    .workspace-grid { display:grid;grid-template-columns:1fr 1fr;gap:18px; }
-    .workspace-card { padding:25px;border:1px solid var(--border);background:var(--surface);border-radius:20px; }
-    .workspace-card h3 { margin:0 0 8px;font-size:19px; }
-    .workspace-card p { color:var(--muted);font-size:13px;margin:0 0 17px; }
-    .workspace-visual { min-height:115px;background:var(--surface2);border-radius:14px;padding:17px; }
-    .task-row { display:flex;align-items:center;gap:10px;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border); }
-    .task-row:last-child { border:0; }
-    .task-dot { width:9px;height:9px;border-radius:50%;background:var(--green); }
-    .task-dot.pending { background:var(--orange); }
-
-    /* Resources */
-    .resource-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:17px; }
-    .resource-card { background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px; }
-    .resource-number { color:var(--primary);font-size:12px;font-weight:800; }
-    .resource-card h3 { font-size:17px;margin:13px 0 9px; }
-    .resource-card p { color:var(--muted);font-size:13px;margin:0 0 15px; }
-
-    /* CTA */
-    .cta {
-      padding:42px;border-radius:25px;
-      background:linear-gradient(115deg,#5355d9,#716be9 55%,#20b9bd);
-      color:white;display:flex;justify-content:space-between;align-items:center;gap:25px;
-    }
-    .cta h2 { font-size:clamp(25px,3vw,34px);margin:0 0 9px; }
-    .cta p { color:rgba(255,255,255,.82);margin:0; }
-    .cta .btn { background:white;color:#5154d4;white-space:nowrap; }
-    .cta .btn:hover { background:#f0f0ff; }
-
-    /* Footer */
-    footer { border-top:1px solid var(--border);padding:45px 0 20px;background:var(--surface); }
-    .footer-grid { display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px; }
-    .footer-about p { color:var(--muted);font-size:13px;max-width:310px; }
-    .footer-col strong { display:block;font-size:13px;margin-bottom:15px; }
-    .footer-col a { display:block;color:var(--muted);font-size:12px;margin:10px 0; }
-    .footer-col a:hover { color:var(--primary); }
-    .copyright { border-top:1px solid var(--border);margin-top:35px;padding-top:18px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:15px; }
-
-    /* Modal */
-    .modal {
-      position:fixed;inset:0;z-index:300;background:rgba(8,13,28,.65);
-      display:none;align-items:center;justify-content:center;padding:18px;
-      backdrop-filter:blur(5px);
-    }
-    .modal.show { display:flex; }
-    .modal-box {
-      width:min(650px,100%);max-height:90vh;overflow:auto;
-      background:var(--surface);border:1px solid var(--border);
-      border-radius:22px;padding:25px;box-shadow:0 25px 80px rgba(0,0,0,.25);
-    }
-    .modal-header { display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px; }
-    .modal-header h2 { font-size:22px;margin:0; }
-    .close-btn { width:36px;height:36px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);color:var(--text);font-size:19px; }
-    .tool-form { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
-    .field { display:flex;flex-direction:column;gap:6px; }
-    .field.full { grid-column:1/-1; }
-    .field label { color:var(--muted);font-size:12px;font-weight:700; }
-    .field input,.field select,.field textarea {
-      width:100%;padding:12px 13px;border-radius:11px;
-      border:1px solid var(--border);outline:0;background:var(--bg);color:var(--text);
-    }
-    .field textarea { min-height:110px;resize:vertical; }
-    .field input:focus,.field select:focus,.field textarea:focus { border-color:var(--primary); }
-    .form-actions { grid-column:1/-1;display:flex;gap:9px;flex-wrap:wrap;margin-top:5px; }
-    .result {
-      display:none;margin-top:18px;padding:17px;border-radius:13px;
-      background:var(--primary-soft);border:1px solid color-mix(in srgb,var(--primary) 25%,transparent);
-      color:var(--text);font-size:14px;line-height:1.8;overflow-wrap:anywhere;
-    }
-    .result.show { display:block; }
-    .result strong { color:var(--primary); }
-    .result-value { font-family:Manrope,sans-serif;font-size:27px;font-weight:800;color:var(--primary); }
-    .timer-display { font-size:48px;font-weight:800;text-align:center;padding:18px;font-family:Manrope,sans-serif; }
-    .timer-controls { display:flex;justify-content:center;gap:10px;flex-wrap:wrap; }
-    .quiz-question { padding:15px;border:1px solid var(--border);border-radius:13px;margin:12px 0; }
-    .quiz-question label { display:block;font-size:13px;padding:6px 0;cursor:pointer; }
-    .quiz-question input { margin-right:7px; }
-    .small-note { color:var(--muted);font-size:11px;margin-top:12px; }
-
-    @media(max-width:900px) {
-      .hero-grid { grid-template-columns:1fr 1fr;gap:25px; }
-      .category-grid { grid-template-columns:repeat(2,1fr); }
-      .tools-grid { grid-template-columns:repeat(2,1fr); }
-      .footer-grid { grid-template-columns:1fr 1fr; }
-      .nav-links { gap:16px; }
-    }
-    @media(max-width:650px) {
-      .container { width:min(100% - 28px,1180px); }
-      .nav { height:66px; }
-      .brand { font-size:19px; }
-      .nav-links {
-        display:none;position:absolute;top:66px;left:0;right:0;
-        background:var(--surface);border-bottom:1px solid var(--border);
-        padding:18px 22px;flex-direction:column;align-items:flex-start;
-      }
-      .nav-links.open { display:flex; }
-      .menu-btn { display:grid; }
-      .nav-actions .btn { display:none; }
-      .hero { padding:55px 0 50px; }
-      .hero-grid { grid-template-columns:1fr; }
-      h1 { font-size:42px;letter-spacing:-1.8px; }
-      .hero-copy { font-size:15px; }
-      .dashboard-art { margin:20px 8px 15px; }
-      .floating-one { right:-5px; }
-      .floating-two { left:-8px; }
-      .section { padding:55px 0; }
-      .section-heading { align-items:flex-start;flex-direction:column; }
-      .category-grid { gap:10px; }
-      .category-card { padding:15px;min-height:145px; }
-      .tools-grid { grid-template-columns:1fr; }
-      .tool-card { min-height:190px; }
-      .workspace-grid,.resource-grid { grid-template-columns:1fr; }
-      .cta { padding:27px;align-items:flex-start;flex-direction:column; }
-      .footer-grid { grid-template-columns:1fr 1fr;gap:25px 15px; }
-      .footer-about { grid-column:1/-1; }
-      .copyright { flex-direction:column; }
-      .tool-form { grid-template-columns:1fr; }
-      .field.full,.form-actions { grid-column:auto; }
-      .modal-box { padding:19px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f6f8fc">
+<meta name="description" content="StudyPilot is your personal academic workspace. Organize subjects, assignments, quizzes, exams, grades, semesters and study schedules.">
+<title>StudyPilot — Your Personal Academic Workspace</title>
+<style>
+:root{
+ --bg:#f6f8fc;--surface:#fff;--surface2:#f1f5fb;--text:#202b3c;
+ --muted:#748197;--line:#e7ecf3;--primary:#4779d8;--primary2:#315fbd;
+ --soft:#eaf1ff;--green:#269b76;--greenbg:#e9f7f1;--orange:#d68a36;
+ --orangebg:#fff4e6;--red:#d65c66;--redbg:#fff0f1;--purple:#8871d5;
+ --shadow:0 8px 28px rgba(31,51,82,.055);--radius:17px;
+}
+[data-theme="dark"]{
+ --bg:#151b27;--surface:#1d2635;--surface2:#263246;--text:#edf2fa;
+ --muted:#a4b0c3;--line:#344154;--primary:#83a9f5;--primary2:#a6c1ff;
+ --soft:#293b5c;--greenbg:#203b35;--orangebg:#493927;--redbg:#482d34;
+ --shadow:0 8px 28px rgba(0,0,0,.15);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.5}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh}
+.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:var(--surface);border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column;z-index:20}
+.brand{display:flex;align-items:center;gap:11px;padding:0 9px 28px}
+.brand-icon{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#6696ef,#4774ce);color:white;display:grid;place-items:center;font-size:21px;font-weight:800}
+.brand-name{font-size:19px;font-weight:800;letter-spacing:-.6px}
+.brand-sub{font-size:10px;color:var(--muted);margin-top:-2px}
+.nav-label{font-size:10px;font-weight:800;letter-spacing:1.1px;color:var(--muted);padding:13px 11px 8px;text-transform:uppercase}
+.nav{display:grid;gap:5px}
+.nav button{border:0;background:transparent;color:var(--muted);display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;text-align:left;font-weight:600;width:100%;transition:.18s}
+.nav button:hover{background:var(--surface2);color:var(--text)}
+.nav button.active{background:var(--soft);color:var(--primary2)}
+.nav-icon{width:20px;text-align:center;font-size:17px}
+.sidebar-bottom{margin-top:auto}
+.profile-mini{display:flex;gap:10px;align-items:center;padding:13px 8px 3px;border-top:1px solid var(--line)}
+.avatar{width:36px;height:36px;display:grid;place-items:center;background:var(--soft);color:var(--primary2);border-radius:50%;font-weight:800}
+.profile-mini strong{display:block;font-size:12px}
+.profile-mini small{color:var(--muted);font-size:11px}
+.main{margin-left:245px;min-height:100vh}
+.topbar{height:75px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:15}
+.top-left{display:flex;align-items:center;gap:12px}
+.page-title{font-size:19px;font-weight:750;letter-spacing:-.4px}
+.page-subtitle{font-size:11px;color:var(--muted)}
+.top-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{width:38px;height:38px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:11px;font-size:17px}
+.icon-btn:hover{background:var(--surface2)}
+.primary-btn,.secondary-btn,.danger-btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;font-size:12px}
+.primary-btn{background:var(--primary);color:white}
+.primary-btn:hover{background:var(--primary2)}
+.secondary-btn{background:var(--soft);color:var(--primary2)}
+.danger-btn{background:var(--redbg);color:var(--red)}
+.content{max-width:1450px;margin:auto;padding:29px 34px 55px}
+.page{display:none}
+.page.active{display:block}
+.welcome{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:25px}
+.welcome h1{font-size:25px;letter-spacing:-.8px;margin:0 0 5px}
+.welcome p{color:var(--muted);margin:0}
+.date-pill{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:10px 13px;color:var(--muted);font-size:12px}
+.grid{display:grid;gap:16px}
+.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:19px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:19px;box-shadow:var(--shadow);min-width:0}
+.stat-top{display:flex;align-items:center;justify-content:space-between}
+.stat-icon{width:37px;height:37px;border-radius:11px;display:grid;place-items:center;background:var(--soft);color:var(--primary2);font-size:17px}
+.stat-label{color:var(--muted);font-size:12px;font-weight:600}
+.stat-value{font-size:27px;font-weight:800;letter-spacing:-1px;margin-top:10px}
+.stat-note{color:var(--muted);font-size:11px;margin-top:2px}
+.two-col{grid-template-columns:minmax(0,1.5fr) minmax(270px,1fr);margin-bottom:17px}
+.three-col{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.card-head h2,.section-heading{font-size:15px;margin:0;font-weight:750}
+.card-head p{margin:3px 0 0;color:var(--muted);font-size:11px}
+.text-link{border:0;background:none;color:var(--primary2);font-weight:700;font-size:11px}
+.empty{padding:27px 12px;text-align:center;color:var(--muted);font-size:12px}
+.empty-icon{font-size:27px;margin-bottom:8px}
+.subject-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.subject-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface);min-width:0}
+.subject-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.subject-dot{width:10px;height:10px;border-radius:50%;background:var(--primary)}
+.subject-card h3{font-size:14px;margin:12px 0 3px}
+.subject-card p{font-size:11px;color:var(--muted);margin:0}
+.subject-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-top:14px}
+.progress{height:7px;background:var(--surface2);border-radius:10px;overflow:hidden;margin-top:8px}
+.progress span{display:block;height:100%;background:var(--primary);border-radius:10px}
+.list{display:grid;gap:0}
+.list-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.list-row:last-child{border-bottom:0}
+.list-mark{width:34px;height:34px;border-radius:10px;background:var(--surface2);display:grid;place-items:center;flex-shrink:0}
+.list-main{flex:1;min-width:0}
+.list-main strong{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-main small{color:var(--muted);font-size:10px}
+.status{font-size:10px;font-weight:700;padding:5px 8px;border-radius:20px;white-space:nowrap;background:var(--surface2);color:var(--muted)}
+.status.done{background:var(--greenbg);color:var(--green)}
+.status.pending{background:var(--orangebg);color:var(--orange)}
+.status.late{background:var(--redbg);color:var(--red)}
+.table-wrap{overflow:auto}
+table{border-collapse:collapse;width:100%;min-width:580px}
+th{text-align:left;color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:11px;border-bottom:1px solid var(--line)}
+td{padding:13px 11px;border-bottom:1px solid var(--line);font-size:12px}
+tr:last-child td{border-bottom:0}
+td strong{font-weight:700}
+.row-actions{display:flex;gap:5px}
+.small-btn{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:8px;padding:6px 8px;font-size:10px}
+.small-btn:hover{background:var(--surface2);color:var(--text)}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:17px}
+.toolbar-left,.toolbar-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.field,.search-field{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 12px;outline:none;min-height:39px}
+.field:focus,.search-field:focus{border-color:var(--primary)}
+.search-field{min-width:210px}
+.field-label{font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{min-width:0}
+.form-group.full{grid-column:1/-1}
+.form-group input,.form-group select,.form-group textarea{width:100%}
+.form-group textarea{min-height:78px;resize:vertical}
+.modal-backdrop{position:fixed;inset:0;background:rgba(22,33,52,.42);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-backdrop.show{display:flex}
+.modal{width:min(540px,100%);max-height:90vh;overflow:auto;background:var(--surface);border-radius:19px;padding:23px;box-shadow:0 20px 70px rgba(0,0,0,.2)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px}
+.modal-head h2{font-size:18px;margin:0}
+.modal-close{border:0;background:var(--surface2);color:var(--text);width:31px;height:31px;border-radius:9px;font-size:18px}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+.notice{padding:12px 14px;background:var(--soft);color:var(--primary2);border-radius:11px;font-size:11px;margin-bottom:16px}
+.chart{display:flex;align-items:end;gap:12px;height:170px;padding:15px 5px 0;border-bottom:1px solid var(--line)}
+.chart-col{flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%;gap:7px;min-width:0}
+.chart-bar{width:min(38px,75%);background:linear-gradient(180deg,#83a9f5,#4779d8);border-radius:7px 7px 2px 2px;min-height:3px}
+.chart-col small{font-size:9px;color:var(--muted);white-space:nowrap}
+.chart-col b{font-size:10px}
+.week-grid{display:grid;grid-template-columns:repeat(7,minmax(90px,1fr));gap:8px;overflow:auto}
+.day-col{background:var(--surface2);border-radius:12px;padding:10px;min-height:145px}
+.day-col h4{font-size:11px;margin:0 0 10px}
+.event{background:var(--soft);border-left:3px solid var(--primary);border-radius:7px;padding:7px;margin-bottom:6px;font-size:10px}
+.event strong{display:block}
+.event small{color:var(--muted)}
+.profile-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
+.settings-row:last-child{border:0}
+.settings-row strong{display:block;font-size:12px}
+.settings-row small{color:var(--muted);font-size:10px}
+.mobile-menu{display:none}
+.toast{position:fixed;bottom:22px;right:22px;background:#24344d;color:white;padding:12px 17px;border-radius:11px;font-size:12px;z-index:100;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.onboarding{position:fixed;inset:0;background:var(--bg);z-index:80;display:none;overflow:auto;padding:30px 16px}
+.onboarding.show{display:grid;place-items:center}
+.onboard-box{width:min(720px,100%);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow)}
+.onboard-brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.onboard-box h1{font-size:25px;margin:0 0 7px;letter-spacing:-.7px}
+.onboard-box>p{color:var(--muted);margin:0 0 22px}
+.level-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:13px 0 20px}
+.level-option{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;padding:15px;text-align:left}
+.level-option.selected{border:2px solid var(--primary);background:var(--soft)}
+.level-option strong{display:block;font-size:13px;margin-bottom:3px}
+.level-option small{font-size:10px;color:var(--muted)}
+.onboard-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.onboard-form .full{grid-column:1/-1}
+.onboard-actions{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px}
+.muted{color:var(--muted)}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(2,1fr)}.content{padding:24px}}
+@media(max-width:760px){
+ .sidebar{transform:translateX(-100%);transition:.25s;box-shadow:var(--shadow)}
+ .sidebar.open{transform:translateX(0)}
+ .main{margin-left:0}.mobile-menu{display:inline-grid;place-items:center}
+ .topbar{height:65px;padding:0 16px}.content{padding:21px 15px 40px}
+ .two-col{grid-template-columns:1fr}.three-col{grid-template-columns:1fr}
+ .welcome{align-items:flex-start;flex-direction:column}.welcome h1{font-size:22px}
+ .stats{gap:10px}.card{padding:15px}.stat-value{font-size:23px}
+ .subject-grid{grid-template-columns:1fr 1fr}.page-title{font-size:16px}
+ .top-actions .primary-btn{padding:9px 10px}
+ .profile-panel{grid-template-columns:1fr}
+}
+@media(max-width:420px){.subject-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.level-grid,.onboard-form,.form-grid{grid-template-columns:1fr}.onboard-form .full,.form-group.full{grid-column:auto}.onboard-box{padding:21px}}
+</style>
 </head>
-
 <body>
-<header class="header">
-  <div class="container nav">
-    <a href="#" class="brand">
-      <span class="brand-mark">✦</span>
-      <span>Study<span>Pilot</span></span>
-    </a>
-
-    <nav class="nav-links" id="navLinks">
-      <a href="#home">Home</a>
-      <a href="#categories">Categories</a>
-      <a href="#tools">All Tools</a>
-      <a href="#workspace">Workspace</a>
-      <a href="#resources">Resources</a>
-    </nav>
-
-    <div class="nav-actions">
-      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">☾</button>
-      <a href="#tools" class="btn btn-small">Explore Tools ↗</a>
-      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
-    </div>
-  </div>
-</header>
-
-<main>
-  <section class="hero" id="home">
-    <div class="container hero-grid">
-      <div>
-        <span class="eyebrow">Your smarter study companion</span>
-        <h1>Everything Students Need. <span class="gradient-text">One Smart Workspace.</span></h1>
-        <p class="hero-copy">
-          Make studying simpler, stay organized and reach your academic goals.
-          Discover practical tools designed to help you learn, plan and perform better.
-        </p>
-        <div class="hero-buttons">
-          <a href="#tools" class="btn">Explore Free Tools <span>→</span></a>
-          <a href="#categories" class="btn btn-outline">Browse Categories</a>
-        </div>
-        <div class="hero-note"><span>✓</span> Free tools · No account required · Works in your browser</div>
-      </div>
-
-      <div class="dashboard-art">
-        <div class="floating-tag floating-one">✦ Study smarter</div>
-        <div class="art-top">
-          <div class="art-dots"><i></i><i></i><i></i></div>
-          <span class="art-status">● Your study space</span>
-        </div>
-        <div class="art-heading">Your learning overview</div>
-        <div class="art-sub">A little progress every day adds up.</div>
-        <div class="progress-card">
-          <div class="progress-line"><span>Weekly study goal</span><span>72%</span></div>
-          <div class="progress-track"><div class="progress-fill"></div></div>
-        </div>
-        <div class="art-grid">
-          <div class="art-mini"><div class="art-icon">📚</div><strong>Study Planner</strong><small>Organize your day</small></div>
-          <div class="art-mini"><div class="art-icon">📊</div><strong>Grade Tracker</strong><small>Track performance</small></div>
-          <div class="art-mini"><div class="art-icon">⏱️</div><strong>Focus Timer</strong><small>Stay on task</small></div>
-          <div class="art-mini"><div class="art-icon">🧠</div><strong>Quiz Maker</strong><small>Test your knowledge</small></div>
-        </div>
-        <div class="floating-tag floating-two">✓ Small steps. Big results.</div>
-      </div>
-    </div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="brand-icon">S</div><div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your academic workspace</div></div></div>
+ <div class="nav-label">Workspace</div>
+ <nav class="nav">
+  <button class="active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+  <button data-page="subjects"><span class="nav-icon">▤</span>My Subjects</button>
+  <button data-page="assignments"><span class="nav-icon">▣</span>Assignments</button>
+  <button data-page="assessments"><span class="nav-icon">✓</span>Quizzes & Exams</button>
+  <button data-page="planner"><span class="nav-icon">▦</span>Study Planner</button>
+ </nav>
+ <div class="nav-label">Academic</div>
+ <nav class="nav">
+  <button data-page="records"><span class="nav-icon">▥</span>Academic Records</button>
+  <button data-page="reports"><span class="nav-icon">◔</span>Reports & Analytics</button>
+ </nav>
+ <div class="nav-label">Personal</div>
+ <nav class="nav">
+  <button data-page="settings"><span class="nav-icon">⚙</span>Settings & Profile</button>
+ </nav>
+ <div class="sidebar-bottom">
+  <div class="profile-mini"><div class="avatar" id="miniAvatar">S</div><div><strong id="miniName">Student</strong><small id="miniLevel">My workspace</small></div></div>
+ </div>
+</aside>
+<main class="main">
+ <header class="topbar">
+  <div class="top-left"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div><div class="page-title" id="topTitle">Dashboard</div><div class="page-subtitle" id="topSubtitle">Your academic overview</div></div></div>
+  <div class="top-actions"><button class="icon-btn" id="themeBtn" title="Change theme">☾</button><button class="primary-btn" id="quickAdd">＋ Add New</button></div>
+ </header>
+ <div class="content">
+  <section class="page active" id="page-dashboard">
+   <div class="welcome"><div><h1 id="greeting">Welcome back!</h1><p>Here's what's happening with your studies.</p></div><div class="date-pill" id="todayDate"></div></div>
+   <div class="grid stats">
+    <div class="card"><div class="stat-top"><span class="stat-label">Current GPA</span><span class="stat-icon">✦</span></div><div class="stat-value" id="dashGpa">—</div><div class="stat-note" id="dashGpaNote">Add assessment results</div></div>
+    <div class="card"><div class="stat-top"><span class="stat-label">My Subjects</span><span class="stat-icon">▤</span></div><div class="stat-value" id="dashSubjects">0</div><div class="stat-note">Active subjects</div></div>
+    <div class="card"><div class="stat-top"><span class="stat-label">Pending Tasks</span><span class="stat-icon">▣</span></div><div class="stat-value" id="dashPending">0</div><div class="stat-note">Assignments to complete</div></div>
+    <div class="card"><div class="stat-top"><span class="stat-label">Assessments</span><span class="stat-icon">✓</span></div><div class="stat-value" id="dashAssessments">0</div><div class="stat-note">Quizzes and exams recorded</div></div>
+   </div>
+   <div class="grid two-col">
+    <div class="card"><div class="card-head"><div><h2>My Subjects</h2><p>Your current academic courses</p></div><button class="text-link" data-go="subjects">View all →</button></div><div class="grid subject-grid" id="dashSubjectList"></div></div>
+    <div class="card"><div class="card-head"><div><h2>Upcoming Assignments</h2><p>Keep track of your deadlines</p></div><button class="text-link" data-go="assignments">View all →</button></div><div class="list" id="dashAssignments"></div></div>
+   </div>
+   <div class="grid two-col">
+    <div class="card"><div class="card-head"><div><h2>Recent Results</h2><p>Your latest recorded marks</p></div><button class="text-link" data-go="assessments">View all →</button></div><div class="list" id="dashResults"></div></div>
+    <div class="card"><div class="card-head"><div><h2>Study Snapshot</h2><p>Your academic setup</p></div><button class="text-link" data-go="settings">Edit profile →</button></div><div id="studySnapshot"></div></div>
+   </div>
   </section>
 
-  <section class="search-section">
-    <div class="container">
-      <div class="search-box">
-        <span class="search-symbol">⌕</span>
-        <input id="searchInput" type="search" placeholder="Search calculators, study tools and more..." aria-label="Search tools">
-        <button class="btn btn-small" id="searchBtn">Search</button>
-      </div>
-    </div>
+  <section class="page" id="page-subjects">
+   <div class="welcome"><div><h1>My Subjects</h1><p>Organize the courses and subjects you are studying.</p></div><button class="primary-btn" data-add="subject">＋ Add Subject</button></div>
+   <div class="toolbar"><div class="toolbar-left"><input class="search-field" id="subjectSearch" placeholder="Search subjects..."></div><div class="toolbar-right"><span class="muted" id="subjectCount"></span></div></div>
+   <div class="grid subject-grid" id="subjectList"></div>
   </section>
 
-  <section class="section" id="categories">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">Explore your possibilities</span>
-          <h2>Everything in one place</h2>
-          <p>Choose a category and find the right tools for your academic journey.</p>
-        </div>
-      </div>
-
-      <div class="category-grid">
-        <button class="category-card" data-category="calculators">
-          <div class="category-icon" style="background:#eeeeff">📊</div>
-          <strong>Academic Calculators</strong>
-          <small>GPA, grades, attendance and more</small>
-        </button>
-        <button class="category-card" data-category="planning">
-          <div class="category-icon" style="background:#e5f8f4">🗓️</div>
-          <strong>Study Planner</strong>
-          <small>Plan your time and tasks</small>
-        </button>
-        <button class="category-card" data-category="writing">
-          <div class="category-icon" style="background:#fff1e5">✍️</div>
-          <strong>Writing Tools</strong>
-          <small>Words, reading and writing</small>
-        </button>
-        <button class="category-card" data-category="learning">
-          <div class="category-icon" style="background:#eaf1ff">🧠</div>
-          <strong>Quiz & Learning</strong>
-          <small>Practice and test your knowledge</small>
-        </button>
-        <button class="category-card" data-category="math">
-          <div class="category-icon" style="background:#fcecf4">➗</div>
-          <strong>Math & Science</strong>
-          <small>Fractions and unit conversions</small>
-        </button>
-        <button class="category-card" data-category="planning">
-          <div class="category-icon" style="background:#fff6df">⏱️</div>
-          <strong>Productivity</strong>
-          <small>Focus and manage your time</small>
-        </button>
-        <button class="category-card" data-category="documents">
-          <div class="category-icon" style="background:#e8f5ff">📄</div>
-          <strong>PDF & Documents</strong>
-          <small>Document tools coming next</small>
-        </button>
-        <button class="category-card" data-category="resources">
-          <div class="category-icon" style="background:#e9f8e9">🌱</div>
-          <strong>Student Resources</strong>
-          <small>Guides and learning strategies</small>
-        </button>
-      </div>
-    </div>
+  <section class="page" id="page-assignments">
+   <div class="welcome"><div><h1>Assignments</h1><p>Manage your coursework, deadlines and progress.</p></div><button class="primary-btn" data-add="assignment">＋ Add Assignment</button></div>
+   <div class="toolbar"><div class="toolbar-left"><select class="field" id="assignmentFilter"><option value="all">All assignments</option><option value="Pending">Pending</option><option value="In Progress">In Progress</option><option value="Completed">Completed</option></select><input class="search-field" id="assignmentSearch" placeholder="Search assignments..."></div></div>
+   <div class="card"><div class="table-wrap"><table><thead><tr><th>Assignment</th><th>Subject</th><th>Due date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="assignmentTable"></tbody></table></div></div>
   </section>
 
-  <section class="section tools-section" id="tools">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">Your academic toolkit</span>
-          <h2>Popular student tools</h2>
-          <p>Simple, practical tools to help you manage your studies more effectively.</p>
-        </div>
-        <span class="text-link" id="toolCount">15 tools available</span>
-      </div>
-
-      <div class="filter-row" id="filterRow">
-        <button class="filter-btn active" data-filter="all">All Tools</button>
-        <button class="filter-btn" data-filter="calculators">Calculators</button>
-        <button class="filter-btn" data-filter="planning">Planning</button>
-        <button class="filter-btn" data-filter="writing">Writing</button>
-        <button class="filter-btn" data-filter="learning">Learning</button>
-        <button class="filter-btn" data-filter="math">Math & Science</button>
-      </div>
-
-      <div class="tools-grid" id="toolsGrid"></div>
-    </div>
+  <section class="page" id="page-assessments">
+   <div class="welcome"><div><h1>Quizzes & Exams</h1><p>Record your test scores, marks and grades.</p></div><button class="primary-btn" data-add="assessment">＋ Add Result</button></div>
+   <div class="grid stats">
+    <div class="card"><div class="stat-label">Total Assessments</div><div class="stat-value" id="assessmentTotal">0</div></div>
+    <div class="card"><div class="stat-label">Average Score</div><div class="stat-value" id="assessmentAverage">—</div></div>
+    <div class="card"><div class="stat-label">Best Score</div><div class="stat-value" id="assessmentBest">—</div></div>
+    <div class="card"><div class="stat-label">Recorded Exams</div><div class="stat-value" id="examTotal">0</div></div>
+   </div>
+   <div class="card"><div class="card-head"><div><h2>Assessment History</h2><p>All your saved marks and results</p></div></div><div class="table-wrap"><table><thead><tr><th>Assessment</th><th>Subject</th><th>Type</th><th>Marks</th><th>Percentage</th><th>Actions</th></tr></thead><tbody id="assessmentTable"></tbody></table></div></div>
   </section>
 
-  <section class="section" id="workspace">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">Stay organized</span>
-          <h2>A workspace built around your goals</h2>
-          <p>Build better study habits with simple ways to plan your day and stay focused.</p>
-        </div>
-      </div>
-
-      <div class="workspace-grid">
-        <div class="workspace-card">
-          <h3>🗓️ Plan your study day</h3>
-          <p>Break big academic goals into smaller, manageable tasks.</p>
-          <div class="workspace-visual">
-            <div class="task-row"><span class="task-dot"></span> Review lecture notes <span class="muted" style="margin-left:auto">Completed</span></div>
-            <div class="task-row"><span class="task-dot"></span> Practice mathematics <span class="muted" style="margin-left:auto">Done</span></div>
-            <div class="task-row"><span class="task-dot pending"></span> Prepare assignment <span class="muted" style="margin-left:auto">Pending</span></div>
-          </div>
-          <br>
-          <button class="btn btn-small" onclick="openTool('exam')">Try Exam Countdown</button>
-        </div>
-
-        <div class="workspace-card">
-          <h3>⏱️ Make time for deep focus</h3>
-          <p>Use focused study sessions and short breaks to maintain momentum.</p>
-          <div class="workspace-visual" style="display:grid;place-items:center;text-align:center">
-            <div style="font-size:35px">🍅</div>
-            <strong style="font-size:21px">25:00</strong>
-            <span class="muted" style="font-size:11px">A focused session starts here</span>
-          </div>
-          <br>
-          <button class="btn btn-small" onclick="openTool('pomodoro')">Start Focus Timer</button>
-        </div>
-      </div>
-    </div>
+  <section class="page" id="page-planner">
+   <div class="welcome"><div><h1>Study Planner</h1><p>Build a study routine that works for you.</p></div><button class="primary-btn" data-add="schedule">＋ Add Schedule</button></div>
+   <div class="card" style="margin-bottom:17px"><div class="card-head"><div><h2>Weekly Timetable</h2><p>Your personal study schedule</p></div></div><div class="week-grid" id="weekGrid"></div></div>
+   <div class="card"><div class="card-head"><div><h2>My Study Tasks</h2><p>Plan your next study activities</p></div><button class="secondary-btn" data-add="assignment">＋ Add Task</button></div><div class="list" id="plannerTasks"></div></div>
   </section>
 
-  <section class="section" id="resources" style="background:var(--surface2)">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">Learn and improve</span>
-          <h2>Student success resources</h2>
-          <p>Explore practical ideas that can make your learning journey more productive.</p>
-        </div>
-      </div>
-      <div class="resource-grid">
-        <article class="resource-card">
-          <span class="resource-number">GUIDE 01</span>
-          <h3>How to Build a Better Study Routine</h3>
-          <p>Learn how to create a realistic routine, set priorities and make time for revision.</p>
-          <a class="text-link" href="#study-tips">Explore study tips →</a>
-        </article>
-        <article class="resource-card">
-          <span class="resource-number">GUIDE 02</span>
-          <h3>Simple Exam Preparation Strategies</h3>
-          <p>Use active recall, practice questions and spaced revision to prepare effectively.</p>
-          <a class="text-link" href="#study-tips">Explore study tips →</a>
-        </article>
-        <article class="resource-card">
-          <span class="resource-number">GUIDE 03</span>
-          <h3>How to Manage Your Study Time</h3>
-          <p>Discover ways to balance assignments, revision, personal time and daily responsibilities.</p>
-          <a class="text-link" href="#study-tips">Explore study tips →</a>
-        </article>
-      </div>
-    </div>
+  <section class="page" id="page-records">
+   <div class="welcome"><div><h1>Academic Records</h1><p>Keep your semester history and academic results in one place.</p></div><button class="primary-btn" data-add="semester">＋ Add Semester</button></div>
+   <div class="notice">Your academic history belongs to you. Add previous semesters manually or record a new semester as you progress.</div>
+   <div class="grid stats">
+    <div class="card"><div class="stat-label">Overall CGPA</div><div class="stat-value" id="recordCgpa">—</div></div>
+    <div class="card"><div class="stat-label">Semesters</div><div class="stat-value" id="recordSemesters">0</div></div>
+    <div class="card"><div class="stat-label">Recorded Credits</div><div class="stat-value" id="recordCredits">0</div></div>
+    <div class="card"><div class="stat-label">Academic Level</div><div class="stat-value" style="font-size:17px" id="recordLevel">—</div></div>
+   </div>
+   <div class="card"><div class="card-head"><div><h2>Semester History</h2><p>Your past and current academic periods</p></div></div><div class="table-wrap"><table><thead><tr><th>Semester / Term</th><th>Academic Year</th><th>GPA</th><th>Credits</th><th>Status</th><th>Actions</th></tr></thead><tbody id="semesterTable"></tbody></table></div></div>
   </section>
 
-  <section class="section" id="study-tips">
-    <div class="container">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">A smarter way to learn</span>
-          <h2>Small habits can make a difference</h2>
-          <p>Try these practical learning habits and adjust them to your own schedule.</p>
-        </div>
-      </div>
-      <div class="workspace-grid">
-        <div class="workspace-card">
-          <h3>1. Use active recall</h3>
-          <p>Instead of only rereading your notes, close your book and try to explain the topic from memory. Then check what you missed.</p>
-        </div>
-        <div class="workspace-card">
-          <h3>2. Break work into sessions</h3>
-          <p>Divide large assignments into smaller tasks. Short, focused sessions can make difficult work feel more manageable.</p>
-        </div>
-        <div class="workspace-card">
-          <h3>3. Review at intervals</h3>
-          <p>Return to important material over several days rather than trying to memorize everything in one sitting.</p>
-        </div>
-        <div class="workspace-card">
-          <h3>4. Track your progress</h3>
-          <p>Keep track of completed tasks and learning goals. Use your progress to decide what needs more attention.</p>
-        </div>
-      </div>
-    </div>
+  <section class="page" id="page-reports">
+   <div class="welcome"><div><h1>Reports & Analytics</h1><p>Understand your academic performance over time.</p></div></div>
+   <div class="grid two-col">
+    <div class="card"><div class="card-head"><div><h2>Semester GPA Trend</h2><p>Your recorded semester performance</p></div></div><div class="chart" id="gpaChart"></div></div>
+    <div class="card"><div class="card-head"><div><h2>Performance Overview</h2><p>Based on your recorded assessments</p></div></div><div id="performanceOverview"></div></div>
+   </div>
+   <div class="card"><div class="card-head"><div><h2>Subject Performance</h2><p>Average score in each subject</p></div></div><div id="subjectPerformance"></div></div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="cta">
-        <div>
-          <h2>Ready to make studying simpler?</h2>
-          <p>Choose a tool, take the next step and keep moving toward your goals.</p>
-        </div>
-        <a href="#tools" class="btn">Explore StudyPilot ↗</a>
-      </div>
+  <section class="page" id="page-settings">
+   <div class="welcome"><div><h1>Settings & Profile</h1><p>Manage your personal and academic workspace.</p></div></div>
+   <div class="grid two-col">
+    <div class="card"><div class="card-head"><div><h2>My Profile</h2><p>Your education and personal details</p></div><button class="secondary-btn" id="editProfile">Edit Profile</button></div><div id="profileDetails"></div></div>
+    <div class="card"><div class="card-head"><div><h2>Workspace Preferences</h2><p>Customize your StudyPilot experience</p></div></div>
+     <div class="settings-row"><div><strong>Appearance</strong><small>Switch between light and dark theme</small></div><button class="secondary-btn" id="settingsTheme">Change</button></div>
+     <div class="settings-row"><div><strong>Export my data</strong><small>Download a backup of your workspace</small></div><button class="secondary-btn" id="exportData">Export</button></div>
+     <div class="settings-row"><div><strong>Import backup</strong><small>Restore a previously exported backup</small></div><button class="secondary-btn" id="importDataBtn">Import</button><input type="file" id="importFile" accept="application/json" hidden></div>
+     <div class="settings-row"><div><strong>Reset workspace</strong><small>Clear this browser's StudyPilot data</small></div><button class="danger-btn" id="resetData">Reset</button></div>
     </div>
+   </div>
+   <div class="card" style="margin-top:17px"><h2 class="section-heading">About StudyPilot</h2><p class="muted" style="font-size:12px">StudyPilot is your personal academic workspace. This version stores your information locally in this browser. Account registration and secure cloud synchronization will be added in a later development phase.</p></div>
   </section>
+ </div>
 </main>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-about">
-        <a href="#" class="brand"><span class="brand-mark">✦</span><span>Study<span>Pilot</span></span></a>
-        <p>A practical learning and productivity space designed to help students organize their studies and build better learning habits.</p>
-      </div>
-      <div class="footer-col">
-        <strong>Explore</strong>
-        <a href="#home">Home</a>
-        <a href="#categories">Categories</a>
-        <a href="#tools">All Tools</a>
-        <a href="#resources">Resources</a>
-      </div>
-      <div class="footer-col">
-        <strong>Popular Tools</strong>
-        <a href="#tools" onclick="openTool('gpa')">GPA Calculator</a>
-        <a href="#tools" onclick="openTool('attendance')">Attendance Calculator</a>
-        <a href="#tools" onclick="openTool('word')">Word Counter</a>
-        <a href="#tools" onclick="openTool('pomodoro')">Focus Timer</a>
-      </div>
-      <div class="footer-col">
-        <strong>Information</strong>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="privacy-policy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Use</a>
-      </div>
-    </div>
-    <div class="copyright">
-      <span>© <span id="year"></span> StudyPilot. All rights reserved.</span>
-      <span>Built to help students learn smarter.</span>
-    </div>
-  </div>
-</footer>
-
-<div class="modal" id="toolModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h2 id="modalTitle">Student Tool</h2>
-      <button class="close-btn" id="closeModal" aria-label="Close">×</button>
-    </div>
-    <div id="toolContent"></div>
-  </div>
 </div>
 
+<div class="modal-backdrop" id="modalBackdrop">
+ <div class="modal"><div class="modal-head"><h2 id="modalTitle">Add item</h2><button class="modal-close" id="modalClose">×</button></div><form id="modalForm"><div id="modalFields"></div><div class="modal-actions"><button type="button" class="secondary-btn" id="modalCancel">Cancel</button><button type="submit" class="primary-btn">Save</button></div></form></div>
+</div>
+
+<div class="onboarding" id="onboarding">
+ <div class="onboard-box">
+  <div class="onboard-brand"><div class="brand-icon">S</div><div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your academic workspace</div></div></div>
+  <h1>Let's set up your study space.</h1>
+  <p>Tell us a little about your education. We'll create a starting structure that you can customize anytime.</p>
+  <form id="onboardForm">
+   <label class="field-label">Choose your education level</label>
+   <div class="level-grid">
+    <button type="button" class="level-option selected" data-level="University"><strong>🎓 University</strong><small>Degree, department and semesters</small></button>
+    <button type="button" class="level-option" data-level="College"><strong>📚 College</strong><small>Intermediate and college studies</small></button>
+    <button type="button" class="level-option" data-level="School"><strong>🏫 School</strong><small>Class, subjects and academic year</small></button>
+    <button type="button" class="level-option" data-level="Self-Learner"><strong>✏️ Self-Learner</strong><small>Personal learning goals and topics</small></button>
+   </div>
+   <div class="onboard-form">
+    <div class="form-group"><label class="field-label">Your name</label><input class="field" name="name" placeholder="e.g. Alex Morgan" required></div>
+    <div class="form-group"><label class="field-label">Institution name</label><input class="field" name="institution" placeholder="School, college or university"></div>
+    <div class="form-group"><label class="field-label" id="programLabel">Degree / Program</label><input class="field" name="program" placeholder="e.g. BS Computer Science"></div>
+    <div class="form-group"><label class="field-label">Current year / class</label><input class="field" name="year" placeholder="e.g. Year 2 / Class 10"></div>
+    <div class="form-group"><label class="field-label">Current semester / term</label><input class="field" name="semester" placeholder="e.g. Semester 3 / Term 1"></div>
+    <div class="form-group"><label class="field-label">Academic year</label><input class="field" name="academicYear" placeholder="e.g. 2026–2027"></div>
+    <div class="form-group full"><label class="field-label">Subjects (separate with commas)</label><input class="field" name="subjects" placeholder="e.g. Mathematics, English, Physics"></div>
+   </div>
+   <div class="onboard-actions"><span class="muted" style="font-size:10px">You can change all these details later.</span><button class="primary-btn" type="submit">Create My Workspace →</button></div>
+  </form>
+ </div>
+</div>
+<div class="toast" id="toast"></div>
+
 <script>
-  const tools = [
-    {id:"gpa",name:"GPA Calculator",category:"calculators",icon:"📊",tag:"Popular",desc:"Calculate your semester GPA using course grades and credit hours."},
-    {id:"cgpa",name:"CGPA Calculator",category:"calculators",icon:"🎓",tag:"Popular",desc:"Calculate cumulative GPA across multiple semesters."},
-    {id:"percentage",name:"Percentage Calculator",category:"calculators",icon:"％",tag:"Essential",desc:"Calculate percentages, scores and percentage changes."},
-    {id:"grade",name:"Grade Calculator",category:"calculators",icon:"🏅",tag:"Essential",desc:"Find your grade from marks and total possible marks."},
-    {id:"attendance",name:"Attendance Calculator",category:"calculators",icon:"📅",tag:"Popular",desc:"Check your attendance percentage and remaining class allowance."},
-    {id:"final",name:"Final Grade Calculator",category:"calculators",icon:"🎯",tag:"Useful",desc:"Find the score you need on your final exam to reach your target."},
-    {id:"weighted",name:"Weighted Average Calculator",category:"calculators",icon:"⚖️",tag:"Useful",desc:"Calculate weighted results from scores and their weights."},
-    {id:"fraction",name:"Fraction Calculator",category:"math",icon:"➗",tag:"Math",desc:"Add, subtract, multiply and divide fractions."},
-    {id:"unit",name:"Unit Converter",category:"math",icon:"📐",tag:"Math",desc:"Convert common length, weight and temperature units."},
-    {id:"hours",name:"Study Hours Calculator",category:"planning",icon:"⏰",tag:"Planning",desc:"Calculate your total study time from hours and minutes."},
-    {id:"pomodoro",name:"Pomodoro Focus Timer",category:"planning",icon:"🍅",tag:"Productivity",desc:"Work in focused sessions with a built-in break timer."},
-    {id:"exam",name:"Exam Countdown",category:"planning",icon:"🗓️",tag:"Planning",desc:"Find out how many days remain until your exam."},
-    {id:"word",name:"Word Counter",category:"writing",icon:"✍️",tag:"Writing",desc:"Count words, sentences, paragraphs and reading time."},
-    {id:"character",name:"Character Counter",category:"writing",icon:"🔤",tag:"Writing",desc:"Count characters with and without spaces."},
-    {id:"quiz",name:"Quiz Maker",category:"learning",icon:"🧠",tag:"Learning",desc:"Create a multiple-choice quiz and test your knowledge."}
-  ];
-
-  const toolsGrid = document.getElementById("toolsGrid");
-  const modal = document.getElementById("toolModal");
-  const toolContent = document.getElementById("toolContent");
-  const modalTitle = document.getElementById("modalTitle");
-  let activeFilter = "all";
-  let timerInterval = null;
-  let timerSeconds = 25 * 60;
-  let timerRunning = false;
-  let timerMode = "focus";
-
-  const categoryNames = {
-    calculators:"Calculators",planning:"Planning",writing:"Writing",
-    learning:"Learning",math:"Math & Science",documents:"Documents"
-  };
-
-  function renderTools() {
-    const query = document.getElementById("searchInput").value.trim().toLowerCase();
-    const filtered = tools.filter(tool => {
-      const matchesFilter = activeFilter === "all" || tool.category === activeFilter;
-      const matchesSearch = !query || (tool.name + " " + tool.desc + " " + tool.category).toLowerCase().includes(query);
-      return matchesFilter && matchesSearch;
-    });
-
-    toolsGrid.innerHTML = "";
-    document.getElementById("toolCount").textContent = filtered.length + " tools shown";
-
-    if (!filtered.length) {
-      toolsGrid.innerHTML = '<div class="empty-state"><div style="font-size:30px">🔎</div><h3>No tools found</h3><p>Try another search or category.</p></div>';
-      return;
-    }
-
-    filtered.forEach(tool => {
-      const card = document.createElement("article");
-      card.className = "tool-card";
-      card.innerHTML = `
-        <div class="tool-top">
-          <span class="tool-icon">${tool.icon}</span>
-          <span class="tool-tag">${tool.tag}</span>
-        </div>
-        <h3>${tool.name}</h3>
-        <p>${tool.desc}</p>
-        <button class="tool-open" data-open="${tool.id}">Open Tool →</button>
-      `;
-      toolsGrid.appendChild(card);
-    });
-  }
-
-  function setFilter(filter) {
-    activeFilter = filter;
-    document.querySelectorAll(".filter-btn").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.filter === filter);
-    });
-    renderTools();
-    document.getElementById("tools").scrollIntoView({behavior:"smooth"});
-  }
-
-  document.getElementById("filterRow").addEventListener("click", e => {
-    const btn = e.target.closest("[data-filter]");
-    if (btn) setFilter(btn.dataset.filter);
-  });
-
-  document.querySelectorAll(".category-card").forEach(card => {
-    card.addEventListener("click", () => setFilter(card.dataset.category));
-  });
-
-  document.getElementById("searchInput").addEventListener("input", () => {
-    activeFilter = "all";
-    document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.toggle("active",btn.dataset.filter === "all"));
-    renderTools();
-  });
-  document.getElementById("searchBtn").addEventListener("click", () => {
-    document.getElementById("tools").scrollIntoView({behavior:"smooth"});
-    renderTools();
-  });
-
-  toolsGrid.addEventListener("click", e => {
-    const btn = e.target.closest("[data-open]");
-    if (btn) openTool(btn.dataset.open);
-  });
-
-  function field(label,id,type="number",placeholder="",value="") {
-    return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" placeholder="${placeholder}" value="${value}" ${type==="number"?'step="any"':''}></div>`;
-  }
-
-  function formButton(label="Calculate") {
-    return `<div class="form-actions"><button class="btn" type="submit">${label}</button><button class="btn btn-outline" type="reset">Clear</button></div>`;
-  }
-
-  function showResult(html) {
-    const result = document.getElementById("toolResult");
-    if (!result) return;
-    result.innerHTML = html;
-    result.classList.add("show");
-  }
-
-  function numberValue(id) {
-    const el = document.getElementById(id);
-    return el ? Number(el.value) : NaN;
-  }
-
-  function openTool(id) {
-    const tool = tools.find(item => item.id === id);
-    if (!tool) return;
-
-    modalTitle.textContent = tool.name;
-    toolContent.innerHTML = "";
-    modal.classList.add("show");
-
-    const views = {
-      gpa: renderGPA,
-      cgpa: renderCGPA,
-      percentage: renderPercentage,
-      grade: renderGrade,
-      attendance: renderAttendance,
-      final: renderFinal,
-      weighted: renderWeighted,
-      fraction: renderFraction,
-      unit: renderUnit,
-      hours: renderHours,
-      pomodoro: renderPomodoro,
-      exam: renderExam,
-      word: renderWord,
-      character: renderCharacter,
-      quiz: renderQuiz
-    };
-
-    views[id]();
-  }
-
-  function renderGPA() {
-    toolContent.innerHTML = `
-      <p class="muted" style="font-size:13px">Enter the grade points and credit hours for each course. Add as many courses as you need.</p>
-      <form id="gpaForm">
-        <div id="gpaRows"></div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-outline" id="addCourse">+ Add Course</button>
-          <button class="btn" type="submit">Calculate GPA</button>
-        </div>
-      </form>
-      <div class="result" id="toolResult"></div>
-      <p class="small-note">Use your institution's grade-point scale. This calculator does not assume a universal grading system.</p>
-    `;
-    let count = 0;
-    const rows = document.getElementById("gpaRows");
-    function addRow() {
-      count++;
-      const row = document.createElement("div");
-      row.className = "tool-form";
-      row.style.marginBottom = "12px";
-      row.innerHTML = `
-        <div class="field"><label>Course ${count} — Grade points</label><input class="gp-grade" type="number" min="0" step="any" placeholder="e.g. 3.7" required></div>
-        <div class="field"><label>Credit hours</label><input class="gp-credit" type="number" min="0.01" step="any" placeholder="e.g. 3" required></div>`;
-      rows.appendChild(row);
-    }
-    addRow();addRow();addRow();
-    document.getElementById("addCourse").onclick = addRow;
-    document.getElementById("gpaForm").onsubmit = e => {
-      e.preventDefault();
-      let points = 0, credits = 0;
-      const grades = [...document.querySelectorAll(".gp-grade")];
-      const hours = [...document.querySelectorAll(".gp-credit")];
-      for (let i=0;i<grades.length;i++) {
-        const g=Number(grades[i].value), c=Number(hours[i].value);
-        if (!grades[i].value || !hours[i].value || g<0 || c<=0) return showResult("Please enter valid grade points and credit hours for every course.");
-        points += g*c; credits += c;
-      }
-      showResult(`<div class="result-value">${(points/credits).toFixed(2)}</div><strong>Estimated GPA</strong><br>Total credit hours: ${credits}<br>Weighted grade points: ${points.toFixed(2)}`);
-    };
-  }
-
-  function renderCGPA() {
-    toolContent.innerHTML = `
-      <p class="muted" style="font-size:13px">Enter your previous CGPA and completed credits, then add your latest semester GPA and credits.</p>
-      <form id="cgpaForm" class="tool-form">
-        ${field("Previous CGPA","oldCgpa","number","e.g. 3.25")}
-        ${field("Previously completed credits","oldCredits","number","e.g. 45")}
-        ${field("Current semester GPA","newGpa","number","e.g. 3.70")}
-        ${field("Current semester credits","newCredits","number","e.g. 15")}
-        ${formButton()}
-      </form><div class="result" id="toolResult"></div>`;
-    document.getElementById("cgpaForm").onsubmit = e => {
-      e.preventDefault();
-      const old=numberValue("oldCgpa"),oc=numberValue("oldCredits"),now=numberValue("newGpa"),nc=numberValue("newCredits");
-      if ([old,oc,now,nc].some(v=>!Number.isFinite(v)||v<0)||oc+nc===0) return showResult("Please enter valid values. Total credits must be greater than zero.");
-      const result=(old*oc+now*nc)/(oc+nc);
-      showResult(`<div class="result-value">${result.toFixed(2)}</div><strong>Estimated cumulative GPA</strong><br>Total completed credits: ${oc+nc}`);
-    };
-  }
-
-  function renderPercentage() {
-    toolContent.innerHTML = `
-      <form id="percentageForm" class="tool-form">
-        ${field("Your obtained value","pValue","number","e.g. 45")}
-        ${field("Total value","pTotal","number","e.g. 60")}
-        ${formButton()}
-      </form><div class="result" id="toolResult"></div>`;
-    document.getElementById("percentageForm").onsubmit = e => {
-      e.preventDefault();
-      const a=numberValue("pValue"),b=numberValue("pTotal");
-      if (!Number.isFinite(a)||!Number.isFinite(b)||b<=0) return showResult("Enter valid values. Total value must be greater than zero.");
-      showResult(`<div class="result-value">${(a/b*100).toFixed(2)}%</div><strong>Percentage</strong><br>${a} out of ${b}`);
-    };
-  }
-
-  function renderGrade() {
-    toolContent.innerHTML = `
-      <form id="gradeForm" class="tool-form">
-        ${field("Marks obtained","gObtained","number","e.g. 82")}
-        ${field("Total marks","gTotal","number","e.g. 100")}
-        ${field("Passing percentage (optional)","gPass","number","e.g. 40","40")}
-        ${formButton()}
-      </form><div class="result" id="toolResult"></div>
-      <p class="small-note">Grade boundaries differ between schools and universities. This tool uses a simple illustrative percentage scale.</p>`;
-    document.getElementById("gradeForm").onsubmit = e => {
-      e.preventDefault();
-      const a=numberValue("gObtained"),b=numberValue("gTotal"),pass=numberValue("gPass");
-      if (!Number.isFinite(a)||!Number.isFinite(b)||b<=0||a<0||a>b||pass<0||pass>100) return showResult("Enter valid marks and passing percentage.");
-      const p=a/b*100;
-      let grade=p>=90?"A+":p>=80?"A":p>=70?"B":p>=60?"C":p>=50?"D":p>=pass?"E":"F";
-      showResult(`<div class="result-value">${grade}</div><strong>${p.toFixed(2)}% — ${p>=pass?"Pass":"Below passing mark"}</strong><br>Obtained marks: ${a}/${b}`);
-    };
-  }
-
-  function renderAttendance() {
-    toolContent.innerHTML = `
-      <form id="attendanceForm" class="tool-form">
-        ${field("Classes attended","attended","number","e.g. 32")}
-        ${field("Total classes held","totalClasses","number","e.g. 40")}
-        ${field("Required attendance (%)","requiredAttendance","number","e.g. 75","75")}
-        ${formButton()}
-      </form><div class="result" id="toolResult"></div>`;
-    document.getElementById("attendanceForm").onsubmit = e => {
-      e.preventDefault();
-      const a=numberValue("attended"),t=numberValue("totalClasses"),r=numberValue("requiredAttendance");
-      if (![a,t,r].every(Number.isFinite)||t<=0||a<0||a>t||r<=0||r>100) return showResult("Please enter valid attendance details.");
-      const p=a/t*100;
-      let message="";
-      if (p>=r) {
-        const canMiss=Math.floor((a-r*t/100)/(r/100));
-        message=`You can miss approximately ${Math.max(0,canMiss)} future classes in a row and remain at or above your target, assuming no other classes are attended.`;
-      } else {
-        const need=Math.ceil((r*t/100-a)/(1-r/100));
-        message=`You need to attend approximately ${need} consecutive classes to reach your target, assuming no more classes are missed.`;
-      }
-      showResult(`<div class="result-value">${p.toFixed(2)}%</div><strong>Current attendance</strong><br>${message}`);
-    };
-  }
-
-  function renderFinal() {
-    toolContent.innerHTML = `
-      <p class="muted" style="font-size:13px">Find the exam score needed to achieve your desired overall course grade.</p>
-      <form id="finalForm" class="tool-form">
-        ${field("Current course grade (%)","currentGrade","number","e.g. 78")}
-        ${field("Final exam weight (%)","examWeight","number","e.g. 30")}
-        ${field("Desired overall grade (%)","targetGrade","number","e.g. 85")}
-        ${formButton()}
-      </form><div class="result" id="toolResult"></div>`;
-    document.getElementById("finalForm").onsubmit = e => {
-      e.preventDefault();
-      const c=numberValue("currentGrade"),w=numberValue("examWeight"),t=numberValue("targetGrade");
-      if (![c,w,t].every(Number.isFinite)||c<0||c>100||w<=0||w>100||t<0||t>100) return showResult("Enter valid percentages. Exam weight must be between 0 and 100.");
-      const need=(t-c*(1-w/100))/(w/100);
-      showResult(need<=0?`<div class="result-value">0%</div><strong>Your current grade already meets your target.</strong>`:need>100?`<strong>Your target may not be achievable through the final exam alone.</strong><br>Required exam score: ${need.toFixed(2)}%`: `<div class="result-value">${need.toFixed(2)}%</div><strong>Required final exam score</strong><br>You need at least this score to reach your target.`);
-    };
-  }
-
-  function renderWeighted() {
-    toolContent.innerHTML = `
-      <p class="muted" style="font-size:13px">Enter each score and its corresponding weight. The weights should add up to 100% or another consistent total.</p>
-      <form id="weightedForm">
-        <div id="weightedRows"></div>
-        <div class="form-actions"><button class="btn btn-outline" type="button" id="addWeight">+ Add score</button><button class="btn" type="submit">Calculate average</button></div>
-      </form><div class="result" id="toolResult"></div>`;
-    const rows=document.getElementById("weightedRows");
-    let count=0;
-    function add() {
-      count++;
-      const row=document.createElement("div");
-      row.className="tool-form";
-      row.style.marginBottom="10px";
-      row.innerHTML=`<div class="field"><label>Score ${count}</label><input class="weight-score" type="number" step="any" required placeholder="e.g. 85"></div><div class="field"><label>Weight</label><input class="weight-value" type="number" step="any" min="0" required placeholder="e.g. 30"></div>`;
-      rows.appendChild(row);
-    }
-    add();add();add();
-    document.getElementById("addWeight").onclick=add;
-    document.getElementById("weightedForm").onsubmit=e=>{
-      e.preventDefault();
-      const scores=[...document.querySelectorAll(".weight-score")].map(x=>Number(x.value));
-      const weights=[...document.querySelectorAll(".weight-value")].map(x=>Number(x.value));
-      if(scores.some((v,i)=>!Number.isFinite(v)||!Number.isFinite(weights[i])||weights[i]<0)) return showResult("Enter valid scores and non-negative weights.");
-      const total=weights.reduce((a,b)=>a+b,0);
-      if(total<=0) return showResult("The total weight must be greater than zero.");
-      const result=scores.reduce((sum,v,i)=>sum+v*weights[i],0)/total;
-      showResult(`<div class="result-value">${result.toFixed(2)}</div><strong>Weighted average</strong><br>Total weight: ${total}`);
-    };
-  }
-
-  function renderFraction() {
-    toolContent.innerHTML = `
-      <form id="fractionForm" class="tool-form">
-        ${field("First numerator","fN1","number","e.g. 1")}
-        ${field("First denominator","fD1","number","e.g. 2")}
-        ${field("Second numerator","fN2","number","e.g. 1")}
-        ${field("Second denominator","fD2","number","e.g. 3")}
-        <div class="field full"><label>Operation</label><select id="fractionOp"><option value="+">Add (+)</option><option value="-">Subtract (−)</option><option value="*">Multiply (×)</option><option value="/">Divide (÷)</option></select></div>
-        ${formButton("Calculate fraction")}
-      </form><div class="result" id="toolResult"></div>`;
-    document.getElementById("fractionForm").onsubmit=e=>{
-      e.preventDefault();
-      const a=numberValue("fN1"),b=numberValue("fD1"),c=numberValue("fN2"),d=numberValue("fD2"),op=document.getElementById("fractionOp").value;
-      if (![a,b,c,d].every(Number.isFinite)||b===0||d===0) return showResult("Enter valid numerators and non-zero denominators.");
-      let n,den;
-      if(op==="+"){n=a*d+c*b;den=b*d;}
-      if(op==="-"){n=a*d-c*b;den=b*d;}
-      if(op==="*"){n=a*c;den=b*d;}
-      if(op==="/"){if(c===0)return showResult("Cannot divide by a zero fraction.");n=a*d;den=b*c;}
-      if(den<0){n=-n;den=-den;}
-      const gcd=(x,y)=>y===0?Math.abs(x):gcd(y,x%y);
-      const divisor=gcd(Math.round(n),Math.round(den));
-      const sn=Math.round(n/divisor),sd=Math.round(den/divisor);
-      showResult(`<div class="result-value">${sn}/${sd}</div><strong>Simplified result</strong><br>Decimal: ${(n/den).toFixed(6).replace(/0+$/,"").replace(/\.$/,"")}`);
-    };
-  }
-
-  function renderUnit() {
-    toolContent.innerHTML = `
-      <form id="unitForm" class="tool-form">
-        <div class="field"><label>Conversion type</label><select id="unitType"><option value="length">Length</option><option value="weight">Weight</option><option value="temp">Temperature</option></select></div>
-        <div class="field"><label>Value</label><input type="number" id="unitValue" step="any" placeholder="Enter a value" required></div>
-        <div class="field"><label>From</label><select id="unitFrom"></select></div>
-        <div class="field"><label>To</label><select id="unitTo"></select></div>
-        ${formButton("Convert")}
-      </form><div class="result" id="toolResult"></div>`;
-    const units={
-      length:{m:1,km:1000,cm:.01,mm:.001,ft:.3048,in:.0254,mi:1609.344},
-      weight:{kg:1,g:.001,mg:.000001,lb:.45359237,oz:.028349523125},
-      temp:{C:"C",F:"F",K:"K"}
-    };
-    const labels={m:"Meters",km:"Kilometers",cm:"Centimeters",mm:"Millimeters",ft:"Feet",in:"Inches",mi:"Miles",kg:"Kilograms",g:"Grams",mg:"Milligrams",lb:"Pounds",oz:"Ounces",C:"Celsius",F:"Fahrenheit",K:"Kelvin"};
-    const type=document.getElementById("unitType"),from=document.getElementById("unitFrom"),to=document.getElementById("unitTo");
-    function update(){
-      const keys=Object.keys(units[type.value]);
-      from.innerHTML=keys.map(k=>`<option value="${k}">${labels[k]}</option>`).join("");
-      to.innerHTML=keys.map(k=>`<option value="${k}">${labels[k]}</option>`).join("");
-      if(keys.length>1)to.selectedIndex=1;
-    }
-    type.onchange=update;update();
-    document.getElementById("unitForm").onsubmit=e=>{
-      e.preventDefault();
-      const value=numberValue("unitValue"),a=from.value,b=to.value;
-      if(!Number.isFinite(value))return showResult("Enter a valid value.");
-      let result;
-      if(type.value==="temp"){
-        let c=a==="C"?value:a==="F"?(value-32)*5/9:value-273.15;
-        result=b==="C"?c:b==="F"?c*9/5+32:c+273.15;
-      }else result=value*units[type.value][a]/units[type.value][b];
-      showResult(`<div class="result-value">${Number(result.toFixed(8))}</div><strong>${labels[b]}</strong><br>${value} ${labels[a]} = ${Number(result.toFixed(8))} ${labels[b]}`);
-    };
-  }
-
-  function renderHours() {
-    toolContent.innerHTML = `
-      <form id="hoursForm" class="tool-form">
-        ${field("Hours","studyHours","number","e.g. 2")}
-        ${field("Minutes","studyMinutes","number","e.g. 30","0")}
-        ${formButton("Calculate study time")}
-      </form><div class="result" id="toolResult"></div>`;
-    document.getElementById("hoursForm").onsubmit=e=>{
-      e.preventDefault();
-      const h=numberValue("studyHours"),m=numberValue("studyMinutes");
-      if(!Number.isFinite(h)||!Number.isFinite(m)||h<0||m<0||m>=60)return showResult("Enter non-negative hours and minutes from 0 to 59.");
-      const total=h*60+m;
-      showResult(`<div class="result-value">${Math.floor(total/60)}h ${total%60}m</div><strong>Total study time</strong><br>${total} minutes · ${(total/60).toFixed(2)} hours`);
-    };
-  }
-
-  function renderPomodoro() {
-    toolContent.innerHTML = `
-      <p class="muted" style="text-align:center;font-size:13px">Choose a focus session or a short break.</p>
-      <div class="timer-display" id="timerDisplay">25:00</div>
-      <div class="timer-controls">
-        <button class="btn" id="timerStart">Start</button>
-        <button class="btn btn-outline" id="timerPause">Pause</button>
-        <button class="btn btn-outline" id="timerReset">Reset</button>
-      </div>
-      <div class="form-actions" style="justify-content:center;margin-top:18px">
-        <button class="btn btn-outline btn-small" id="focusMode">Focus · 25 min</button>
-        <button class="btn btn-outline btn-small" id="breakMode">Break · 5 min</button>
-      </div>
-      <p class="small-note" style="text-align:center">Keep this tab open while the timer runs.</p>`;
-    stopTimer();
-    setTimerMode("focus");
-    document.getElementById("timerStart").onclick=startTimer;
-    document.getElementById("timerPause").onclick=stopTimer;
-    document.getElementById("timerReset").onclick=()=>{stopTimer();timerSeconds=timerMode==="focus"?1500:300;updateTimerDisplay();};
-    document.getElementById("focusMode").onclick=()=>setTimerMode("focus");
-    document.getElementById("breakMode").onclick=()=>setTimerMode("break");
-    updateTimerDisplay();
-  }
-
-  function setTimerMode(mode) {
-    stopTimer();
-    timerMode=mode;
-    timerSeconds=mode==="focus"?25*60:5*60;
-    updateTimerDisplay();
-  }
-  function updateTimerDisplay() {
-    const el=document.getElementById("timerDisplay");
-    if(!el)return;
-    const m=Math.floor(timerSeconds/60),s=timerSeconds%60;
-    el.textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
-  }
-  function startTimer() {
-    if(timerRunning)return;
-    timerRunning=true;
-    timerInterval=setInterval(()=>{
-      if(!document.getElementById("timerDisplay")){stopTimer();return;}
-      if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}
-      else {stopTimer();alert(timerMode==="focus"?"Focus session complete. Time for a break!":"Break complete. Ready to focus again?");}
-    },1000);
-  }
-  function stopTimer() {
-    timerRunning=false;
-    if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-  }
-
-  function renderExam() {
-    toolContent.innerHTML = `
-      <form id="examForm" class="tool-form">
-        <div class="field full"><label>Exam name</label><input id="examName" type="text" placeholder="e.g. Mathematics final exam"></div>
-        <div class="field full"><label>Exam date</label><input id="examDate" type="date" required></div>
-        ${formButton("Calculate countdown")}
-      </form><div class="result" id="toolResult"></div>`;
-    const dateInput=document.getElementById("examDate");
-    dateInput.min=new Date().toISOString().split("T")[0];
-    document.getElementById("examForm").onsubmit=e=>{
-      e.preventDefault();
-      const name=document.getElementById("examName").value.trim()||"Your exam";
-      const date=new Date(dateInput.value+"T00:00:00");
-      if(!dateInput.value||Number.isNaN(date.getTime()))return showResult("Choose a valid exam date.");
-      const today=new Date();today.setHours(0,0,0,0);
-      const days=Math.ceil((date-today)/86400000);
-      showResult(`<div class="result-value">${days<0?Math.abs(days):days}</div><strong>${days<0?"days since":"days until"} ${escapeHTML(name)}</strong><br>${date.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"})}${days===0?"<br>Your exam is today!":""}`);
-    };
-  }
-
-  function renderWord() {
-    toolContent.innerHTML = `
-      <div class="field"><label for="wordText">Paste or type your text</label><textarea id="wordText" placeholder="Start writing or paste your text here..."></textarea></div>
-      <div class="result show" id="wordStats">Words: 0 · Characters: 0 · Sentences: 0 · Paragraphs: 0 · Reading time: 0 min</div>`;
-    document.getElementById("wordText").addEventListener("input",updateTextStats);
-  }
-  function updateTextStats() {
-    const text=document.getElementById("wordText").value;
-    const words=text.trim()?text.trim().split(/\s+/).length:0;
-    const chars=text.length;
-    const sentences=text.trim()?(text.match(/[.!?]+(?=\s|$)/g)||[]).length:0;
-    const paragraphs=text.trim()?text.trim().split(/\n\s*\n/).filter(Boolean).length:0;
-    const minutes=words?Math.max(1,Math.ceil(words/200)):0;
-    document.getElementById("wordStats").innerHTML=`<strong>Word count:</strong> ${words}<br><strong>Characters:</strong> ${chars}<br><strong>Sentences:</strong> ${sentences}<br><strong>Paragraphs:</strong> ${paragraphs}<br><strong>Estimated reading time:</strong> ${minutes} min`;
-  }
-
-  function renderCharacter() {
-    toolContent.innerHTML = `
-      <div class="field"><label for="characterText">Enter your text</label><textarea id="characterText" placeholder="Type or paste text here..."></textarea></div>
-      <div class="result show" id="characterStats">Characters (with spaces): 0<br>Characters (without spaces): 0<br>Words: 0<br>Lines: 0</div>`;
-    document.getElementById("characterText").addEventListener("input",()=>{
-      const text=document.getElementById("characterText").value;
-      const words=text.trim()?text.trim().split(/\s+/).length:0;
-      document.getElementById("characterStats").innerHTML=`<strong>Characters (with spaces):</strong> ${text.length}<br><strong>Characters (without spaces):</strong> ${text.replace(/\s/g,"").length}<br><strong>Words:</strong> ${words}<br><strong>Lines:</strong> ${text?text.split(/\r\n|\r|\n/).length:0}`;
-    });
-  }
-
-  function renderQuiz() {
-    toolContent.innerHTML = `
-      <p class="muted" style="font-size:13px">Create a short multiple-choice quiz. Add a question, four options and choose the correct answer.</p>
-      <form id="quizForm">
-        <div id="quizRows"></div>
-        <div class="form-actions"><button type="button" class="btn btn-outline" id="addQuestion">+ Add question</button><button type="submit" class="btn">Create quiz</button></div>
-      </form>
-      <div id="quizPreview"></div>`;
-    let qCount=0;
-    const rows=document.getElementById("quizRows");
-    function addQuestion() {
-      qCount++;
-      const box=document.createElement("div");
-      box.className="workspace-card";
-      box.style.marginBottom="12px";
-      box.innerHTML=`
-        <div class="field"><label>Question ${qCount}</label><input class="q-text" type="text" required placeholder="Write your question"></div>
-        <div class="tool-form" style="margin-top:10px">
-          ${[1,2,3,4].map(n=>`<div class="field"><label>Option ${n}</label><input class="q-option" type="text" required placeholder="Option ${n}"></div>`).join("")}
-        </div>
-        <div class="field" style="margin-top:10px"><label>Correct answer</label><select class="q-correct"><option value="0">Option 1</option><option value="1">Option 2</option><option value="2">Option 3</option><option value="3">Option 4</option></select></div>`;
-      rows.appendChild(box);
-    }
-    addQuestion();
-    document.getElementById("addQuestion").onclick=addQuestion;
-    document.getElementById("quizForm").onsubmit=e=>{
-      e.preventDefault();
-      const questions=[...rows.children].map(box=>({
-        question:box.querySelector(".q-text").value.trim(),
-        options:[...box.querySelectorAll(".q-option")].map(x=>x.value.trim()),
-        correct:Number(box.querySelector(".q-correct").value)
-      }));
-      if(questions.some(q=>!q.question||q.options.some(x=>!x)))return;
-      const preview=document.getElementById("quizPreview");
-      preview.innerHTML=`<div class="result show" style="margin-top:20px"><strong>Your quiz is ready — ${questions.length} questions</strong><div id="quizPlay"></div><button class="btn" id="submitQuiz" style="margin-top:12px">Submit answers</button><div id="quizScore"></div></div>`;
-      const play=document.getElementById("quizPlay");
-      questions.forEach((q,i)=>{
-        const div=document.createElement("div");
-        div.className="quiz-question";
-        const heading=document.createElement("strong");
-        heading.textContent=(i+1)+". "+q.question;
-        div.appendChild(heading);
-        q.options.forEach((option,j)=>{
-          const label=document.createElement("label");
-          const radio=document.createElement("input");
-          radio.type="radio";radio.name="quiz"+i;radio.value=j;
-          label.appendChild(radio);
-          label.appendChild(document.createTextNode(option));
-          div.appendChild(label);
-        });
-        play.appendChild(div);
-      });
-      document.getElementById("submitQuiz").onclick=()=>{
-        let score=0,answered=0;
-        questions.forEach((q,i)=>{
-          const selected=document.querySelector(`input[name="quiz${i}"]:checked`);
-          if(selected){answered++;if(Number(selected.value)===q.correct)score++;}
-        });
-        document.getElementById("quizScore").innerHTML=`<br><strong>Your score: ${score}/${questions.length}</strong><br>Answered: ${answered} of ${questions.length}`;
-      };
-      preview.scrollIntoView({behavior:"smooth",block:"nearest"});
-    };
-  }
-
-  function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[char]));
-  }
-
-  document.getElementById("closeModal").onclick=()=>{
-    modal.classList.remove("show");
-    stopTimer();
-  };
-  modal.addEventListener("click",e=>{
-    if(e.target===modal){modal.classList.remove("show");stopTimer();}
-  });
-  document.addEventListener("keydown",e=>{
-    if(e.key==="Escape"){modal.classList.remove("show");stopTimer();}
-  });
-
-  document.getElementById("menuBtn").onclick=()=>{
-    document.getElementById("navLinks").classList.toggle("open");
-  };
-  document.querySelectorAll(".nav-links a").forEach(a=>{
-    a.addEventListener("click",()=>document.getElementById("navLinks").classList.remove("open"));
-  });
-
-  const themeBtn=document.getElementById("themeBtn");
-  function applyTheme(theme) {
-    document.documentElement.dataset.theme=theme;
-    themeBtn.textContent=theme==="dark"?"☀":"☾";
-    try{localStorage.setItem("studypilot-theme",theme);}catch(e){}
-  }
-  let savedTheme="light";
-  try{savedTheme=localStorage.getItem("studypilot-theme")||"light";}catch(e){}
-  applyTheme(savedTheme);
-  themeBtn.onclick=()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
-
-  document.getElementById("year").textContent=new Date().getFullYear();
-  renderTools();
+const STORAGE_KEY="studypilot_workspace_v1";
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const today=()=>new Date().toISOString().slice(0,10);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeNum=n=>Number.isFinite(Number(n))?Number(n):0;
+const defaults=()=>({profile:null,subjects:[],assignments:[],assessments:[],semesters:[],schedule:[],theme:"light"});
+let db=loadData(),activeLevel="University",editing=null,currentType=null;
+function loadData(){try{return {...defaults(),...JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}}catch(e){return defaults()}}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(db));renderAll()}
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2400)}
+function dateText(d){if(!d)return "No date";const x=new Date(d+"T00:00:00");return isNaN(x)?"No date":x.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}
+function gradeFromPercent(p){if(p>=90)return "A+";if(p>=85)return "A";if(p>=80)return "A-";if(p>=75)return "B+";if(p>=70)return "B";if(p>=65)return "B-";if(p>=60)return "C+";if(p>=55)return "C";if(p>=50)return "D";return "F"}
+function gradePoints(g){return ({"A+":4,"A":4,"A-":3.7,"B+":3.3,"B":3,"B-":2.7,"C+":2.3,"C":2,"D":1,"F":0})[g]??null}
+function calcGpa(){let total=0,credits=0;db.subjects.forEach(s=>{const a=db.assessments.filter(x=>x.subjectId===s.id&&x.total>0);if(!a.length)return;const obtained=a.reduce((n,x)=>n+x.obtained,0),possible=a.reduce((n,x)=>n+x.total,0);const gp=gradePoints(gradeFromPercent(obtained/possible*100));if(gp!==null){total+=gp*(s.credits||1);credits+=s.credits||1}});return credits?total/credits:null}
+function calcCgpa(){const old=db.semesters.filter(s=>s.gpa!==""&&s.gpa!==null&&s.gpa!==undefined);let points=0,credits=0;old.forEach(s=>{let c=s.credits||1;points+=safeNum(s.gpa)*c;credits+=c});return credits?points/credits:calcGpa()}
+function subjectAverage(id){const a=db.assessments.filter(x=>x.subjectId===id&&x.total>0);if(!a.length)return null;return a.reduce((n,x)=>n+x.obtained,0)/a.reduce((n,x)=>n+x.total,0)*100}
+function subjectName(id){return db.subjects.find(s=>s.id===id)?.name||"Unassigned"}
+function showPage(name){$$(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+name));$$(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===name));const b=$(`[data-page="${name}"]`);$("#topTitle").textContent=b?b.textContent.trim():name;$("#topSubtitle").textContent=({dashboard:"Your academic overview",subjects:"Manage your courses and subjects",assignments:"Coursework and deadlines",assessments:"Your quiz and exam results",planner:"Your personal study routine",records:"Your academic history",reports:"Track your academic progress",settings:"Your profile and preferences"})[name]||"";$("#sidebar").classList.remove("open");renderAll()}
+function renderAll(){if(!db.profile)return;syncProfile();renderDashboard();renderSubjects();renderAssignments();renderAssessments();renderPlanner();renderRecords();renderReports();renderSettings()}
+function syncProfile(){const p=db.profile;$("#miniName").textContent=p.name;$("#miniLevel").textContent=p.level+" workspace";$("#miniAvatar").textContent=(p.name||"S").charAt(0).toUpperCase();$("#greeting").textContent="Welcome back, "+p.name.split(" ")[0]+"!";$("#todayDate").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});document.documentElement.dataset.theme=db.theme==="dark"?"dark":"light";$("#themeBtn").textContent=db.theme==="dark"?"☀":"☾"}
+function subjectCard(s){const avg=subjectAverage(s.id),pct=avg===null?0:avg;return `<div class="subject-card"><div class="subject-top"><span class="subject-dot" style="background:${esc(s.color||"#4779d8")}"></span><div class="row-actions"><button class="small-btn" data-edit="subject" data-id="${s.id}">Edit</button><button class="small-btn" data-delete="subject" data-id="${s.id}">×</button></div></div><h3>${esc(s.name)}</h3><p>${esc(s.code||"Subject")} · ${safeNum(s.credits)||1} credit(s)</p><div class="subject-meta"><span>Performance</span><strong>${avg===null?"No results":pct.toFixed(1)+"%"}</strong></div><div class="progress"><span style="width:${Math.min(100,pct)}%"></span></div></div>`}
+function renderDashboard(){
+ const g=calcGpa(),pending=db.assignments.filter(a=>a.status!=="Completed").length;
+ $("#dashGpa").textContent=g===null?"—":g.toFixed(2);$("#dashGpaNote").textContent=g===null?"Add marks to calculate an estimate":"Estimated from recorded subject results";
+ $("#dashSubjects").textContent=db.subjects.length;$("#dashPending").textContent=pending;$("#dashAssessments").textContent=db.assessments.length;
+ $("#dashSubjectList").innerHTML=db.subjects.length?db.subjects.slice(0,6).map(subjectCard).join(""):`<div class="empty"><div class="empty-icon">📚</div>Add your first subject to get started.</div>`;
+ const upcoming=db.assignments.filter(a=>a.status!=="Completed").sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")).slice(0,5);
+ $("#dashAssignments").innerHTML=upcoming.length?upcoming.map(a=>`<div class="list-row"><div class="list-mark">▣</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · Due ${dateText(a.due)}</small></div><span class="status ${a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></div>`).join(""):`<div class="empty">No pending assignments. You're all caught up!</div>`;
+ const recent=[...db.assessments].sort((a,b)=>(b.date||"").localeCompare(a.date||"")).slice(0,4);
+ $("#dashResults").innerHTML=recent.length?recent.map(a=>`<div class="list-row"><div class="list-mark">✓</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.date)}</small></div><strong>${a.obtained}/${a.total}</strong></div>`).join(""):`<div class="empty">Your saved quiz and exam results will appear here.</div>`;
+ $("#studySnapshot").innerHTML=`<div class="list"><div class="list-row"><div class="list-main"><strong>Education</strong><small>${esc(db.profile.level)}</small></div></div><div class="list-row"><div class="list-main"><strong>Institution</strong><small>${esc(db.profile.institution||"Not added")}</small></div></div><div class="list-row"><div class="list-main"><strong>Program / Class</strong><small>${esc(db.profile.program||"Not added")} · ${esc(db.profile.year||"")}</small></div></div><div class="list-row"><div class="list-main"><strong>Current period</strong><small>${esc(db.profile.semester||"Not added")} · ${esc(db.profile.academicYear||"")}</small></div></div></div>`;
+}
+function renderSubjects(){const q=($("#subjectSearch")?.value||"").toLowerCase();const arr=db.subjects.filter(s=>s.name.toLowerCase().includes(q));$("#subjectCount").textContent=arr.length+" subjects";$("#subjectList").innerHTML=arr.length?arr.map(subjectCard).join(""):`<div class="card empty" style="grid-column:1/-1"><div class="empty-icon">📘</div>No subjects found. Add a subject to build your academic workspace.</div>`}
+function renderAssignments(){const filter=$("#assignmentFilter")?.value||"all",q=($("#assignmentSearch")?.value||"").toLowerCase();let arr=db.assignments.filter(a=>(filter==="all"||a.status===filter)&&(a.title+" "+subjectName(a.subjectId)).toLowerCase().includes(q)).sort((a,b)=>(a.due||"").localeCompare(b.due||""));$("#assignmentTable").innerHTML=arr.length?arr.map(a=>`<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${esc(a.notes||"")}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${dateText(a.due)}</td><td><span class="status ${a.status==="Completed"?"done":a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="assignment" data-id="${a.id}">Edit</button><button class="small-btn" data-delete="assignment" data-id="${a.id}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="5"><div class="empty">No assignments yet. Add your first assignment.</div></td></tr>`}
+function renderAssessments(){const arr=[...db.assessments].sort((a,b)=>(b.date||"").localeCompare(a.date||""));const avg=arr.length?arr.reduce((n,a)=>n+a.obtained/a.total*100,0)/arr.length:null;$("#assessmentTotal").textContent=arr.length;$("#assessmentAverage").textContent=avg===null?"—":avg.toFixed(1)+"%";$("#assessmentBest").textContent=arr.length?Math.max(...arr.map(a=>a.obtained/a.total*100)).toFixed(1)+"%":"—";$("#examTotal").textContent=arr.filter(a=>a.type==="Exam").length;$("#assessmentTable").innerHTML=arr.length?arr.map(a=>{let pct=a.total?a.obtained/a.total*100:0;return `<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${dateText(a.date)}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${esc(a.type)}</td><td>${a.obtained} / ${a.total}</td><td><strong>${pct.toFixed(1)}%</strong> · ${gradeFromPercent(pct)}</td><td><div class="row-actions"><button class="small-btn" data-edit="assessment" data-id="${a.id}">Edit</button><button class="small-btn" data-delete="assessment" data-id="${a.id}">Delete</button></div></td></tr>`}).join(""):`<tr><td colspan="6"><div class="empty">No results recorded yet.</div></td></tr>`}
+function renderPlanner(){const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];$("#weekGrid").innerHTML=days.map(day=>{let items=db.schedule.filter(x=>x.day===day).sort((a,b)=>(a.time||"").localeCompare(b.time||""));return `<div class="day-col"><h4>${day}</h4>${items.length?items.map(x=>`<div class="event"><strong>${esc(x.title)}</strong><small>${esc(x.time||"")} · ${esc(x.subjectId?subjectName(x.subjectId):"Study")}</small><div style="text-align:right;margin-top:4px"><button class="small-btn" data-edit="schedule" data-id="${x.id}">Edit</button></div></div>`).join(""):`<span class="muted" style="font-size:10px">No plans</span>`}</div>`}).join("");const tasks=db.assignments.filter(a=>a.status!=="Completed").sort((a,b)=>(a.due||"").localeCompare(b.due||""));$("#plannerTasks").innerHTML=tasks.length?tasks.map(a=>`<div class="list-row"><div class="list-mark">◷</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.due)}</small></div><span class="status pending">${esc(a.status)}</span></div>`).join(""):`<div class="empty">Your upcoming study tasks will appear here.</div>`}
+function renderRecords(){const cg=calcCgpa();$("#recordCgpa").textContent=cg===null?"—":cg.toFixed(2);$("#recordSemesters").textContent=db.semesters.length;$("#recordCredits").textContent=db.semesters.reduce((n,s)=>n+safeNum(s.credits),0);$("#recordLevel").textContent=db.profile.level;const arr=[...db.semesters].sort((a,b)=>(a.year||"").localeCompare(b.year||""));$("#semesterTable").innerHTML=arr.length?arr.map(s=>`<tr><td><strong>${esc(s.name)}</strong></td><td>${esc(s.year||"—")}</td><td>${s.gpa===""?"—":safeNum(s.gpa).toFixed(2)}</td><td>${safeNum(s.credits)}</td><td><span class="status ${s.status==="Completed"?"done":"pending"}">${esc(s.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="semester" data-id="${s.id}">Edit</button><button class="small-btn" data-delete="semester" data-id="${s.id}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="6"><div class="empty">No semester history yet. Add your current or previous semester.</div></td></tr>`}
+function renderReports(){const arr=[...db.semesters].filter(s=>s.gpa!==""&&s.gpa!==null).slice(-8);const max=4;$("#gpaChart").innerHTML=arr.length?arr.map(s=>`<div class="chart-col"><b>${safeNum(s.gpa).toFixed(2)}</b><div class="chart-bar" style="height:${Math.max(3,Math.min(100,safeNum(s.gpa)/max*100))}%"></div><small>${esc(s.name.slice(0,9))}</small></div>`).join(""):`<div class="empty" style="width:100%">Add semester GPA records to see your trend.</div>`;const a=db.assessments;const avg=a.length?a.reduce((n,x)=>n+x.obtained/x.total*100,0)/a.length:null;$("#performanceOverview").innerHTML=`<div class="list"><div class="list-row"><div class="list-main"><strong>Assessment average</strong><small>Across ${a.length} recorded results</small></div><strong>${avg===null?"—":avg.toFixed(1)+"%"}</strong></div><div class="list-row"><div class="list-main"><strong>Estimated current GPA</strong><small>Calculated from subject assessment totals</small></div><strong>${calcGpa()===null?"—":calcGpa().toFixed(2)}</strong></div><div class="list-row"><div class="list-main"><strong>Completed assignments</strong><small>Of ${db.assignments.length} total assignments</small></div><strong>${db.assignments.filter(x=>x.status==="Completed").length}</strong></div></div>`;$("#subjectPerformance").innerHTML=db.subjects.length?`<div class="list">${db.subjects.map(s=>{let v=subjectAverage(s.id);return `<div class="list-row"><div class="list-main"><strong>${esc(s.name)}</strong><div class="progress"><span style="width:${v===null?0:v}%"></span></div></div><strong>${v===null?"—":v.toFixed(1)+"%"}</strong></div>`}).join("")}</div>`:`<div class="empty">Add subjects and assessment results to see subject performance.</div>`}
+function renderSettings(){const p=db.profile;$("#profileDetails").innerHTML=`<div class="profile-panel"><div><span class="field-label">Name</span><strong>${esc(p.name)}</strong></div><div><span class="field-label">Education level</span><strong>${esc(p.level)}</strong></div><div><span class="field-label">Institution</span><strong>${esc(p.institution||"Not added")}</strong></div><div><span class="field-label">Program / Class</span><strong>${esc(p.program||"Not added")}</strong></div><div><span class="field-label">Year</span><strong>${esc(p.year||"Not added")}</strong></div><div><span class="field-label">Current semester / term</span><strong>${esc(p.semester||"Not added")}</strong></div><div><span class="field-label">Academic year</span><strong>${esc(p.academicYear||"Not added")}</strong></div></div>`}
+function subjectOptions(selected=""){return `<option value="">Choose a subject</option>`+db.subjects.map(s=>`<option value="${s.id}" ${s.id===selected?"selected":""}>${esc(s.name)}</option>`).join("")}
+function field(name,label,value="",type="text",required=false,extra=""){return `<div class="form-group"><label class="field-label">${label}</label><input class="field" name="${name}" type="${type}" value="${esc(value)}" ${required?"required":""} ${extra}></div>`}
+function selectField(name,label,options,value=""){return `<div class="form-group"><label class="field-label">${label}</label><select class="field" name="${name}">${options.map(o=>`<option value="${esc(o)}" ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`}
+function openModal(type,id=null){currentType=type;editing=id?{...db[type+"s"].find(x=>x.id===id)}:null;const x=editing||{};let title="",html="";
+if(type==="subject"){title=id?"Edit Subject":"Add Subject";html=`<div class="form-grid">${field("name","Subject name",x.name||"","text",true)}${field("code","Subject code",x.code||"")} ${field("credits","Credit hours",x.credits??3,"number",true,'min="0" step="0.5"')}${field("color","Subject color",x.color||"#4779d8","color")}</div>`}
+if(type==="assignment"){title=id?"Edit Assignment":"Add Assignment";html=`<div class="form-grid">${field("title","Assignment / task title",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${field("due","Due date",x.due||today(),"date")}${selectField("status","Status",["Pending","In Progress","Completed"],x.status||"Pending")}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes" placeholder="Instructions or details...">${esc(x.notes||"")}</textarea></div></div>`}
+if(type==="assessment"){title=id?"Edit Result":"Add Quiz / Exam Result";html=`<div class="form-grid">${field("title","Assessment name",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId" required>${subjectOptions(x.subjectId)}</select></div>${selectField("type","Assessment type",["Quiz","Test","Midterm","Final Exam","Assignment","Other"],x.type||"Quiz")}${field("date","Date",x.date||today(),"date")}${field("obtained","Obtained marks",x.obtained??"","number",true,'min="0" step="any"')}${field("total","Total marks",x.total??"","number",true,'min="0.01" step="any"')}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(x.notes||"")}</textarea></div></div>`}
+if(type==="semester"){title=id?"Edit Semester":"Add Semester Record";html=`<div class="form-grid">${field("name","Semester / term name",x.name||"","text",true)}${field("year","Academic year",x.year||db.profile.academicYear||"")}${field("gpa","GPA (optional)",x.gpa??"","number",false,'min="0" max="4" step="0.01"')}${field("credits","Credit hours",x.credits??0,"number",false,'min="0" step="0.5"')}${selectField("status","Status",["Current","Completed"],x.status||"Completed")}</div><div class="notice" style="margin-top:14px;margin-bottom:0">Enter your GPA from your official academic record. You can also add previous years and semesters.</div>`}
+if(type==="schedule"){title=id?"Edit Schedule":"Add Study Schedule";html=`<div class="form-grid">${field("title","Activity / subject",x.title||"","text",true)}<div class="form-group"><label class="field-label">Related subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${selectField("day","Day",["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],x.day||"Monday")}${field("time","Start time",x.time||"09:00","time")}</div>`}
+$("#modalTitle").textContent=title;$("#modalFields").innerHTML=html;$("#modalBackdrop").classList.add("show");$("#modalForm").dataset.id=id||""}
+function closeModal(){$("#modalBackdrop").classList.remove("show");$("#modalForm").reset();editing=null}
+$("#modalForm").addEventListener("submit",e=>{e.preventDefault();const type=currentType;const data=Object.fromEntries(new FormData(e.target).entries());const id=e.target.dataset.id||uid();if(type==="subject"){data.credits=safeNum(data.credits)||1;data.color=data.color||"#4779d8"}if(type==="assessment"){data.obtained=safeNum(data.obtained);data.total=safeNum(data.total);if(data.total<=0||data.obtained<0||data.obtained>data.total){toast("Check your marks. Obtained marks cannot exceed total marks.");return}}if(type==="semester"){data.gpa=data.gpa===""?"":safeNum(data.gpa);data.credits=safeNum(data.credits);if(data.gpa!==""&&(data.gpa<0||data.gpa>4)){toast("Enter a GPA between 0 and 4.");return}}const key=type+"s";const index=db[key].findIndex(x=>x.id===id);const record={...data,id};if(index>=0)db[key][index]=record;else db[key].push(record);save();closeModal();toast(type.charAt(0).toUpperCase()+type.slice(1)+" saved successfully.")});
+function deleteItem(type,id){if(!confirm("Are you sure you want to delete this item?"))return;const key=type+"s";db[key]=db[key].filter(x=>x.id!==id);if(type==="subject"){db.assessments=db.assessments.filter(x=>x.subjectId!==id);db.assignments=db.assignments.filter(x=>x.subjectId!==id);db.schedule=db.schedule.filter(x=>x.subjectId!==id)}save();toast("Item deleted.")}
+document.addEventListener("click",e=>{const add=e.target.closest("[data-add]");if(add){openModal(add.dataset.add);return}const edit=e.target.closest("[data-edit]");if(edit){openModal(edit.dataset.edit,edit.dataset.id);return}const del=e.target.closest("[data-delete]");if(del){deleteItem(del.dataset.delete,del.dataset.id);return}const go=e.target.closest("[data-go]");if(go){showPage(go.dataset.go);return}});
+$$(".nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+$("#quickAdd").addEventListener("click",()=>openModal("assignment"));
+$("#modalClose").onclick=closeModal;$("#modalCancel").onclick=closeModal;$("#modalBackdrop").addEventListener("click",e=>{if(e.target===$("#modalBackdrop"))closeModal()});
+$("#menuBtn").onclick=()=>$("#sidebar").classList.toggle("open");
+function toggleTheme(){db.theme=db.theme==="dark"?"light":"dark";save()}
+$("#themeBtn").onclick=toggleTheme;$("#settingsTheme").onclick=toggleTheme;
+$("#subjectSearch").addEventListener("input",renderSubjects);$("#assignmentFilter").addEventListener("change",renderAssignments);$("#assignmentSearch").addEventListener("input",renderAssignments);
+$$(".level-option").forEach(b=>b.addEventListener("click",()=>{$$(".level-option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");activeLevel=b.dataset.level;$("#programLabel").textContent=activeLevel==="School"?"Class / Grade":activeLevel==="Self-Learner"?"Learning focus":"Degree / Program"}));
+function showOnboarding(){if(db.profile){renderAll();return}$("#onboarding").classList.add("show")}
+$("#onboardForm").addEventListener("submit",e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target).entries());db.profile={name:f.name.trim(),institution:f.institution.trim(),program:f.program.trim(),year:f.year.trim(),semester:f.semester.trim(),academicYear:f.academicYear.trim(),level:activeLevel};const names=f.subjects.split(",").map(x=>x.trim()).filter(Boolean);db.subjects=names.map((name,i)=>({id:uid(),name,code:"",credits:1,color:["#4779d8","#269b76","#8871d5","#d68a36","#d65c66"][i%5]}));if(f.semester.trim())db.semesters.push({id:uid(),name:f.semester.trim(),year:f.academicYear.trim(),gpa:"",credits:0,status:"Current"});save();$("#onboarding").classList.remove("show");showPage("dashboard");toast("Your StudyPilot workspace is ready!")});
+$("#editProfile").onclick=()=>{const p=db.profile;const html=`<div class="form-grid">${field("name","Your name",p.name,"text",true)}${selectField("level","Education level",["School","College","University","Self-Learner"],p.level)}${field("institution","Institution",p.institution)}${field("program","Program / Class",p.program)}${field("year","Year / Class",p.year)}${field("semester","Current semester / term",p.semester)}${field("academicYear","Academic year",p.academicYear)}</div>`;currentType="profile";$("#modalTitle").textContent="Edit Profile";$("#modalFields").innerHTML=html;$("#modalBackdrop").classList.add("show");$("#modalForm").dataset.id="profile"};
+const originalSubmit=$("#modalForm").onsubmit;
+$("#modalForm").addEventListener("submit",e=>{if(currentType!=="profile")return;e.preventDefault();const f=Object.fromEntries(new FormData(e.target).entries());db.profile={...db.profile,...f};save();closeModal();toast("Profile updated.")});
+$("#exportData").onclick=()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="studypilot-backup-"+today()+".json";a.click();URL.revokeObjectURL(url);toast("Your backup has been downloaded.")};
+$("#importDataBtn").onclick=()=>$("#importFile").click();
+$("#importFile").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const imported=JSON.parse(await file.text());if(!imported||!Array.isArray(imported.subjects)||!imported.profile)throw new Error();db={...defaults(),...imported};save();toast("Backup restored successfully.")}catch(err){toast("This backup file is not valid.")}e.target.value=""};
+$("#resetData").onclick=()=>{if(!confirm("This will permanently clear the StudyPilot data saved in this browser. Download a backup first if you need it. Continue?"))return;localStorage.removeItem(STORAGE_KEY);db=defaults();location.reload()};
+if(db.theme==="dark")document.documentElement.dataset.theme="dark";
+if(db.profile){$("#onboarding").classList.remove("show");renderAll()}else showOnboarding();
 </script>
 </body>
 </html>
