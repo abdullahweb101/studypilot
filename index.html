@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#f6f8fc">
 <meta name="description" content="StudyPilot is your personal academic workspace. Organize subjects, assignments, exams, grades and study schedules.">
 <title>StudyPilot — Your Personal Academic Workspace</title>
+
 <style>
 :root{
  --bg:#f6f8fc;--surface:#fff;--surface2:#f1f5fb;--text:#202b3c;
@@ -155,6 +156,7 @@ tr:last-child td{border:0}
 .level-option strong{display:block;font-size:13px}
 .level-option small{font-size:10px;color:var(--muted)}
 .onboard-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.muted{color:var(--muted)}
 @media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(2,1fr)}.content{padding:24px}}
 @media(max-width:760px){
  .sidebar{transform:translateX(-100%);transition:.25s;box-shadow:var(--shadow)}
@@ -166,49 +168,70 @@ tr:last-child td{border:0}
  .page-title{font-size:16px}.top-actions .primary-btn{padding:9px 10px}
 }
 @media(max-width:420px){
- .stats{grid-template-columns:1fr 1fr}.level-grid,.onboard-form,.form-grid{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr 1fr}
+ .level-grid,.onboard-form,.form-grid{grid-template-columns:1fr}
  .form-group.full{grid-column:auto}.onboard-box{padding:20px}
  .subject-grid{grid-template-columns:1fr}.auth-card{padding:22px}
 }
 </style>
 </head>
+
 <body>
 
 <section class="auth-screen" id="authScreen">
  <div class="auth-card">
   <div class="brand">
    <div class="brand-icon">S</div>
-   <div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your personal academic workspace</div></div>
+   <div>
+    <div class="brand-name">StudyPilot</div>
+    <div class="brand-sub">Your personal academic workspace</div>
+   </div>
   </div>
+
   <h1 id="authTitle">Welcome back</h1>
   <p class="auth-intro" id="authIntro">Log in to continue to your personal workspace.</p>
+
   <div class="auth-tabs">
    <button class="active" id="loginTab" type="button">Log in</button>
    <button id="registerTab" type="button">Create account</button>
   </div>
+
   <form id="authForm">
    <div class="form-group hidden" id="nameGroup">
     <label class="field-label">Your name</label>
     <input class="field" name="name" autocomplete="name" maxlength="80" placeholder="Your full name">
    </div>
+
    <div class="form-group">
     <label class="field-label">Email address</label>
     <input class="field" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
    </div>
+
    <div class="form-group">
     <label class="field-label">Password</label>
     <input class="field" name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="128" placeholder="At least 10 characters">
    </div>
+
+   <div class="form-group hidden" id="confirmGroup">
+    <label class="field-label">Confirm password</label>
+    <input class="field" name="confirmPassword" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="Enter your password again">
+   </div>
+
    <div class="auth-error hidden" id="authError"></div>
    <button class="primary-btn" id="authSubmit" type="submit" style="width:100%;padding:13px">Log in →</button>
   </form>
+
   <div class="auth-footer">Your academic information is private to your account.</div>
  </div>
 </section>
 
 <div class="app hidden" id="app">
 <aside class="sidebar" id="sidebar">
- <div class="brand"><div class="brand-icon">S</div><div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your academic workspace</div></div></div>
+ <div class="brand">
+  <div class="brand-icon">S</div>
+  <div><div class="brand-name">StudyPilot</div><div class="brand-sub">Your academic workspace</div></div>
+ </div>
+
  <div class="nav-label">Workspace</div>
  <nav class="nav">
   <button class="active" data-page="dashboard">▦ &nbsp; Dashboard</button>
@@ -217,15 +240,23 @@ tr:last-child td{border:0}
   <button data-page="assessments">✓ &nbsp; Quizzes & Exams</button>
   <button data-page="planner">▦ &nbsp; Study Planner</button>
  </nav>
+
  <div class="nav-label">Academic</div>
  <nav class="nav">
   <button data-page="records">▥ &nbsp; Academic Records</button>
   <button data-page="reports">◔ &nbsp; Reports & Analytics</button>
  </nav>
+
  <div class="nav-label">Personal</div>
- <nav class="nav"><button data-page="settings">⚙ &nbsp; Settings & Profile</button></nav>
+ <nav class="nav">
+  <button data-page="settings">⚙ &nbsp; Settings & Profile</button>
+ </nav>
+
  <div class="sidebar-bottom">
-  <div class="profile-mini"><div class="avatar" id="miniAvatar">S</div><div><strong id="miniName">Student</strong><small id="miniEmail">My workspace</small></div></div>
+  <div class="profile-mini">
+   <div class="avatar" id="miniAvatar">S</div>
+   <div><strong id="miniName">Student</strong><small id="miniEmail">My workspace</small></div>
+  </div>
  </div>
 </aside>
 
@@ -233,7 +264,10 @@ tr:last-child td{border:0}
 <header class="topbar">
  <div class="top-left">
   <button class="icon-btn mobile-menu" id="menuBtn">☰</button>
-  <div><div class="page-title" id="topTitle">Dashboard</div><div class="page-subtitle" id="topSubtitle">Your academic overview</div></div>
+  <div>
+   <div class="page-title" id="topTitle">Dashboard</div>
+   <div class="page-subtitle" id="topSubtitle">Your academic overview</div>
+  </div>
  </div>
  <div class="top-actions">
   <button class="icon-btn" id="themeBtn" title="Change theme">☾</button>
@@ -243,33 +277,57 @@ tr:last-child td{border:0}
 </header>
 
 <div class="content">
+
 <section class="page active" id="page-dashboard">
- <div class="welcome"><div><h1 id="greeting">Welcome!</h1><p>Here's what's happening with your studies.</p></div><div class="notice" id="todayDate"></div></div>
+ <div class="welcome">
+  <div><h1 id="greeting">Welcome!</h1><p>Here's what's happening with your studies.</p></div>
+  <div class="notice" id="todayDate"></div>
+ </div>
+
  <div class="grid stats">
   <div class="card"><div class="stat-label">Current GPA</div><div class="stat-value" id="dashGpa">—</div><div class="stat-note">Estimated from recorded results</div></div>
   <div class="card"><div class="stat-label">My Subjects</div><div class="stat-value" id="dashSubjects">0</div><div class="stat-note">Active subjects</div></div>
   <div class="card"><div class="stat-label">Pending Tasks</div><div class="stat-value" id="dashPending">0</div><div class="stat-note">Assignments to complete</div></div>
   <div class="card"><div class="stat-label">Assessments</div><div class="stat-value" id="dashAssessments">0</div><div class="stat-note">Results recorded</div></div>
  </div>
+
  <div class="grid two-col">
-  <div class="card"><div class="card-head"><div><h2>My Subjects</h2><p>Your current academic courses</p></div><button class="text-link" data-go="subjects">View all →</button></div><div class="grid subject-grid" id="dashSubjectList"></div></div>
-  <div class="card"><div class="card-head"><div><h2>Upcoming Assignments</h2><p>Keep track of deadlines</p></div><button class="text-link" data-go="assignments">View all →</button></div><div class="list" id="dashAssignments"></div></div>
+  <div class="card">
+   <div class="card-head"><div><h2>My Subjects</h2><p>Your current academic courses</p></div><button class="text-link" data-go="subjects">View all →</button></div>
+   <div class="grid subject-grid" id="dashSubjectList"></div>
+  </div>
+  <div class="card">
+   <div class="card-head"><div><h2>Upcoming Assignments</h2><p>Keep track of deadlines</p></div><button class="text-link" data-go="assignments">View all →</button></div>
+   <div class="list" id="dashAssignments"></div>
+  </div>
  </div>
+
  <div class="grid two-col">
-  <div class="card"><div class="card-head"><div><h2>Recent Results</h2><p>Your latest marks</p></div><button class="text-link" data-go="assessments">View all →</button></div><div class="list" id="dashResults"></div></div>
-  <div class="card"><div class="card-head"><div><h2>Study Snapshot</h2><p>Your academic setup</p></div><button class="text-link" data-go="settings">Edit profile →</button></div><div id="studySnapshot"></div></div>
+  <div class="card">
+   <div class="card-head"><div><h2>Recent Results</h2><p>Your latest marks</p></div><button class="text-link" data-go="assessments">View all →</button></div>
+   <div class="list" id="dashResults"></div>
+  </div>
+  <div class="card">
+   <div class="card-head"><div><h2>Study Snapshot</h2><p>Your academic setup</p></div><button class="text-link" data-go="settings">Edit profile →</button></div>
+   <div id="studySnapshot"></div>
+  </div>
  </div>
 </section>
 
 <section class="page" id="page-subjects">
  <div class="welcome"><div><h1>My Subjects</h1><p>Organize your courses and subjects.</p></div><button class="primary-btn" data-add="subject">＋ Add Subject</button></div>
- <div class="toolbar"><div class="toolbar-left"><input class="field search-field" id="subjectSearch" placeholder="Search subjects..."></div><span class="muted" id="subjectCount"></span></div>
+ <div class="toolbar"><div class="toolbar-left"><input class="field search-field" id="subjectSearch" placeholder="Search subjects..."></div><span id="subjectCount"></span></div>
  <div class="grid subject-grid" id="subjectList"></div>
 </section>
 
 <section class="page" id="page-assignments">
  <div class="welcome"><div><h1>Assignments</h1><p>Manage coursework, deadlines and progress.</p></div><button class="primary-btn" data-add="assignment">＋ Add Assignment</button></div>
- <div class="toolbar"><div class="toolbar-left"><select class="field" id="assignmentFilter"><option value="all">All assignments</option><option>Pending</option><option>In Progress</option><option>Completed</option></select><input class="field search-field" id="assignmentSearch" placeholder="Search assignments..."></div></div>
+ <div class="toolbar">
+  <div class="toolbar-left">
+   <select class="field" id="assignmentFilter"><option value="all">All assignments</option><option>Pending</option><option>In Progress</option><option>Completed</option></select>
+   <input class="field search-field" id="assignmentSearch" placeholder="Search assignments...">
+  </div>
+ </div>
  <div class="card"><div class="table-wrap"><table><thead><tr><th>Assignment</th><th>Subject</th><th>Due date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="assignmentTable"></tbody></table></div></div>
 </section>
 
@@ -315,7 +373,8 @@ tr:last-child td{border:0}
  <div class="welcome"><div><h1>Settings & Profile</h1><p>Manage your personal academic workspace.</p></div></div>
  <div class="grid two-col">
   <div class="card"><div class="card-head"><div><h2>My Profile</h2><p>Your education and personal details</p></div><button class="secondary-btn" id="editProfile">Edit Profile</button></div><div id="profileDetails"></div></div>
-  <div class="card"><div class="card-head"><div><h2>Workspace Preferences</h2><p>Customize your experience</p></div></div>
+  <div class="card">
+   <div class="card-head"><div><h2>Workspace Preferences</h2><p>Customize your experience</p></div></div>
    <div class="settings-row"><div><strong>Appearance</strong><small>Switch between light and dark theme</small></div><button class="secondary-btn" id="settingsTheme">Change</button></div>
    <div class="settings-row"><div><strong>Export my data</strong><small>Download a backup of your workspace</small></div><button class="secondary-btn" id="exportData">Export</button></div>
    <div class="settings-row"><div><strong>Import backup</strong><small>Restore a previously exported backup</small></div><button class="secondary-btn" id="importDataBtn">Import</button><input type="file" id="importFile" accept="application/json" hidden></div>
@@ -324,12 +383,16 @@ tr:last-child td{border:0}
  </div>
  <div class="card" style="margin-top:17px"><h2>About StudyPilot</h2><p class="muted">Your personal academic workspace. Your account's workspace is stored in the StudyPilot cloud database.</p><p class="muted" id="accountEmail"></p></div>
 </section>
+
 </div>
 </main>
 </div>
 
 <div class="modal-backdrop" id="modalBackdrop">
- <div class="modal"><div class="modal-head"><h2 id="modalTitle">Add item</h2><button class="modal-close" id="modalClose">×</button></div><form id="modalForm"><div id="modalFields"></div><div class="modal-actions"><button type="button" class="secondary-btn" id="modalCancel">Cancel</button><button type="submit" class="primary-btn">Save</button></div></form></div>
+ <div class="modal">
+  <div class="modal-head"><h2 id="modalTitle">Add item</h2><button class="modal-close" id="modalClose">×</button></div>
+  <form id="modalForm"><div id="modalFields"></div><div class="modal-actions"><button type="button" class="secondary-btn" id="modalCancel">Cancel</button><button type="submit" class="primary-btn" id="modalSave">Save</button></div></form>
+ </div>
 </div>
 
 <div class="onboarding" id="onboarding">
@@ -346,7 +409,7 @@ tr:last-child td{border:0}
     <button type="button" class="level-option" data-level="Self-Learner"><strong>✏️ Self-Learner</strong><small>Personal learning</small></button>
    </div>
    <div class="onboard-form">
-    <div class="form-group"><label class="field-label">Your name</label><input class="field" name="name" required maxlength="80"></div>
+    <div class="form-group"><label class="field-label">Your name</label><input class="field" name="name" id="onboardName" required maxlength="80"></div>
     <div class="form-group"><label class="field-label">Institution name</label><input class="field" name="institution"></div>
     <div class="form-group"><label class="field-label">Degree / Program / Class</label><input class="field" name="program"></div>
     <div class="form-group"><label class="field-label">Current year / class</label><input class="field" name="year"></div>
@@ -354,420 +417,1174 @@ tr:last-child td{border:0}
     <div class="form-group"><label class="field-label">Academic year</label><input class="field" name="academicYear"></div>
     <div class="form-group" style="grid-column:1/-1"><label class="field-label">Subjects (separate with commas)</label><input class="field" name="subjects" placeholder="Mathematics, English, Physics"></div>
    </div>
-   <div style="display:flex;justify-content:flex-end;margin-top:20px"><button class="primary-btn" type="submit">Create My Workspace →</button></div>
+   <div style="display:flex;justify-content:flex-end;margin-top:20px"><button class="primary-btn" id="onboardSubmit" type="submit">Create My Workspace →</button></div>
   </form>
  </div>
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
-const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const num=n=>Number.isFinite(Number(n))?Number(n):0;
-const defaults=()=>({profile:null,subjects:[],assignments:[],assessments:[],semesters:[],schedule:[],theme:"light"});
-let db=defaults(),user=null,authMode="login",activeLevel="University",currentType=null,editing=null,saving=false;
-let saveTimer=null;
+"use strict";
 
-async function api(path,options={}){
- const response=await fetch("/api/"+path,{
-  credentials:"same-origin",
-  ...options,
-  headers:{"Content-Type":"application/json",...(options.headers||{})}
- });
- let result={};
- try{result=await response.json()}catch{}
- if(!response.ok)throw new Error(result.error||"Request failed.");
- return result;
-}
-function toast(message){const t=$("#toast");t.textContent=message;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2500)}
-function dateText(d){if(!d)return"No date";const x=new Date(d+"T00:00:00");return isNaN(x)?"No date":x.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}
-function gradeFromPercent(p){if(p>=90)return"A+";if(p>=85)return"A";if(p>=80)return"A-";if(p>=75)return"B+";if(p>=70)return"B";if(p>=65)return"B-";if(p>=60)return"C+";if(p>=55)return"C";if(p>=50)return"D";return"F"}
-function gradePoints(g){return({"A+":4,A:4,"A-":3.7,"B+":3.3,B:3,"B-":2.7,"C+":2.3,C:2,D:1,F:0})[g]??null}
-function calcGpa(){
- let total=0,credits=0;
- db.subjects.forEach(s=>{
-  const a=db.assessments.filter(x=>x.subjectId===s.id&&x.total>0);
-  if(!a.length)return;
-  const obtained=a.reduce((n,x)=>n+num(x.obtained),0),possible=a.reduce((n,x)=>n+num(x.total),0);
-  const gp=gradePoints(gradeFromPercent(obtained/possible*100));
-  if(gp!==null){const c=num(s.credits)||1;total+=gp*c;credits+=c}
- });
- return credits?total/credits:null;
-}
-function calcCgpa(){
- const records=db.semesters.filter(s=>s.gpa!==""&&s.gpa!==null&&s.gpa!==undefined);
- if(!records.length)return calcGpa();
- let points=0,credits=0;
- records.forEach(s=>{const c=num(s.credits)||1;points+=num(s.gpa)*c;credits+=c});
- return credits?points/credits:null;
-}
-function subjectAverage(id){
- const a=db.assessments.filter(x=>x.subjectId===id&&num(x.total)>0);
- if(!a.length)return null;
- return a.reduce((n,x)=>n+num(x.obtained),0)/a.reduce((n,x)=>n+num(x.total),0)*100;
-}
-function subjectName(id){return db.subjects.find(s=>s.id===id)?.name||"Unassigned"}
-function syncProfile(){
- const p=db.profile||{};
- $("#miniName").textContent=p.name||user.name;
- $("#miniEmail").textContent=user.email;
- $("#miniAvatar").textContent=(p.name||user.name||"S").charAt(0).toUpperCase();
- $("#greeting").textContent="Welcome back, "+(p.name||user.name).split(" ")[0]+"!";
- $("#todayDate").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
- document.documentElement.dataset.theme=db.theme==="dark"?"dark":"light";
- $("#themeBtn").textContent=db.theme==="dark"?"☀":"☾";
-}
-function subjectCard(s){
- const avg=subjectAverage(s.id);
- return `<div class="subject-card">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-   <span style="width:10px;height:10px;border-radius:50%;background:${esc(s.color||"#4779d8")}"></span>
-   <div class="row-actions"><button class="small-btn" data-edit="subject" data-id="${esc(s.id)}">Edit</button><button class="small-btn" data-delete="subject" data-id="${esc(s.id)}">Delete</button></div>
-  </div>
-  <h3>${esc(s.name)}</h3><p>${esc(s.code||"Subject")} · ${num(s.credits)||1} credit(s)</p>
-  <div class="subject-meta"><span>Performance</span><strong>${avg===null?"No results":avg.toFixed(1)+"%"}</strong></div>
-  <div class="progress"><span style="width:${Math.min(100,avg||0)}%"></span></div>
- </div>`;
-}
-function renderDashboard(){
- const g=calcGpa(),pending=db.assignments.filter(a=>a.status!=="Completed").length;
- $("#dashGpa").textContent=g===null?"—":g.toFixed(2);
- $("#dashSubjects").textContent=db.subjects.length;
- $("#dashPending").textContent=pending;
- $("#dashAssessments").textContent=db.assessments.length;
- $("#dashSubjectList").innerHTML=db.subjects.length?db.subjects.slice(0,6).map(subjectCard).join(""):`<div class="empty">📚<br>Add your first subject to get started.</div>`;
- const upcoming=db.assignments.filter(a=>a.status!=="Completed").sort((a,b)=>(a.due||"9999").localeCompare(b.due||"9999")).slice(0,5);
- $("#dashAssignments").innerHTML=upcoming.length?upcoming.map(a=>`<div class="list-row"><div class="list-mark">▣</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · Due ${dateText(a.due)}</small></div><span class="status ${a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></div>`).join(""):`<div class="empty">No pending assignments.</div>`;
- const recent=[...db.assessments].sort((a,b)=>(b.date||"").localeCompare(a.date||"")).slice(0,4);
- $("#dashResults").innerHTML=recent.length?recent.map(a=>`<div class="list-row"><div class="list-mark">✓</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.date)}</small></div><strong>${num(a.obtained)}/${num(a.total)}</strong></div>`).join(""):`<div class="empty">Your results will appear here.</div>`;
- const p=db.profile||{};
- $("#studySnapshot").innerHTML=`<div class="list">
- <div class="list-row"><div class="list-main"><strong>Education</strong><small>${esc(p.level||"Not added")}</small></div></div>
- <div class="list-row"><div class="list-main"><strong>Institution</strong><small>${esc(p.institution||"Not added")}</small></div></div>
- <div class="list-row"><div class="list-main"><strong>Program / Class</strong><small>${esc(p.program||"Not added")} · ${esc(p.year||"")}</small></div></div>
- <div class="list-row"><div class="list-main"><strong>Current period</strong><small>${esc(p.semester||"Not added")} · ${esc(p.academicYear||"")}</small></div></div></div>`;
-}
-function renderSubjects(){
- const q=($("#subjectSearch")?.value||"").toLowerCase();
- const arr=db.subjects.filter(s=>(s.name||"").toLowerCase().includes(q));
- $("#subjectCount").textContent=arr.length+" subjects";
- $("#subjectList").innerHTML=arr.length?arr.map(subjectCard).join(""):`<div class="card empty" style="grid-column:1/-1">No subjects found. Add a subject to begin.</div>`;
-}
-function renderAssignments(){
- const filter=$("#assignmentFilter")?.value||"all",q=($("#assignmentSearch")?.value||"").toLowerCase();
- const arr=db.assignments.filter(a=>(filter==="all"||a.status===filter)&&(a.title+" "+subjectName(a.subjectId)).toLowerCase().includes(q)).sort((a,b)=>(a.due||"").localeCompare(b.due||""));
- $("#assignmentTable").innerHTML=arr.length?arr.map(a=>`<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${esc(a.notes||"")}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${dateText(a.due)}</td><td><span class="status ${a.status==="Completed"?"done":a.status==="In Progress"?"pending":""}">${esc(a.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="assignment" data-id="${esc(a.id)}">Edit</button><button class="small-btn" data-delete="assignment" data-id="${esc(a.id)}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="5"><div class="empty">No assignments yet.</div></td></tr>`;
-}
-function renderAssessments(){
- const arr=[...db.assessments].sort((a,b)=>(b.date||"").localeCompare(a.date||""));
- const avg=arr.length?arr.reduce((n,a)=>n+num(a.obtained)/num(a.total)*100,0)/arr.length:null;
- $("#assessmentTotal").textContent=arr.length;
- $("#assessmentAverage").textContent=avg===null?"—":avg.toFixed(1)+"%";
- $("#assessmentBest").textContent=arr.length?Math.max(...arr.map(a=>num(a.obtained)/num(a.total)*100)).toFixed(1)+"%":"—";
- $("#examTotal").textContent=arr.filter(a=>String(a.type).toLowerCase().includes("exam")).length;
- $("#assessmentTable").innerHTML=arr.length?arr.map(a=>{
-  const pct=num(a.total)?num(a.obtained)/num(a.total)*100:0;
-  return `<tr><td><strong>${esc(a.title)}</strong><br><span class="muted">${dateText(a.date)}</span></td><td>${esc(subjectName(a.subjectId))}</td><td>${esc(a.type)}</td><td>${num(a.obtained)} / ${num(a.total)}</td><td><strong>${pct.toFixed(1)}%</strong> · ${gradeFromPercent(pct)}</td><td><div class="row-actions"><button class="small-btn" data-edit="assessment" data-id="${esc(a.id)}">Edit</button><button class="small-btn" data-delete="assessment" data-id="${esc(a.id)}">Delete</button></div></td></tr>`;
- }).join(""):`<tr><td colspan="6"><div class="empty">No results recorded yet.</div></td></tr>`;
-}
-function renderPlanner(){
- const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
- $("#weekGrid").innerHTML=days.map(day=>{
-  const items=db.schedule.filter(x=>x.day===day).sort((a,b)=>(a.time||"").localeCompare(b.time||""));
-  return `<div class="day-col"><h4>${day}</h4>${items.length?items.map(x=>`<div class="event"><strong>${esc(x.title)}</strong><small>${esc(x.time||"")} · ${esc(x.subjectId?subjectName(x.subjectId):"Study")}</small><div style="text-align:right;margin-top:4px"><button class="small-btn" data-edit="schedule" data-id="${esc(x.id)}">Edit</button><button class="small-btn" data-delete="schedule" data-id="${esc(x.id)}">×</button></div></div>`).join(""):`<span class="muted">No plans</span>`}</div>`;
- }).join("");
- const tasks=db.assignments.filter(a=>a.status!=="Completed").sort((a,b)=>(a.due||"").localeCompare(b.due||""));
- $("#plannerTasks").innerHTML=tasks.length?tasks.map(a=>`<div class="list-row"><div class="list-mark">◷</div><div class="list-main"><strong>${esc(a.title)}</strong><small>${esc(subjectName(a.subjectId))} · ${dateText(a.due)}</small></div><span class="status pending">${esc(a.status)}</span></div>`).join(""):`<div class="empty">Your upcoming study tasks will appear here.</div>`;
-}
-function renderRecords(){
- const cg=calcCgpa();
- $("#recordCgpa").textContent=cg===null?"—":cg.toFixed(2);
- $("#recordSemesters").textContent=db.semesters.length;
- $("#recordCredits").textContent=db.semesters.reduce((n,s)=>n+num(s.credits),0);
- $("#recordLevel").textContent=db.profile?.level||"—";
- const arr=[...db.semesters].sort((a,b)=>(a.year||"").localeCompare(b.year||""));
- $("#semesterTable").innerHTML=arr.length?arr.map(s=>`<tr><td><strong>${esc(s.name)}</strong></td><td>${esc(s.year||"—")}</td><td>${s.gpa===""?"—":num(s.gpa).toFixed(2)}</td><td>${num(s.credits)}</td><td><span class="status ${s.status==="Completed"?"done":"pending"}">${esc(s.status)}</span></td><td><div class="row-actions"><button class="small-btn" data-edit="semester" data-id="${esc(s.id)}">Edit</button><button class="small-btn" data-delete="semester" data-id="${esc(s.id)}">Delete</button></div></td></tr>`).join(""):`<tr><td colspan="6"><div class="empty">No semester history yet.</div></td></tr>`;
-}
-function renderReports(){
- const arr=db.semesters.filter(s=>s.gpa!==""&&s.gpa!==null).slice(-8);
- $("#gpaChart").innerHTML=arr.length?arr.map(s=>`<div class="chart-col"><b>${num(s.gpa).toFixed(2)}</b><div class="chart-bar" style="height:${Math.max(3,Math.min(100,num(s.gpa)/4*100))}%"></div><small>${esc((s.name||"").slice(0,9))}</small></div>`).join(""):`<div class="empty" style="width:100%">Add semester GPA records to see your trend.</div>`;
- const a=db.assessments,avg=a.length?a.reduce((n,x)=>n+num(x.obtained)/num(x.total)*100,0)/a.length:null;
- const g=calcGpa();
- $("#performanceOverview").innerHTML=`<div class="list">
- <div class="list-row"><div class="list-main"><strong>Assessment average</strong><small>Across ${a.length} results</small></div><strong>${avg===null?"—":avg.toFixed(1)+"%"}</strong></div>
- <div class="list-row"><div class="list-main"><strong>Estimated current GPA</strong><small>Based on subject results</small></div><strong>${g===null?"—":g.toFixed(2)}</strong></div>
- <div class="list-row"><div class="list-main"><strong>Completed assignments</strong><small>Of ${db.assignments.length} total</small></div><strong>${db.assignments.filter(x=>x.status==="Completed").length}</strong></div></div>`;
- $("#subjectPerformance").innerHTML=db.subjects.length?`<div class="list">${db.subjects.map(s=>{const v=subjectAverage(s.id);return `<div class="list-row"><div class="list-main"><strong>${esc(s.name)}</strong><div class="progress"><span style="width:${v===null?0:v}%"></span></div></div><strong>${v===null?"—":v.toFixed(1)+"%"}</strong></div>`}).join("")}</div>`:`<div class="empty">Add subjects and assessment results to see performance.</div>`;
-}
-function renderSettings(){
- const p=db.profile||{};
- $("#profileDetails").innerHTML=`<div class="profile-panel">
- <div><span class="field-label">Name</span><strong>${esc(p.name||"")}</strong></div>
- <div><span class="field-label">Education level</span><strong>${esc(p.level||"")}</strong></div>
- <div><span class="field-label">Institution</span><strong>${esc(p.institution||"Not added")}</strong></div>
- <div><span class="field-label">Program / Class</span><strong>${esc(p.program||"Not added")}</strong></div>
- <div><span class="field-label">Year</span><strong>${esc(p.year||"Not added")}</strong></div>
- <div><span class="field-label">Current semester</span><strong>${esc(p.semester||"Not added")}</strong></div>
- <div><span class="field-label">Academic year</span><strong>${esc(p.academicYear||"Not added")}</strong></div>
- </div>`;
- $("#accountEmail").textContent="Signed in as "+user.email;
-}
-function renderAll(){
- if(!user)return;
- syncProfile();renderDashboard();renderSubjects();renderAssignments();
- renderAssessments();renderPlanner();renderRecords();renderReports();renderSettings();
-}
-function showPage(name){
- $$(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+name));
- $$(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
- const b=$(`[data-page="${name}"]`);
- $("#topTitle").textContent=b?b.textContent.trim():name;
- $("#topSubtitle").textContent=({dashboard:"Your academic overview",subjects:"Manage your courses and subjects",assignments:"Coursework and deadlines",assessments:"Your quiz and exam results",planner:"Your personal study routine",records:"Your academic history",reports:"Track your academic progress",settings:"Your profile and preferences"})[name]||"";
- $("#sidebar").classList.remove("open");renderAll();
-}
-function persist(){
- if(!user)return;
- clearTimeout(saveTimer);
- saveTimer=setTimeout(async()=>{
-  if(saving)return;
-  saving=true;
-  try{await api("workspace",{method:"PUT",body:JSON.stringify({data:db})});}
-  catch(e){toast("Cloud save failed: "+e.message);}
-  finally{saving=false;}
- },350);
-}
-function saveNow(){clearTimeout(saveTimer);return api("workspace",{method:"PUT",body:JSON.stringify({data:db})})}
-function subjectOptions(selected=""){
- return `<option value="">Choose a subject</option>`+db.subjects.map(s=>`<option value="${esc(s.id)}" ${s.id===selected?"selected":""}>${esc(s.name)}</option>`).join("");
-}
-function field(name,label,value="",type="text",required=false,extra=""){
- return `<div class="form-group"><label class="field-label">${label}</label><input class="field" name="${name}" type="${type}" value="${esc(value)}" ${required?"required":""} ${extra}></div>`;
-}
-function selectField(name,label,options,value=""){
- return `<div class="form-group"><label class="field-label">${label}</label><select class="field" name="${name}">${options.map(o=>`<option value="${esc(o)}" ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`;
-}
-function getCollection(type){
- return ({subject:"subjects",assignment:"assignments",assessment:"assessments",semester:"semesters",schedule:"schedule"})[type];
-}
-function openModal(type,id=null){
- currentType=type;
- const key=getCollection(type);
- editing=id?db[key].find(x=>x.id===id):null;
- const x=editing||{};
- let title="",html="";
- if(type==="subject"){
-  title=id?"Edit Subject":"Add Subject";
-  html=`<div class="form-grid">${field("name","Subject name",x.name||"","text",true)}${field("code","Subject code",x.code||"")}${field("credits","Credit hours",x.credits??3,"number",true,'min="0.5" step="0.5"')}${field("color","Subject color",x.color||"#4779d8","color")}</div>`;
- }
- if(type==="assignment"){
-  title=id?"Edit Assignment":"Add Assignment";
-  html=`<div class="form-grid">${field("title","Assignment / task title",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${field("due","Due date",x.due||today(),"date")}${selectField("status","Status",["Pending","In Progress","Completed"],x.status||"Pending")}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(x.notes||"")}</textarea></div></div>`;
- }
- if(type==="assessment"){
-  title=id?"Edit Result":"Add Quiz / Exam Result";
-  html=`<div class="form-grid">${field("title","Assessment name",x.title||"","text",true)}<div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId" required>${subjectOptions(x.subjectId)}</select></div>${selectField("type","Assessment type",["Quiz","Test","Midterm","Final Exam","Assignment","Other"],x.type||"Quiz")}${field("date","Date",x.date||today(),"date")}${field("obtained","Obtained marks",x.obtained??"","number",true,'min="0" step="any"')}${field("total","Total marks",x.total??"","number",true,'min="0.01" step="any"')}<div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(x.notes||"")}</textarea></div></div>`;
- }
- if(type==="semester"){
-  title=id?"Edit Semester":"Add Semester Record";
-  html=`<div class="form-grid">${field("name","Semester / term name",x.name||"","text",true)}${field("year","Academic year",x.year||db.profile?.academicYear||"")}${field("gpa","GPA (optional)",x.gpa??"","number",false,'min="0" max="4" step="0.01"')}${field("credits","Credit hours",x.credits??0,"number",false,'min="0" step="0.5"')}${selectField("status","Status",["Current","Completed"],x.status||"Completed")}</div><div class="notice">Enter your GPA from your official academic record.</div>`;
- }
- if(type==="schedule"){
-  title=id?"Edit Schedule":"Add Study Schedule";
-  html=`<div class="form-grid">${field("title","Activity / subject",x.title||"","text",true)}<div class="form-group"><label class="field-label">Related subject</label><select class="field" name="subjectId">${subjectOptions(x.subjectId)}</select></div>${selectField("day","Day",["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],x.day||"Monday")}${field("time","Start time",x.time||"09:00","time")}</div>`;
- }
- $("#modalTitle").textContent=title;
- $("#modalFields").innerHTML=html;
- $("#modalBackdrop").classList.add("show");
- $("#modalForm").dataset.id=id||"";
-}
-function closeModal(){$("#modalBackdrop").classList.remove("show");$("#modalForm").reset();editing=null}
-$("#modalForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const type=currentType,key=getCollection(type);
- const data=Object.fromEntries(new FormData(e.target).entries());
- const id=e.target.dataset.id||uid();
- if(type==="subject"){data.credits=num(data.credits)||1;data.color=data.color||"#4779d8"}
- if(type==="assessment"){
-  data.obtained=num(data.obtained);data.total=num(data.total);
-  if(data.total<=0||data.obtained<0||data.obtained>data.total){toast("Check your marks. Obtained marks cannot exceed total marks.");return}
- }
- if(type==="semester"){
-  data.gpa=data.gpa===""?"":num(data.gpa);data.credits=num(data.credits);
-  if(data.gpa!==""&&(data.gpa<0||data.gpa>4)){toast("Enter a GPA between 0 and 4.");return}
- }
- const index=db[key].findIndex(x=>x.id===id);
- const record={...data,id};
- if(index>=0)db[key][index]=record;else db[key].push(record);
- closeModal();renderAll();
- try{await saveNow();toast("Saved to your account.");}
- catch(err){toast("Save failed: "+err.message);}
-});
-async function deleteItem(type,id){
- if(!confirm("Are you sure you want to delete this item?"))return;
- const key=getCollection(type);
- db[key]=db[key].filter(x=>x.id!==id);
- if(type==="subject"){
-  db.assessments=db.assessments.filter(x=>x.subjectId!==id);
-  db.assignments=db.assignments.filter(x=>x.subjectId!==id);
-  db.schedule=db.schedule.filter(x=>x.subjectId!==id);
- }
- renderAll();
- try{await saveNow();toast("Item deleted.");}
- catch(e){toast("Could not save deletion: "+e.message);}
-}
-document.addEventListener("click",e=>{
- const add=e.target.closest("[data-add]");
- if(add){openModal(add.dataset.add);return}
- const edit=e.target.closest("[data-edit]");
- if(edit){openModal(edit.dataset.edit,edit.dataset.id);return}
- const del=e.target.closest("[data-delete]");
- if(del){deleteItem(del.dataset.delete,del.dataset.id);return}
- const go=e.target.closest("[data-go]");
- if(go){showPage(go.dataset.go);return}
-});
-$$(".nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
-$("#quickAdd").onclick=()=>openModal("assignment");
-$("#modalClose").onclick=closeModal;$("#modalCancel").onclick=closeModal;
-$("#modalBackdrop").addEventListener("click",e=>{if(e.target===$("#modalBackdrop"))closeModal()});
-$("#menuBtn").onclick=()=>$("#sidebar").classList.toggle("open");
-function toggleTheme(){db.theme=db.theme==="dark"?"light":"dark";renderAll();persist()}
-$("#themeBtn").onclick=toggleTheme;$("#settingsTheme").onclick=toggleTheme;
-$("#subjectSearch").oninput=renderSubjects;
-$("#assignmentFilter").onchange=renderAssignments;
-$("#assignmentSearch").oninput=renderAssignments;
-$$(".level-option").forEach(b=>b.onclick=()=>{
- $$(".level-option").forEach(x=>x.classList.remove("selected"));
- b.classList.add("selected");activeLevel=b.dataset.level;
-});
-let activeLevel="University";
-$("#onboardForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const f=Object.fromEntries(new FormData(e.target).entries());
- db.profile={
-  name:f.name.trim(),institution:f.institution.trim(),program:f.program.trim(),
-  year:f.year.trim(),semester:f.semester.trim(),academicYear:f.academicYear.trim(),level:activeLevel
- };
- db.subjects=f.subjects.split(",").map(x=>x.trim()).filter(Boolean).map((name,i)=>({
-  id:uid(),name,code:"",credits:1,color:["#4779d8","#269b76","#8871d5","#d68a36","#d65c66"][i%5]
- }));
- if(f.semester.trim())db.semesters.push({id:uid(),name:f.semester.trim(),year:f.academicYear.trim(),gpa:"",credits:0,status:"Current"});
- try{
-  await saveNow();$("#onboarding").classList.remove("show");renderAll();showPage("dashboard");toast("Your workspace is ready!");
- }catch(err){toast("Could not save your profile: "+err.message)}
-});
-$("#editProfile").onclick=()=>{
- const p=db.profile||{};
- const html=`<div class="form-grid">
- ${field("name","Your name",p.name||"","text",true)}
- ${selectField("level","Education level",["School","College","University","Self-Learner"],p.level||"University")}
- ${field("institution","Institution",p.institution||"")}
- ${field("program","Program / Class",p.program||"")}
- ${field("year","Year / Class",p.year||"")}
- ${field("semester","Current semester / term",p.semester||"")}
- ${field("academicYear","Academic year",p.academicYear||"")}
- </div>`;
- currentType="profile";$("#modalTitle").textContent="Edit Profile";
- $("#modalFields").innerHTML=html;$("#modalBackdrop").classList.add("show");
- $("#modalForm").dataset.id="profile";
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+
+const uid = () =>
+  crypto.randomUUID
+    ? crypto.randomUUID()
+    : Date.now().toString(36) + Math.random().toString(36).slice(2);
+
+const today = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 };
-$("#modalForm").addEventListener("submit",async e=>{
- if(currentType!=="profile")return;
- e.preventDefault();
- const f=Object.fromEntries(new FormData(e.target).entries());
- db.profile={...db.profile,...f};
- closeModal();renderAll();
- try{await saveNow();toast("Profile updated.");}
- catch(err){toast("Could not save profile: "+err.message)}
+
+const esc = value =>
+  String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+
+const num = value =>
+  Number.isFinite(Number(value)) ? Number(value) : 0;
+
+const defaults = () => ({
+  profile: null,
+  subjects: [],
+  assignments: [],
+  assessments: [],
+  semesters: [],
+  schedule: [],
+  theme: "light"
 });
-$("#exportData").onclick=()=>{
- const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="studypilot-backup-"+today()+".json";a.click();
- URL.revokeObjectURL(url);toast("Backup downloaded.");
-};
-$("#importDataBtn").onclick=()=>$("#importFile").click();
-$("#importFile").onchange=async e=>{
- const file=e.target.files[0];if(!file)return;
- try{
-  const imported=JSON.parse(await file.text());
-  if(!imported||!Array.isArray(imported.subjects)||!imported.profile)throw new Error();
-  const fresh={...defaults(),...imported};
-  for(const key of ["subjects","assignments","assessments","semesters","schedule"]){
-   if(!Array.isArray(fresh[key]))throw new Error();
+
+let db = defaults();
+let user = null;
+let authMode = "login";
+let activeLevel = "University";
+let currentType = null;
+let editing = null;
+let saving = false;
+let saveTimer = null;
+
+async function api(path, options = {}) {
+  const response = await fetch("/api/" + path, {
+    credentials: "same-origin",
+    ...options,
+    headers: {
+      ...(options.body ? {"Content-Type":"application/json"} : {}),
+      ...(options.headers || {})
+    }
+  });
+
+  let result = {};
+
+  try {
+    result = await response.json();
+  } catch {}
+
+  if (!response.ok) {
+    throw new Error(result.error || `Request failed (${response.status}).`);
   }
-  db=fresh;await saveNow();renderAll();toast("Backup restored to your account.");
- }catch(err){toast("This backup is not valid or could not be saved.");}
- e.target.value="";
-};
-async function logout(){
- if(!confirm("Log out of your StudyPilot account?"))return;
- try{await api("logout",{method:"POST",body:"{}"});}catch(e){}
- user=null;db=defaults();$("#app").classList.add("hidden");$("#authScreen").classList.remove("hidden");
- $("#authForm").reset();setAuthMode("login");toast("You have logged out.");
-}
-$("#logoutBtn").onclick=logout;$("#settingsLogout").onclick=logout;
 
-function setAuthMode(mode){
- authMode=mode;
- const login=mode==="login";
- $("#loginTab").classList.toggle("active",login);
- $("#registerTab").classList.toggle("active",!login);
- $("#nameGroup").classList.toggle("hidden",login);
- $("#authTitle").textContent=login?"Welcome back":"Create your account";
- $("#authIntro").textContent=login?"Log in to continue to your personal workspace.":"Create your private StudyPilot student account.";
- $("#authSubmit").textContent=login?"Log in →":"Create account →";
- $("#authForm").elements.password.autocomplete=login?"current-password":"new-password";
- $("#authForm").elements.password.value="";
- $("#authError").classList.add("hidden");
+  return result;
 }
-$("#loginTab").onclick=()=>setAuthMode("login");
-$("#registerTab").onclick=()=>setAuthMode("register");
-$("#authForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const f=Object.fromEntries(new FormData(e.target).entries());
- const btn=$("#authSubmit");
- btn.disabled=true;btn.textContent="Please wait...";
- $("#authError").classList.add("hidden");
- try{
-  const endpoint=authMode==="login"?"login":"register";
-  const result=await api(endpoint,{method:"POST",body:JSON.stringify(f)});
-  user=result.user;
-  await loadWorkspace();
- }catch(err){
-  $("#authError").textContent=err.message;
-  $("#authError").classList.remove("hidden");
- }finally{
-  btn.disabled=false;btn.textContent=authMode==="login"?"Log in →":"Create account →";
- }
+
+function toast(message) {
+  const element = $("#toast");
+  element.textContent = message;
+  element.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => element.classList.remove("show"), 2800);
+}
+
+function dateText(value) {
+  if (!value) return "No date";
+  const date = new Date(value + "T00:00:00");
+  return isNaN(date)
+    ? "No date"
+    : date.toLocaleDateString(undefined, {
+        month:"short",
+        day:"numeric",
+        year:"numeric"
+      });
+}
+
+function gradeFromPercent(percent) {
+  if (percent >= 90) return "A+";
+  if (percent >= 85) return "A";
+  if (percent >= 80) return "A-";
+  if (percent >= 75) return "B+";
+  if (percent >= 70) return "B";
+  if (percent >= 65) return "B-";
+  if (percent >= 60) return "C+";
+  if (percent >= 55) return "C";
+  if (percent >= 50) return "D";
+  return "F";
+}
+
+function gradePoints(grade) {
+  return ({
+    "A+":4,"A":4,"A-":3.7,"B+":3.3,"B":3,
+    "B-":2.7,"C+":2.3,"C":2,"D":1,"F":0
+  })[grade] ?? null;
+}
+
+function calcGpa() {
+  let total = 0;
+  let credits = 0;
+
+  db.subjects.forEach(subject => {
+    const assessments = db.assessments.filter(
+      item => item.subjectId === subject.id && num(item.total) > 0
+    );
+
+    if (!assessments.length) return;
+
+    const obtained = assessments.reduce((sum,item) => sum + num(item.obtained),0);
+    const possible = assessments.reduce((sum,item) => sum + num(item.total),0);
+
+    if (!possible) return;
+
+    const points = gradePoints(gradeFromPercent(obtained / possible * 100));
+    const credit = num(subject.credits) || 1;
+
+    if (points !== null) {
+      total += points * credit;
+      credits += credit;
+    }
+  });
+
+  return credits ? total / credits : null;
+}
+
+function calcCgpa() {
+  const records = db.semesters.filter(
+    item => item.gpa !== "" && item.gpa !== null && item.gpa !== undefined
+  );
+
+  if (!records.length) return calcGpa();
+
+  let points = 0;
+  let credits = 0;
+
+  records.forEach(record => {
+    const credit = num(record.credits) || 1;
+    points += num(record.gpa) * credit;
+    credits += credit;
+  });
+
+  return credits ? points / credits : null;
+}
+
+function subjectAverage(id) {
+  const assessments = db.assessments.filter(
+    item => item.subjectId === id && num(item.total) > 0
+  );
+
+  if (!assessments.length) return null;
+
+  const obtained = assessments.reduce((sum,item) => sum + num(item.obtained),0);
+  const total = assessments.reduce((sum,item) => sum + num(item.total),0);
+
+  return total ? obtained / total * 100 : null;
+}
+
+function subjectName(id) {
+  return db.subjects.find(subject => subject.id === id)?.name || "Unassigned";
+}
+
+function syncProfile() {
+  const profile = db.profile || {};
+  const name = profile.name || user?.name || "Student";
+
+  $("#miniName").textContent = name;
+  $("#miniEmail").textContent = user?.email || "";
+  $("#miniAvatar").textContent = name.charAt(0).toUpperCase();
+  $("#greeting").textContent = "Welcome back, " + name.split(" ")[0] + "!";
+  $("#todayDate").textContent = new Date().toLocaleDateString(undefined, {
+    weekday:"long",
+    month:"long",
+    day:"numeric"
+  });
+
+  document.documentElement.dataset.theme =
+    db.theme === "dark" ? "dark" : "light";
+
+  $("#themeBtn").textContent = db.theme === "dark" ? "☀" : "☾";
+}
+
+function subjectCard(subject) {
+  const average = subjectAverage(subject.id);
+
+  return `<div class="subject-card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="width:10px;height:10px;border-radius:50%;background:${esc(subject.color || "#4779d8")}"></span>
+      <div class="row-actions">
+        <button class="small-btn" data-edit="subject" data-id="${esc(subject.id)}">Edit</button>
+        <button class="small-btn" data-delete="subject" data-id="${esc(subject.id)}">Delete</button>
+      </div>
+    </div>
+    <h3>${esc(subject.name)}</h3>
+    <p>${esc(subject.code || "Subject")} · ${num(subject.credits) || 1} credit(s)</p>
+    <div class="subject-meta">
+      <span>Performance</span>
+      <strong>${average === null ? "No results" : average.toFixed(1) + "%"}</strong>
+    </div>
+    <div class="progress"><span style="width:${Math.min(100,average || 0)}%"></span></div>
+  </div>`;
+}
+
+function renderDashboard() {
+  const gpa = calcGpa();
+  const pending = db.assignments.filter(item => item.status !== "Completed").length;
+
+  $("#dashGpa").textContent = gpa === null ? "—" : gpa.toFixed(2);
+  $("#dashSubjects").textContent = db.subjects.length;
+  $("#dashPending").textContent = pending;
+  $("#dashAssessments").textContent = db.assessments.length;
+
+  $("#dashSubjectList").innerHTML = db.subjects.length
+    ? db.subjects.slice(0,6).map(subjectCard).join("")
+    : `<div class="empty">📚<br>Add your first subject to get started.</div>`;
+
+  const upcoming = db.assignments
+    .filter(item => item.status !== "Completed")
+    .sort((a,b) => (a.due || "9999").localeCompare(b.due || "9999"))
+    .slice(0,5);
+
+  $("#dashAssignments").innerHTML = upcoming.length
+    ? upcoming.map(item => `<div class="list-row">
+        <div class="list-mark">▣</div>
+        <div class="list-main">
+          <strong>${esc(item.title)}</strong>
+          <small>${esc(subjectName(item.subjectId))} · Due ${dateText(item.due)}</small>
+        </div>
+        <span class="status ${item.status === "In Progress" ? "pending" : ""}">${esc(item.status)}</span>
+      </div>`).join("")
+    : `<div class="empty">No pending assignments.</div>`;
+
+  const recent = [...db.assessments]
+    .sort((a,b) => (b.date || "").localeCompare(a.date || ""))
+    .slice(0,4);
+
+  $("#dashResults").innerHTML = recent.length
+    ? recent.map(item => `<div class="list-row">
+        <div class="list-mark">✓</div>
+        <div class="list-main">
+          <strong>${esc(item.title)}</strong>
+          <small>${esc(subjectName(item.subjectId))} · ${dateText(item.date)}</small>
+        </div>
+        <strong>${num(item.obtained)}/${num(item.total)}</strong>
+      </div>`).join("")
+    : `<div class="empty">Your results will appear here.</div>`;
+
+  const profile = db.profile || {};
+
+  $("#studySnapshot").innerHTML = `<div class="list">
+    <div class="list-row"><div class="list-main"><strong>Education</strong><small>${esc(profile.level || "Not added")}</small></div></div>
+    <div class="list-row"><div class="list-main"><strong>Institution</strong><small>${esc(profile.institution || "Not added")}</small></div></div>
+    <div class="list-row"><div class="list-main"><strong>Program / Class</strong><small>${esc(profile.program || "Not added")} · ${esc(profile.year || "")}</small></div></div>
+    <div class="list-row"><div class="list-main"><strong>Current period</strong><small>${esc(profile.semester || "Not added")} · ${esc(profile.academicYear || "")}</small></div></div>
+  </div>`;
+}
+
+function renderSubjects() {
+  const query = ($("#subjectSearch")?.value || "").toLowerCase();
+
+  const items = db.subjects.filter(
+    subject => (subject.name || "").toLowerCase().includes(query)
+  );
+
+  $("#subjectCount").textContent = items.length + " subjects";
+
+  $("#subjectList").innerHTML = items.length
+    ? items.map(subjectCard).join("")
+    : `<div class="card empty" style="grid-column:1/-1">No subjects found. Add a subject to begin.</div>`;
+}
+
+function renderAssignments() {
+  const filter = $("#assignmentFilter")?.value || "all";
+  const query = ($("#assignmentSearch")?.value || "").toLowerCase();
+
+  const items = db.assignments
+    .filter(item =>
+      (filter === "all" || item.status === filter) &&
+      (item.title + " " + subjectName(item.subjectId)).toLowerCase().includes(query)
+    )
+    .sort((a,b) => (a.due || "").localeCompare(b.due || ""));
+
+  $("#assignmentTable").innerHTML = items.length
+    ? items.map(item => `<tr>
+        <td><strong>${esc(item.title)}</strong><br><span class="muted">${esc(item.notes || "")}</span></td>
+        <td>${esc(subjectName(item.subjectId))}</td>
+        <td>${dateText(item.due)}</td>
+        <td><span class="status ${item.status === "Completed" ? "done" : item.status === "In Progress" ? "pending" : ""}">${esc(item.status)}</span></td>
+        <td><div class="row-actions">
+          <button class="small-btn" data-edit="assignment" data-id="${esc(item.id)}">Edit</button>
+          <button class="small-btn" data-delete="assignment" data-id="${esc(item.id)}">Delete</button>
+        </div></td>
+      </tr>`).join("")
+    : `<tr><td colspan="5"><div class="empty">No assignments yet.</div></td></tr>`;
+}
+
+function renderAssessments() {
+  const items = [...db.assessments]
+    .sort((a,b) => (b.date || "").localeCompare(a.date || ""));
+
+  const percentages = items
+    .filter(item => num(item.total) > 0)
+    .map(item => num(item.obtained) / num(item.total) * 100);
+
+  const average = percentages.length
+    ? percentages.reduce((sum,value) => sum + value,0) / percentages.length
+    : null;
+
+  $("#assessmentTotal").textContent = items.length;
+  $("#assessmentAverage").textContent = average === null ? "—" : average.toFixed(1) + "%";
+  $("#assessmentBest").textContent = percentages.length
+    ? Math.max(...percentages).toFixed(1) + "%"
+    : "—";
+
+  $("#examTotal").textContent = items.filter(
+    item => String(item.type).toLowerCase().includes("exam") ||
+      ["midterm","final"].includes(String(item.type).toLowerCase())
+  ).length;
+
+  $("#assessmentTable").innerHTML = items.length
+    ? items.map(item => {
+        const percentage = num(item.total)
+          ? num(item.obtained) / num(item.total) * 100
+          : 0;
+
+        return `<tr>
+          <td><strong>${esc(item.title)}</strong><br><span class="muted">${dateText(item.date)}</span></td>
+          <td>${esc(subjectName(item.subjectId))}</td>
+          <td>${esc(item.type)}</td>
+          <td>${num(item.obtained)} / ${num(item.total)}</td>
+          <td><strong>${percentage.toFixed(1)}%</strong> · ${gradeFromPercent(percentage)}</td>
+          <td><div class="row-actions">
+            <button class="small-btn" data-edit="assessment" data-id="${esc(item.id)}">Edit</button>
+            <button class="small-btn" data-delete="assessment" data-id="${esc(item.id)}">Delete</button>
+          </div></td>
+        </tr>`;
+      }).join("")
+    : `<tr><td colspan="6"><div class="empty">No results recorded yet.</div></td></tr>`;
+}
+
+function renderPlanner() {
+  const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
+  $("#weekGrid").innerHTML = days.map(day => {
+    const items = db.schedule
+      .filter(item => item.day === day)
+      .sort((a,b) => (a.time || "").localeCompare(b.time || ""));
+
+    return `<div class="day-col">
+      <h4>${day}</h4>
+      ${items.length ? items.map(item => `<div class="event">
+        <strong>${esc(item.title)}</strong>
+        <small>${esc(item.time || "")} · ${esc(item.subjectId ? subjectName(item.subjectId) : "Study")}</small>
+        <div style="text-align:right;margin-top:4px">
+          <button class="small-btn" data-edit="schedule" data-id="${esc(item.id)}">Edit</button>
+          <button class="small-btn" data-delete="schedule" data-id="${esc(item.id)}">×</button>
+        </div>
+      </div>`).join("") : `<span class="muted">No plans</span>`}
+    </div>`;
+  }).join("");
+
+  const tasks = db.assignments
+    .filter(item => item.status !== "Completed")
+    .sort((a,b) => (a.due || "").localeCompare(b.due || ""));
+
+  $("#plannerTasks").innerHTML = tasks.length
+    ? tasks.map(item => `<div class="list-row">
+        <div class="list-mark">◷</div>
+        <div class="list-main"><strong>${esc(item.title)}</strong><small>${esc(subjectName(item.subjectId))} · ${dateText(item.due)}</small></div>
+        <span class="status pending">${esc(item.status)}</span>
+      </div>`).join("")
+    : `<div class="empty">Your upcoming study tasks will appear here.</div>`;
+}
+
+function renderRecords() {
+  const cgpa = calcCgpa();
+
+  $("#recordCgpa").textContent = cgpa === null ? "—" : cgpa.toFixed(2);
+  $("#recordSemesters").textContent = db.semesters.length;
+  $("#recordCredits").textContent = db.semesters.reduce((sum,item) => sum + num(item.credits),0);
+  $("#recordLevel").textContent = db.profile?.level || "—";
+
+  const items = [...db.semesters]
+    .sort((a,b) => (a.year || "").localeCompare(b.year || ""));
+
+  $("#semesterTable").innerHTML = items.length
+    ? items.map(item => `<tr>
+        <td><strong>${esc(item.name)}</strong></td>
+        <td>${esc(item.year || "—")}</td>
+        <td>${item.gpa === "" ? "—" : num(item.gpa).toFixed(2)}</td>
+        <td>${num(item.credits)}</td>
+        <td><span class="status ${item.status === "Completed" ? "done" : "pending"}">${esc(item.status)}</span></td>
+        <td><div class="row-actions">
+          <button class="small-btn" data-edit="semester" data-id="${esc(item.id)}">Edit</button>
+          <button class="small-btn" data-delete="semester" data-id="${esc(item.id)}">Delete</button>
+        </div></td>
+      </tr>`).join("")
+    : `<tr><td colspan="6"><div class="empty">No semester history yet.</div></td></tr>`;
+}
+
+function renderReports() {
+  const items = db.semesters
+    .filter(item => item.gpa !== "" && item.gpa !== null)
+    .slice(-8);
+
+  $("#gpaChart").innerHTML = items.length
+    ? items.map(item => `<div class="chart-col">
+        <b>${num(item.gpa).toFixed(2)}</b>
+        <div class="chart-bar" style="height:${Math.max(3,Math.min(100,num(item.gpa)/4*100))}%"></div>
+        <small>${esc((item.name || "").slice(0,9))}</small>
+      </div>`).join("")
+    : `<div class="empty" style="width:100%">Add semester GPA records to see your trend.</div>`;
+
+  const assessments = db.assessments;
+  const percentages = assessments
+    .filter(item => num(item.total) > 0)
+    .map(item => num(item.obtained) / num(item.total) * 100);
+
+  const average = percentages.length
+    ? percentages.reduce((sum,value) => sum + value,0) / percentages.length
+    : null;
+
+  const gpa = calcGpa();
+
+  $("#performanceOverview").innerHTML = `<div class="list">
+    <div class="list-row"><div class="list-main"><strong>Assessment average</strong><small>Across ${assessments.length} results</small></div><strong>${average === null ? "—" : average.toFixed(1) + "%"}</strong></div>
+    <div class="list-row"><div class="list-main"><strong>Estimated current GPA</strong><small>Based on subject results</small></div><strong>${gpa === null ? "—" : gpa.toFixed(2)}</strong></div>
+    <div class="list-row"><div class="list-main"><strong>Completed assignments</strong><small>Of ${db.assignments.length} total</small></div><strong>${db.assignments.filter(item => item.status === "Completed").length}</strong></div>
+  </div>`;
+
+  $("#subjectPerformance").innerHTML = db.subjects.length
+    ? `<div class="list">${db.subjects.map(subject => {
+        const value = subjectAverage(subject.id);
+        return `<div class="list-row">
+          <div class="list-main"><strong>${esc(subject.name)}</strong><div class="progress"><span style="width:${value === null ? 0 : value}%"></span></div></div>
+          <strong>${value === null ? "—" : value.toFixed(1) + "%"}</strong>
+        </div>`;
+      }).join("")}</div>`
+    : `<div class="empty">Add subjects and assessment results to see performance.</div>`;
+}
+
+function renderSettings() {
+  const profile = db.profile || {};
+
+  $("#profileDetails").innerHTML = `<div class="profile-panel">
+    <div><span class="field-label">Name</span><strong>${esc(profile.name || "")}</strong></div>
+    <div><span class="field-label">Education level</span><strong>${esc(profile.level || "")}</strong></div>
+    <div><span class="field-label">Institution</span><strong>${esc(profile.institution || "Not added")}</strong></div>
+    <div><span class="field-label">Program / Class</span><strong>${esc(profile.program || "Not added")}</strong></div>
+    <div><span class="field-label">Year</span><strong>${esc(profile.year || "Not added")}</strong></div>
+    <div><span class="field-label">Current semester</span><strong>${esc(profile.semester || "Not added")}</strong></div>
+    <div><span class="field-label">Academic year</span><strong>${esc(profile.academicYear || "Not added")}</strong></div>
+  </div>`;
+
+  $("#accountEmail").textContent = "Signed in as " + (user?.email || "");
+}
+
+function renderAll() {
+  if (!user) return;
+
+  syncProfile();
+  renderDashboard();
+  renderSubjects();
+  renderAssignments();
+  renderAssessments();
+  renderPlanner();
+  renderRecords();
+  renderReports();
+  renderSettings();
+}
+
+function showPage(name) {
+  $$(".page").forEach(page => {
+    page.classList.toggle("active", page.id === "page-" + name);
+  });
+
+  $$(".nav button").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === name);
+  });
+
+  const button = $(`[data-page="${name}"]`);
+
+  $("#topTitle").textContent = button ? button.textContent.trim() : name;
+
+  $("#topSubtitle").textContent = ({
+    dashboard:"Your academic overview",
+    subjects:"Manage your courses and subjects",
+    assignments:"Coursework and deadlines",
+    assessments:"Your quiz and exam results",
+    planner:"Your personal study routine",
+    records:"Your academic history",
+    reports:"Track your academic progress",
+    settings:"Your profile and preferences"
+  })[name] || "";
+
+  $("#sidebar").classList.remove("open");
+  renderAll();
+}
+
+function persist() {
+  if (!user) return;
+
+  clearTimeout(saveTimer);
+
+  saveTimer = setTimeout(async () => {
+    if (saving) {
+      persist();
+      return;
+    }
+
+    saving = true;
+
+    try {
+      await api("workspace", {
+        method:"PUT",
+        body:JSON.stringify({data:db})
+      });
+    } catch (error) {
+      toast("Cloud save failed: " + error.message);
+    } finally {
+      saving = false;
+    }
+  }, 500);
+}
+
+async function saveNow() {
+  clearTimeout(saveTimer);
+
+  if (!user) throw new Error("You are not logged in.");
+
+  return await api("workspace", {
+    method:"PUT",
+    body:JSON.stringify({data:db})
+  });
+}
+
+function subjectOptions(selected = "") {
+  return `<option value="">Choose a subject</option>` +
+    db.subjects.map(subject => `<option value="${esc(subject.id)}" ${subject.id === selected ? "selected" : ""}>${esc(subject.name)}</option>`).join("");
+}
+
+function field(name,label,value="",type="text",required=false,extra="") {
+  return `<div class="form-group">
+    <label class="field-label">${label}</label>
+    <input class="field" name="${name}" type="${type}" value="${esc(value)}" ${required ? "required" : ""} ${extra}>
+  </div>`;
+}
+
+function selectField(name,label,options,value="") {
+  return `<div class="form-group">
+    <label class="field-label">${label}</label>
+    <select class="field" name="${name}">
+      ${options.map(option => `<option value="${esc(option)}" ${option === value ? "selected" : ""}>${esc(option)}</option>`).join("")}
+    </select>
+  </div>`;
+}
+
+function getCollection(type) {
+  return ({
+    subject:"subjects",
+    assignment:"assignments",
+    assessment:"assessments",
+    semester:"semesters",
+    schedule:"schedule"
+  })[type];
+}
+
+function openModal(type,id=null) {
+  currentType = type;
+
+  const key = getCollection(type);
+  editing = id && key ? db[key].find(item => item.id === id) : null;
+
+  const item = editing || {};
+  let title = "";
+  let html = "";
+
+  if (type === "subject") {
+    title = id ? "Edit Subject" : "Add Subject";
+    html = `<div class="form-grid">
+      ${field("name","Subject name",item.name || "","text",true)}
+      ${field("code","Subject code",item.code || "")}
+      ${field("credits","Credit hours",item.credits ?? 3,"number",true,'min="0.5" step="0.5"')}
+      ${field("color","Subject color",item.color || "#4779d8","color")}
+    </div>`;
+  }
+
+  if (type === "assignment") {
+    title = id ? "Edit Assignment" : "Add Assignment";
+    html = `<div class="form-grid">
+      ${field("title","Assignment / task title",item.title || "","text",true)}
+      <div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId">${subjectOptions(item.subjectId)}</select></div>
+      ${field("due","Due date",item.due || today(),"date")}
+      ${selectField("status","Status",["Pending","In Progress","Completed"],item.status || "Pending")}
+      <div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(item.notes || "")}</textarea></div>
+    </div>`;
+  }
+
+  if (type === "assessment") {
+    title = id ? "Edit Result" : "Add Quiz / Exam Result";
+    html = `<div class="form-grid">
+      ${field("title","Assessment name",item.title || "","text",true)}
+      <div class="form-group"><label class="field-label">Subject</label><select class="field" name="subjectId" required>${subjectOptions(item.subjectId)}</select></div>
+      ${selectField("type","Assessment type",["Quiz","Test","Midterm","Final Exam","Assignment","Other"],item.type || "Quiz")}
+      ${field("date","Date",item.date || today(),"date")}
+      ${field("obtained","Obtained marks",item.obtained ?? "","number",true,'min="0" step="any"')}
+      ${field("total","Total marks",item.total ?? "","number",true,'min="0.01" step="any"')}
+      <div class="form-group full"><label class="field-label">Notes</label><textarea class="field" name="notes">${esc(item.notes || "")}</textarea></div>
+    </div>`;
+  }
+
+  if (type === "semester") {
+    title = id ? "Edit Semester" : "Add Semester Record";
+    html = `<div class="form-grid">
+      ${field("name","Semester / term name",item.name || "","text",true)}
+      ${field("year","Academic year",item.year || db.profile?.academicYear || "")}
+      ${field("gpa","GPA (optional)",item.gpa ?? "","number",false,'min="0" max="4" step="0.01"')}
+      ${field("credits","Credit hours",item.credits ?? 0,"number",false,'min="0" step="0.5"')}
+      ${selectField("status","Status",["Current","Completed"],item.status || "Completed")}
+    </div><div class="notice">Enter your GPA from your official academic record.</div>`;
+  }
+
+  if (type === "schedule") {
+    title = id ? "Edit Schedule" : "Add Study Schedule";
+    html = `<div class="form-grid">
+      ${field("title","Activity / subject",item.title || "","text",true)}
+      <div class="form-group"><label class="field-label">Related subject</label><select class="field" name="subjectId">${subjectOptions(item.subjectId)}</select></div>
+      ${selectField("day","Day",["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],item.day || "Monday")}
+      ${field("time","Start time",item.time || "09:00","time")}
+    </div>`;
+  }
+
+  if (type === "profile") {
+    const profile = db.profile || {};
+
+    title = "Edit Profile";
+    html = `<div class="form-grid">
+      ${field("name","Your name",profile.name || user.name,"text",true)}
+      ${selectField("level","Education level",["School","College","University","Self-Learner"],profile.level || "University")}
+      ${field("institution","Institution",profile.institution || "")}
+      ${field("program","Program / Class",profile.program || "")}
+      ${field("year","Year / Class",profile.year || "")}
+      ${field("semester","Current semester / term",profile.semester || "")}
+      ${field("academicYear","Academic year",profile.academicYear || "")}
+    </div>`;
+  }
+
+  $("#modalTitle").textContent = title;
+  $("#modalFields").innerHTML = html;
+  $("#modalBackdrop").classList.add("show");
+  $("#modalForm").dataset.id = id || "";
+}
+
+function closeModal() {
+  $("#modalBackdrop").classList.remove("show");
+  $("#modalForm").reset();
+  $("#modalForm").dataset.id = "";
+  editing = null;
+  currentType = null;
+}
+
+$("#modalForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const type = currentType;
+  const id = $("#modalForm").dataset.id || uid();
+  const formData = Object.fromEntries(new FormData(event.currentTarget).entries());
+
+  if (type === "profile") {
+    db.profile = {
+      ...(db.profile || {}),
+      ...formData,
+      setupComplete:true
+    };
+
+    closeModal();
+    renderAll();
+
+    try {
+      await saveNow();
+      toast("Profile updated.");
+    } catch (error) {
+      toast("Profile save failed: " + error.message);
+    }
+
+    return;
+  }
+
+  const key = getCollection(type);
+
+  if (!key) {
+    toast("Invalid item type.");
+    return;
+  }
+
+  if (type === "subject") {
+    formData.credits = num(formData.credits) || 1;
+    formData.color = formData.color || "#4779d8";
+  }
+
+  if (type === "assessment") {
+    formData.obtained = num(formData.obtained);
+    formData.total = num(formData.total);
+
+    if (
+      formData.total <= 0 ||
+      formData.obtained < 0 ||
+      formData.obtained > formData.total
+    ) {
+      toast("Check your marks. Obtained marks cannot exceed total marks.");
+      return;
+    }
+  }
+
+  if (type === "semester") {
+    formData.gpa = formData.gpa === "" ? "" : num(formData.gpa);
+    formData.credits = num(formData.credits);
+
+    if (formData.gpa !== "" && (formData.gpa < 0 || formData.gpa > 4)) {
+      toast("Enter a GPA between 0 and 4.");
+      return;
+    }
+  }
+
+  const index = db[key].findIndex(item => item.id === id);
+  const record = {...formData,id};
+
+  if (index >= 0) {
+    db[key][index] = record;
+  } else {
+    db[key].push(record);
+  }
+
+  closeModal();
+  renderAll();
+
+  try {
+    await saveNow();
+    toast("Saved to your account.");
+  } catch (error) {
+    toast("Save failed: " + error.message);
+  }
 });
-async function loadWorkspace(){
- const result=await api("workspace");
- db={...defaults(),...result.data};
- if(!db.profile)db.profile={name:user.name,level:"University"};
- $("#authScreen").classList.add("hidden");$("#app").classList.remove("hidden");
- renderAll();
- if(!db.profile.name)db.profile.name=user.name;
- if(!db.profile.level){
-  $("#onboarding").classList.add("show");
- }else{
+
+async function deleteItem(type,id) {
+  const key = getCollection(type);
+
+  if (!key) return;
+
+  let message = "Are you sure you want to delete this item?";
+
+  if (type === "subject") {
+    message = "Deleting this subject will also delete its linked assignments, assessments and timetable entries. Continue?";
+  }
+
+  if (!confirm(message)) return;
+
+  db[key] = db[key].filter(item => item.id !== id);
+
+  if (type === "subject") {
+    db.assessments = db.assessments.filter(item => item.subjectId !== id);
+    db.assignments = db.assignments.filter(item => item.subjectId !== id);
+    db.schedule = db.schedule.filter(item => item.subjectId !== id);
+  }
+
+  renderAll();
+
+  try {
+    await saveNow();
+    toast("Item deleted.");
+  } catch (error) {
+    toast("Could not save deletion: " + error.message);
+  }
+}
+
+document.addEventListener("click", event => {
+  const add = event.target.closest("[data-add]");
+  if (add) {
+    openModal(add.dataset.add);
+    return;
+  }
+
+  const edit = event.target.closest("[data-edit]");
+  if (edit) {
+    openModal(edit.dataset.edit,edit.dataset.id);
+    return;
+  }
+
+  const remove = event.target.closest("[data-delete]");
+  if (remove) {
+    deleteItem(remove.dataset.delete,remove.dataset.id);
+    return;
+  }
+
+  const go = event.target.closest("[data-go]");
+  if (go) {
+    showPage(go.dataset.go);
+  }
+});
+
+$$(".nav button").forEach(button => {
+  button.addEventListener("click",() => showPage(button.dataset.page));
+});
+
+$("#quickAdd").onclick = () => openModal("assignment");
+$("#modalClose").onclick = closeModal;
+$("#modalCancel").onclick = closeModal;
+
+$("#modalBackdrop").addEventListener("click",event => {
+  if (event.target === $("#modalBackdrop")) closeModal();
+});
+
+$("#menuBtn").onclick = () => $("#sidebar").classList.toggle("open");
+
+function toggleTheme() {
+  db.theme = db.theme === "dark" ? "light" : "dark";
+  renderAll();
+  persist();
+}
+
+$("#themeBtn").onclick = toggleTheme;
+$("#settingsTheme").onclick = toggleTheme;
+
+$("#subjectSearch").oninput = renderSubjects;
+$("#assignmentFilter").onchange = renderAssignments;
+$("#assignmentSearch").oninput = renderAssignments;
+
+$$(".level-option").forEach(button => {
+  button.onclick = () => {
+    $$(".level-option").forEach(item => item.classList.remove("selected"));
+    button.classList.add("selected");
+    activeLevel = button.dataset.level;
+  };
+});
+
+$("#onboardForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const form = Object.fromEntries(new FormData(event.currentTarget).entries());
+  const button = $("#onboardSubmit");
+
+  button.disabled = true;
+  button.textContent = "Saving your workspace...";
+
+  db.profile = {
+    name:form.name.trim(),
+    institution:form.institution.trim(),
+    program:form.program.trim(),
+    year:form.year.trim(),
+    semester:form.semester.trim(),
+    academicYear:form.academicYear.trim(),
+    level:activeLevel,
+    setupComplete:true
+  };
+
+  db.subjects = form.subjects
+    .split(",")
+    .map(value => value.trim())
+    .filter(Boolean)
+    .map((name,index) => ({
+      id:uid(),
+      name,
+      code:"",
+      credits:1,
+      color:["#4779d8","#269b76","#8871d5","#d68a36","#d65c66"][index % 5]
+    }));
+
+  if (form.semester.trim() && !db.semesters.length) {
+    db.semesters.push({
+      id:uid(),
+      name:form.semester.trim(),
+      year:form.academicYear.trim(),
+      gpa:"",
+      credits:0,
+      status:"Current"
+    });
+  }
+
+  try {
+    await saveNow();
+    $("#onboarding").classList.remove("show");
+    renderAll();
+    showPage("dashboard");
+    toast("Your workspace is ready!");
+  } catch (error) {
+    toast("Could not save your profile: " + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Create My Workspace →";
+  }
+});
+
+$("#editProfile").onclick = () => openModal("profile");
+
+$("#exportData").onclick = () => {
+  const blob = new Blob([JSON.stringify(db,null,2)], {
+    type:"application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+
+  anchor.href = url;
+  anchor.download = "studypilot-backup-" + today() + ".json";
+  anchor.click();
+
+  URL.revokeObjectURL(url);
+  toast("Backup downloaded.");
+};
+
+$("#importDataBtn").onclick = () => $("#importFile").click();
+
+$("#importFile").onchange = async event => {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  try {
+    const imported = JSON.parse(await file.text());
+
+    if (!imported || !Array.isArray(imported.subjects)) {
+      throw new Error("Invalid backup.");
+    }
+
+    const fresh = {...defaults(),...imported};
+
+    for (const key of [
+      "subjects",
+      "assignments",
+      "assessments",
+      "semesters",
+      "schedule"
+    ]) {
+      if (!Array.isArray(fresh[key])) {
+        throw new Error("Invalid backup structure.");
+      }
+    }
+
+    db = fresh;
+
+    await saveNow();
+    renderAll();
+    toast("Backup restored to your account.");
+  } catch (error) {
+    toast("This backup is not valid or could not be saved.");
+  }
+
+  event.target.value = "";
+};
+
+async function logout() {
+  if (!confirm("Log out of your StudyPilot account?")) return;
+
+  try {
+    await api("logout",{
+      method:"POST",
+      body:"{}"
+    });
+  } catch (error) {
+    console.error("Logout error:",error);
+  }
+
+  user = null;
+  db = defaults();
+
   $("#onboarding").classList.remove("show");
- }
+  $("#app").classList.add("hidden");
+  $("#authScreen").classList.remove("hidden");
+
+  $("#authForm").reset();
+  setAuthMode("login");
+
+  toast("You have logged out.");
 }
-async function start(){
- try{
-  const result=await api("me");
-  user=result.user;
-  if(user){await loadWorkspace();return}
- }catch(e){}
- $("#authScreen").classList.remove("hidden");
- $("#app").classList.add("hidden");
- setAuthMode("login");
+
+$("#logoutBtn").onclick = logout;
+$("#settingsLogout").onclick = logout;
+
+function setAuthMode(mode) {
+  authMode = mode;
+
+  const login = mode === "login";
+
+  $("#loginTab").classList.toggle("active",login);
+  $("#registerTab").classList.toggle("active",!login);
+
+  $("#nameGroup").classList.toggle("hidden",login);
+  $("#confirmGroup").classList.toggle("hidden",login);
+
+  $("#authForm").elements.name.required = !login;
+  $("#authForm").elements.confirmPassword.required = !login;
+
+  $("#authTitle").textContent = login
+    ? "Welcome back"
+    : "Create your account";
+
+  $("#authIntro").textContent = login
+    ? "Log in to continue to your personal workspace."
+    : "Create your private StudyPilot student account.";
+
+  $("#authSubmit").textContent = login
+    ? "Log in →"
+    : "Create account →";
+
+  $("#authForm").elements.password.autocomplete =
+    login ? "current-password" : "new-password";
+
+  $("#authForm").elements.password.value = "";
+  $("#authForm").elements.confirmPassword.value = "";
+
+  $("#authError").classList.add("hidden");
+  $("#authError").textContent = "";
 }
-if("serviceWorker" in navigator){
- // No offline service worker is registered: private pages must be loaded from the server.
+
+$("#loginTab").onclick = () => setAuthMode("login");
+$("#registerTab").onclick = () => setAuthMode("register");
+
+$("#authForm").addEventListener("submit",async event => {
+  event.preventDefault();
+
+  if (saving) return;
+
+  const form = Object.fromEntries(new FormData(event.currentTarget).entries());
+
+  if (authMode === "register") {
+    if (form.password !== form.confirmPassword) {
+      $("#authError").textContent = "Passwords do not match.";
+      $("#authError").classList.remove("hidden");
+      return;
+    }
+
+    if (form.password.length < 10) {
+      $("#authError").textContent = "Password must be at least 10 characters.";
+      $("#authError").classList.remove("hidden");
+      return;
+    }
+  }
+
+  const button = $("#authSubmit");
+  const originalText = authMode === "login" ? "Log in →" : "Create account →";
+
+  button.disabled = true;
+  button.textContent = "Please wait...";
+
+  $("#authError").classList.add("hidden");
+  $("#authError").textContent = "";
+
+  try {
+    const endpoint = authMode === "login" ? "login" : "register";
+
+    const result = await api(endpoint,{
+      method:"POST",
+      body:JSON.stringify(form)
+    });
+
+    if (!result.user) {
+      throw new Error("Account response was incomplete. Please try again.");
+    }
+
+    user = result.user;
+
+    await loadWorkspace();
+
+    $("#authForm").reset();
+
+  } catch (error) {
+    $("#authError").textContent = error.message;
+    $("#authError").classList.remove("hidden");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+});
+
+async function loadWorkspace() {
+  const result = await api("workspace");
+
+  db = {
+    ...defaults(),
+    ...(result.data || {})
+  };
+
+  if (!db.profile) {
+    db.profile = {
+      name:user.name,
+      institution:"",
+      program:"",
+      year:"",
+      semester:"",
+      academicYear:"",
+      level:"University",
+      setupComplete:false
+    };
+  }
+
+  if (!db.profile.name) {
+    db.profile.name = user.name;
+  }
+
+  $("#authScreen").classList.add("hidden");
+  $("#app").classList.remove("hidden");
+
+  renderAll();
+
+  $("#onboardName").value = db.profile.name || user.name || "";
+
+  const setupComplete = db.profile.setupComplete === true;
+
+  if (!setupComplete) {
+    $("#onboarding").classList.add("show");
+
+    activeLevel = db.profile.level || "University";
+
+    $$(".level-option").forEach(button => {
+      button.classList.toggle(
+        "selected",
+        button.dataset.level === activeLevel
+      );
+    });
+  } else {
+    $("#onboarding").classList.remove("show");
+    showPage("dashboard");
+  }
 }
+
+async function start() {
+  try {
+    const result = await api("me");
+
+    user = result.user;
+
+    if (user) {
+      await loadWorkspace();
+      return;
+    }
+  } catch (error) {
+    console.info("No active StudyPilot session:",error.message);
+  }
+
+  user = null;
+  db = defaults();
+
+  $("#authScreen").classList.remove("hidden");
+  $("#app").classList.add("hidden");
+  $("#onboarding").classList.remove("show");
+
+  setAuthMode("login");
+}
+
 start();
 </script>
 </body>
